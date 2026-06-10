@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Own Today - White-label client engagement platform for treatment centers. Take charge. Live empowered.">
+    <title>Own Today | Client Engagement Platform for Treatment Centers</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/white-label.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #2C2C2C;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #0D7C9E 0%, #0A5F7A 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .hero-content {
+            max-width: 1200px;
+            z-index: 1;
+            position: relative;
+        }
+        
+        .hero-logo {
+            max-width: 500px;
+            width: 100%;
+            margin: 0 auto 2rem;
+            filter: drop-shadow(0 10px 30px rgba(0,0,0,0.2));
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        .hero .tagline {
+            font-size: 1.8rem;
+            font-weight: 300;
+            margin-bottom: 2rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #F89A2E;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 3rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0.95;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn-large {
+            padding: 1.25rem 3rem;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+        
+        .btn-primary {
+            background: #F89A2E;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #E88915;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(248, 154, 46, 0.4);
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: #0D7C9E;
+        }
+        
+        .btn-secondary:hover {
+            background: #f0f0f0;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(255,255,255,0.3);
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 6rem 2rem;
+            background: white;
+        }
+        
+        .features-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #0D7C9E;
+            margin-bottom: 1rem;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 4rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+        
+        .feature-card {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.1);
+        }
+        
+        .feature-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #0D7C9E 0%, #F89A2E 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #2C2C2C;
+        }
+        
+        .feature-card p {
+            color: #666;
+            line-height: 1.8;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #F89A2E 0%, #E87A0F 100%);
+            padding: 6rem 2rem;
+            text-align: center;
+            color: white;
+        }
+        
+        .cta-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+        }
+        
+        .cta-section p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Footer */
+        .footer {
+            background: #1A1A1A;
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        
+        .footer-logo {
+            max-width: 250px;
+            margin: 0 auto 1.5rem;
+        }
+        
+        .footer p {
+            color: #999;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: #F89A2E;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: #FFC166;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero .tagline {
+                font-size: 1.3rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+            }
+            
+            .btn-large {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <img src="https://www.genspark.ai/api/files/s/LuSkQujA" alt="Own Today Logo" class="hero-logo">
+            
+            <h1>White-Label Client Engagement</h1>
+            <p class="tagline">Take Charge. Live Empowered.</p>
+            
+            <p>
+                The complete platform for treatment centers to deploy a fully branded 
+                client engagement app with meetings, rewards, progress tracking, and more.
+            </p>
+            
+            <div class="cta-buttons">
+                <a href="#demo" class="btn-large btn-primary">
+                    <i class="fas fa-rocket"></i>
+                    Request Demo
+                </a>
+                <a href="#features" class="btn-large btn-secondary">
+                    <i class="fas fa-info-circle"></i>
+                    Learn More
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="features-container">
+            <h2 class="section-title">Everything Your Clients Need</h2>
+            <p class="section-subtitle">
+                A complete engagement platform that keeps clients connected, motivated, and progressing.
+            </p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Meeting Guide</h3>
+                    <p>
+                        Find AA, NA, and other recovery meetings in your area. 
+                        Check in with geolocation verification and earn points.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <h3>Rewards System</h3>
+                    <p>
+                        Create custom rewards your clients can redeem. 
+                        Gift cards, privileges, sessions - you decide!
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Progress Tracking</h3>
+                    <p>
+                        Clients track their journey with streak counters, 
+                        points earned, and achievement milestones.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3>Your Branding</h3>
+                    <p>
+                        Upload your logo, pick your colors, and launch 
+                        a fully branded app in hours, not months.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h3>Admin Portal</h3>
+                    <p>
+                        Manage providers, approve clients, customize rewards, 
+                        and track engagement from one dashboard.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Mobile Ready</h3>
+                    <p>
+                        Responsive design works perfectly on phones, 
+                        tablets, and desktop. Progressive Web App capable.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2>Ready to Launch Your Branded App?</h2>
+        <p>
+            Join treatment centers across the country using Own Today to 
+            boost client engagement and improve outcomes.
+        </p>
+        <a href="#contact" class="btn-large btn-secondary">
+            <i class="fas fa-envelope"></i>
+            Contact Sales
+        </a>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <img src="https://www.genspark.ai/api/files/s/LuSkQujA" alt="Own Today Logo" class="footer-logo">
+        <p>White-label client engagement platform for treatment centers</p>
+        <p class="tagline" style="color: #F89A2E; font-weight: 600; letter-spacing: 2px;">
+            TAKE CHARGE. LIVE EMPOWERED.
+        </p>
+        
+        <div class="footer-links">
+            <a href="#features">Features</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#demo">Request Demo</a>
+            <a href="#support">Support</a>
+            <a href="#privacy">Privacy Policy</a>
+        </div>
+        
+        <p style="margin-top: 2rem; font-size: 0.9rem;">
+            &copy; 2026 Own Today. All rights reserved.
+        </p>
+    </footer>
+</body>
+</html>
