@@ -1,0 +1,33 @@
+# Supabase Credentials (keep private)
+js/config.js
+
+# Environment files
+.env
+.env.local
+*.local.js
+
+# Node modules (if you add any build tools later)
+node_modules/
+package-lock.json
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Build outputs
+dist/
+build/
+
+# Temp files
+*.tmp
+*.temp
