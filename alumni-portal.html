@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alumni Portal - Own Today</title>
+    <link rel="stylesheet" href="css/white-label.css">
+    <link rel="stylesheet" href="css/mobile-nav.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .alumni-portal-page {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 20px 100px;
+        }
+
+        .page-header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .back-button {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .page-header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .page-header p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        .welcome-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .alumni-badge {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #ffd93d 0%, #ff9100 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            margin: 0 auto 20px;
+            box-shadow: 0 5px 20px rgba(255, 217, 61, 0.4);
+        }
+
+        .welcome-card h2 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+
+        .welcome-card p {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .stat-icon {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .section-title {
+            color: white;
+            font-size: 24px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .resource-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .resource-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--org-primary, #667eea) 0%, var(--org-secondary, #764ba2) 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 15px;
+            color: white;
+        }
+
+        .resource-card h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .resource-card p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .resource-link {
+            color: var(--org-primary, #667eea);
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .success-stories {
+            margin-bottom: 40px;
+        }
+
+        .story-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .story-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .story-avatar {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: white;
+        }
+
+        .story-info h4 {
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 18px;
+        }
+
+        .story-meta {
+            color: #868e96;
+            font-size: 13px;
+        }
+
+        .story-content {
+            color: #495057;
+            line-height: 1.8;
+            font-size: 15px;
+            font-style: italic;
+        }
+
+        .events-section {
+            margin-bottom: 40px;
+        }
+
+        .event-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin-bottom: 15px;
+            display: flex;
+            gap: 20px;
+        }
+
+        .event-date {
+            min-width: 80px;
+            text-align: center;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--org-primary, #667eea) 0%, var(--org-secondary, #764ba2) 100%);
+            border-radius: 10px;
+            color: white;
+        }
+
+        .event-month {
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .event-day {
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .event-details {
+            flex: 1;
+        }
+
+        .event-details h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .event-details p {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .event-meta {
+            display: flex;
+            gap: 20px;
+            color: #868e96;
+            font-size: 14px;
+        }
+
+        .rsvp-button {
+            background: var(--org-primary, #667eea);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .alumni-portal-page {
+                padding: 15px 15px 100px;
+            }
+
+            .page-header h1 {
+                font-size: 28px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .resources-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .event-card {
+                flex-direction: column;
+            }
+
+            .event-date {
+                width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="alumni-portal-page">
+        <div class="page-header">
+            <button class="back-button" onclick="window.location.href='client-portal.html'">
+                <i class="fas fa-arrow-left"></i>
+                Back to Portal
+            </button>
+            <h1>🎓 Alumni Portal</h1>
+            <p>Exclusive resources and community for program graduates</p>
+        </div>
+
+        <div class="welcome-card">
+            <div class="alumni-badge">🏆</div>
+            <h2>Welcome to the Alumni Community!</h2>
+            <p>Congratulations on completing the program! You're now part of an exclusive community dedicated to long-term success and continued growth. Access special resources, connect with fellow alumni, and give back to others on their recovery journey.</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">🎯</div>
+                <div class="stat-number">365</div>
+                <div class="stat-label">Days in Recovery</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">👥</div>
+                <div class="stat-number">1,247</div>
+                <div class="stat-label">Alumni Members</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📅</div>
+                <div class="stat-number">12</div>
+                <div class="stat-label">Upcoming Events</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">💪</div>
+                <div class="stat-number">89%</div>
+                <div class="stat-label">Success Rate</div>
+            </div>
+        </div>
+
+        <div class="section-title">
+            <i class="fas fa-star"></i>
+            Exclusive Alumni Resources
+        </div>
+
+        <div class="resources-grid">
+            <div class="resource-card">
+                <div class="resource-icon">🎓</div>
+                <h3>Advanced Workshops</h3>
+                <p>Free monthly workshops on career development, relationships, financial wellness, and personal growth specifically for alumni.</p>
+                <span class="resource-link">View Schedule <i class="fas fa-arrow-right"></i></span>
+            </div>
+
+            <div class="resource-card">
+                <div class="resource-icon">💼</div>
+                <h3>Career Support</h3>
+                <p>Job placement assistance, resume building, interview coaching, and networking opportunities with recovery-friendly employers.</p>
+                <span class="resource-link">Get Started <i class="fas fa-arrow-right"></i></span>
+            </div>
+
+            <div class="resource-card">
+                <div class="resource-icon">🤝</div>
+                <h3>Mentorship Program</h3>
+                <p>Become a mentor for current clients or get paired with senior alumni for guidance as you navigate long-term recovery.</p>
+                <span class="resource-link">Join Program <i class="fas fa-arrow-right"></i></span>
+            </div>
+
+            <div class="resource-card">
+                <div class="resource-icon">📚</div>
+                <h3>Extended Learning</h3>
+                <p>Access our library of advanced recovery topics, spiritual development resources, and continuing education materials.</p>
+                <span class="resource-link">Browse Library <i class="fas fa-arrow-right"></i></span>
+            </div>
+
+            <div class="resource-card">
+                <div class="resource-icon">🏠</div>
+                <h3>Housing Support</h3>
+                <p>Assistance finding sober living, permanent housing, roommate matching, and connections to recovery-focused properties.</p>
+                <span class="resource-link">Learn More <i class="fas fa-arrow-right"></i></span>
+            </div>
+
+            <div class="resource-card">
+                <div class="resource-icon">💬</div>
+                <h3>Alumni Network</h3>
+                <p>Private online community, regular meetups, and social events exclusively for program graduates and their families.</p>
+                <span class="resource-link">Join Network <i class="fas fa-arrow-right"></i></span>
+            </div>
+        </div>
+
+        <div class="success-stories">
+            <div class="section-title">
+                <i class="fas fa-heart"></i>
+                Alumni Success Stories
+            </div>
+
+            <div class="story-card">
+                <div class="story-header">
+                    <div class="story-avatar">👨</div>
+                    <div class="story-info">
+                        <h4>Michael R.</h4>
+                        <span class="story-meta">3 years in recovery • Graduated 2021</span>
+                    </div>
+                </div>
+                <div class="story-content">
+                    "Three years ago, I didn't think I'd make it a week. Today, I'm celebrating my third year of sobriety, I've rebuilt relationships with my family, and I'm working a job I love. The tools I learned in this program saved my life, and the alumni community keeps me grounded. If you're reading this and struggling, know that recovery is possible. I'm living proof."
+                </div>
+            </div>
+
+            <div class="story-card">
+                <div class="story-header">
+                    <div class="story-avatar">👩</div>
+                    <div class="story-info">
+                        <h4>Sarah L.</h4>
+                        <span class="story-meta">5 years in recovery • Graduated 2019</span>
+                    </div>
+                </div>
+                <div class="story-content">
+                    "I came to this program broken, hopeless, and convinced I'd never amount to anything. Five years later, I'm a sponsor to three women, I've completed my bachelor's degree, and I'm working as a peer counselor helping others find their path to recovery. The alumni network has been incredible - these people understand me in a way nobody else can. We celebrate together, we support each other through tough times, and we remind each other why we chose this life."
+                </div>
+            </div>
+        </div>
+
+        <div class="events-section">
+            <div class="section-title">
+                <i class="fas fa-calendar"></i>
+                Upcoming Alumni Events
+            </div>
+
+            <div class="event-card">
+                <div class="event-date">
+                    <div class="event-month">JUN</div>
+                    <div class="event-day">18</div>
+                </div>
+                <div class="event-details">
+                    <h3>Monthly Alumni Meetup</h3>
+                    <p>Join fellow alumni for dinner, fellowship, and a guest speaker. This month: "Building Financial Wellness in Recovery"</p>
+                    <div class="event-meta">
+                        <span><i class="fas fa-clock"></i> 6:00 PM - 8:30 PM</span>
+                        <span><i class="fas fa-map-marker-alt"></i> Community Center</span>
+                        <span><i class="fas fa-users"></i> 45 attending</span>
+                    </div>
+                    <button class="rsvp-button">RSVP Now</button>
+                </div>
+            </div>
+
+            <div class="event-card">
+                <div class="event-date">
+                    <div class="event-month">JUN</div>
+                    <div class="event-day">22</div>
+                </div>
+                <div class="event-details">
+                    <h3>Recovery Hiking Adventure</h3>
+                    <p>Outdoor activity and nature therapy with fellow alumni. All fitness levels welcome. Lunch provided.</p>
+                    <div class="event-meta">
+                        <span><i class="fas fa-clock"></i> 9:00 AM - 3:00 PM</span>
+                        <span><i class="fas fa-map-marker-alt"></i> Mountain Trail Park</span>
+                        <span><i class="fas fa-users"></i> 28 attending</span>
+                    </div>
+                    <button class="rsvp-button">RSVP Now</button>
+                </div>
+            </div>
+
+            <div class="event-card">
+                <div class="event-date">
+                    <div class="event-month">JUL</div>
+                    <div class="event-day">4</div>
+                </div>
+                <div class="event-details">
+                    <h3>Sober 4th of July Celebration</h3>
+                    <p>Family-friendly BBQ and activities. Bring the kids! Games, food, and fireworks viewing.</p>
+                    <div class="event-meta">
+                        <span><i class="fas fa-clock"></i> 2:00 PM - 10:00 PM</span>
+                        <span><i class="fas fa-map-marker-alt"></i> Recovery Center Campus</span>
+                        <span><i class="fas fa-users"></i> 120+ attending</span>
+                    </div>
+                    <button class="rsvp-button">RSVP Now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <div id="mobile-nav"></div>
+
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/theming-engine.js"></script>
+    <script src="js/mobile-nav.js"></script>
+
+    <script>
+        // Initialize theming
+        window.themingEngine.init();
+
+        // Initialize mobile nav
+        if (window.mobileNav) {
+            window.mobileNav.init();
+        }
+
+        // Resource card interactions
+        document.querySelectorAll('.resource-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const title = this.querySelector('h3').textContent;
+                alert(`Opening ${title}...`);
+            });
+        });
+
+        // RSVP button handling
+        document.querySelectorAll('.rsvp-button').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const eventTitle = this.closest('.event-card').querySelector('h3').textContent;
+                this.textContent = 'RSVP Confirmed!';
+                this.style.background = '#2f9e44';
+                setTimeout(() => {
+                    alert(`You're registered for: ${eventTitle}\n\nWe'll send you a reminder 24 hours before the event.`);
+                }, 300);
+            });
+        });
+    </script>
+</body>
+</html>
