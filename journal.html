@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journal - Own Today</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/white-label.css">
+    <link rel="stylesheet" href="css/mobile-nav.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            padding-bottom: 80px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .page-header {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .back-button {
+            background: linear-gradient(135deg, var(--org-primary, #667eea), var(--org-secondary, #764ba2));
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .back-button:hover {
+            transform: scale(1.1);
+        }
+
+        .page-header-content {
+            flex: 1;
+        }
+
+        .page-header-content h1 {
+            color: var(--org-primary, #667eea);
+            font-size: 32px;
+            margin-bottom: 5px;
+        }
+
+        .page-header-content p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .points-badge {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        /* Journal Prompt */
+        .journal-prompt {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid var(--org-primary, #667eea);
+        }
+
+        .journal-prompt h3 {
+            color: var(--org-primary, #667eea);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .journal-prompt p {
+            color: #666;
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        /* Journal Form */
+        .journal-form {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--org-primary, #667eea);
+        }
+
+        .form-group textarea {
+            min-height: 250px;
+            resize: vertical;
+        }
+
+        .mood-selector {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .mood-option {
+            flex: 1;
+            min-width: 80px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .mood-option:hover {
+            border-color: var(--org-primary, #667eea);
+            transform: scale(1.05);
+        }
+
+        .mood-option.selected {
+            border-color: var(--org-primary, #667eea);
+            background: var(--org-primary, #667eea);
+            color: white;
+        }
+
+        .mood-emoji {
+            font-size: 40px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .mood-label {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .char-counter {
+            text-align: right;
+            color: #999;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 15px 30px;
+            border-radius: 10px;
+            border: none;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--org-primary, #667eea), var(--org-secondary, #764ba2));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #666;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        /* Success Message */
+        .success-message {
+            background: linear-gradient(135deg, #4caf50, #45a049);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            display: none;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+            animation: slideDown 0.5s ease;
+        }
+
+        .success-message.show {
+            display: flex;
+        }
+
+        .success-message i {
+            font-size: 30px;
+        }
+
+        .success-message-content h3 {
+            margin-bottom: 5px;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-header {
+                padding: 20px;
+            }
+
+            .page-header-content h1 {
+                font-size: 24px;
+            }
+
+            .journal-form {
+                padding: 20px;
+            }
+
+            .mood-selector {
+                justify-content: center;
+            }
+
+            .mood-option {
+                flex: 0 0 calc(33.333% - 10px);
+                min-width: auto;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Mobile Navigation -->
+    <div id="mobile-nav"></div>
+
+    <div class="container">
+        <!-- Success Message -->
+        <div id="success-message" class="success-message">
+            <i class="fas fa-check-circle"></i>
+            <div class="success-message-content">
+                <h3>Journal Entry Saved! ✨</h3>
+                <p>+25 points earned • Keep up the great work!</p>
+            </div>
+        </div>
+
+        <!-- Page Header -->
+        <div class="page-header">
+            <button class="back-button" onclick="window.location.href='client-portal.html'">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <div class="page-header-content">
+                <h1>Journal</h1>
+                <p>Express yourself freely</p>
+            </div>
+            <div class="points-badge">
+                <i class="fas fa-star"></i> +25
+            </div>
+        </div>
+
+        <!-- Journal Prompt -->
+        <div class="journal-prompt">
+            <h3><i class="fas fa-lightbulb"></i> Today's Writing Prompt</h3>
+            <p>"What is one thing you're grateful for today, and how can you show appreciation for it?"</p>
+        </div>
+
+        <!-- Journal Form -->
+        <div class="journal-form">
+            <form id="journal-form">
+                <!-- Title -->
+                <div class="form-group">
+                    <label for="entry-title">
+                        <i class="fas fa-heading"></i> Entry Title (Optional)
+                    </label>
+                    <input 
+                        type="text" 
+                        id="entry-title" 
+                        placeholder="Give your entry a title..."
+                        maxlength="100"
+                    >
+                </div>
+
+                <!-- Mood Selector -->
+                <div class="form-group">
+                    <label>
+                        <i class="fas fa-smile"></i> How are you feeling today?
+                    </label>
+                    <div class="mood-selector">
+                        <div class="mood-option" data-mood="amazing">
+                            <span class="mood-emoji">😄</span>
+                            <span class="mood-label">Amazing</span>
+                        </div>
+                        <div class="mood-option" data-mood="good">
+                            <span class="mood-emoji">😊</span>
+                            <span class="mood-label">Good</span>
+                        </div>
+                        <div class="mood-option" data-mood="okay">
+                            <span class="mood-emoji">😐</span>
+                            <span class="mood-label">Okay</span>
+                        </div>
+                        <div class="mood-option" data-mood="struggling">
+                            <span class="mood-emoji">😔</span>
+                            <span class="mood-label">Struggling</span>
+                        </div>
+                        <div class="mood-option" data-mood="difficult">
+                            <span class="mood-emoji">😢</span>
+                            <span class="mood-label">Difficult</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Journal Content -->
+                <div class="form-group">
+                    <label for="entry-content">
+                        <i class="fas fa-pen"></i> Your Thoughts
+                    </label>
+                    <textarea 
+                        id="entry-content" 
+                        placeholder="Write freely... Your thoughts, feelings, experiences, or anything on your mind. This is your safe space."
+                        required
+                    ></textarea>
+                    <div class="char-counter">
+                        <span id="char-count">0</span> characters
+                    </div>
+                </div>
+
+                <!-- Privacy -->
+                <div class="form-group">
+                    <label for="entry-privacy">
+                        <i class="fas fa-lock"></i> Privacy Setting
+                    </label>
+                    <select id="entry-privacy">
+                        <option value="private">Private (Only you can see)</option>
+                        <option value="provider">Share with provider</option>
+                        <option value="group">Share with support group</option>
+                    </select>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="window.location.href='client-portal.html'">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Save Entry (+25 points)
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/config.js"></script>
+    <script src="js/theming-engine.js"></script>
+    <script src="js/mobile-nav.js"></script>
+    
+    <script>
+        // Initialize theming
+        if (window.themingEngine) {
+            window.themingEngine.init();
+        }
+
+        // Mood selector
+        let selectedMood = null;
+        document.querySelectorAll('.mood-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.mood-option').forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+                selectedMood = this.dataset.mood;
+                console.log('Mood selected:', selectedMood);
+            });
+        });
+
+        // Character counter
+        const textarea = document.getElementById('entry-content');
+        const charCount = document.getElementById('char-count');
+        
+        textarea.addEventListener('input', function() {
+            charCount.textContent = this.value.length;
+        });
+
+        // Form submission
+        document.getElementById('journal-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const title = document.getElementById('entry-title').value;
+            const content = document.getElementById('entry-content').value;
+            const privacy = document.getElementById('entry-privacy').value;
+
+            if (!content.trim()) {
+                alert('Please write something in your journal entry.');
+                return;
+            }
+
+            // Demo: Save journal entry
+            console.log('Journal Entry Saved:', {
+                title: title || 'Untitled Entry',
+                content: content,
+                mood: selectedMood || 'not specified',
+                privacy: privacy,
+                date: new Date().toISOString()
+            });
+
+            // Show success message
+            const successMsg = document.getElementById('success-message');
+            successMsg.classList.add('show');
+
+            // Reset form
+            this.reset();
+            document.querySelectorAll('.mood-option').forEach(opt => opt.classList.remove('selected'));
+            selectedMood = null;
+            charCount.textContent = '0';
+
+            // Hide success message after 5 seconds
+            setTimeout(() => {
+                successMsg.classList.remove('show');
+                // Redirect to journal history or dashboard
+                window.location.href = 'client-portal.html';
+            }, 3000);
+        });
+
+        console.log('📄 Journal page loaded');
+    </script>
+</body>
+</html>
