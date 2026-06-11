@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress Tracker - Own Today</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/white-label.css">
+    <link rel="stylesheet" href="css/mobile-nav.css">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            padding-bottom: 80px;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .page-header {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .back-button {
+            background: linear-gradient(135deg, var(--org-primary, #667eea), var(--org-secondary, #764ba2));
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+        .back-button:hover { transform: scale(1.1); }
+        .page-header-content h1 { color: var(--org-primary, #667eea); font-size: 32px; margin-bottom: 5px; }
+        .page-header-content p { color: #666; font-size: 16px; }
+        
+        .stats-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .stat-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+        .stat-number {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--org-primary, #667eea);
+            margin-bottom: 5px;
+        }
+        .stat-label { color: #666; font-size: 14px; font-weight: 600; }
+        
+        .chart-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .chart-card h2 {
+            color: var(--org-primary, #667eea);
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        .activity-chart {
+            display: flex;
+            align-items: flex-end;
+            gap: 10px;
+            height: 200px;
+            margin-bottom: 10px;
+        }
+        .chart-bar {
+            flex: 1;
+            background: linear-gradient(to top, var(--org-primary, #667eea), var(--org-secondary, #764ba2));
+            border-radius: 5px 5px 0 0;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        .chart-bar:hover { opacity: 0.8; }
+        .chart-bar-label {
+            position: absolute;
+            bottom: -25px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+            font-weight: 600;
+        }
+        .chart-legend {
+            display: flex;
+            gap: 20px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+        .milestone-timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+        .timeline-line {
+            position: absolute;
+            left: 10px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--org-primary, #667eea);
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+        }
+        .timeline-dot {
+            position: absolute;
+            left: -25px;
+            width: 16px;
+            height: 16px;
+            background: var(--org-primary, #667eea);
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 0 0 3px var(--org-primary, #667eea);
+        }
+        .timeline-content {
+            background: #f8f9fa;
+            padding: 15px 20px;
+            border-radius: 10px;
+        }
+        .timeline-date {
+            color: var(--org-primary, #667eea);
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        .timeline-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .timeline-desc { color: #666; font-size: 14px; }
+        
+        @media (max-width: 768px) {
+            .stats-overview { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <div id="mobile-nav"></div>
+    <div class="container">
+        <div class="page-header">
+            <button class="back-button" onclick="window.location.href='client-portal.html'">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <div class="page-header-content">
+                <h1>Progress Tracker</h1>
+                <p>Visualize your recovery journey</p>
+            </div>
+        </div>
+
+        <div class="stats-overview">
+            <div class="stat-card">
+                <div class="stat-icon">📅</div>
+                <div class="stat-number">42</div>
+                <div class="stat-label">Days in Program</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🔥</div>
+                <div class="stat-number">14</div>
+                <div class="stat-label">Current Streak</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⭐</div>
+                <div class="stat-number">3,500</div>
+                <div class="stat-label">Points Earned</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🏆</div>
+                <div class="stat-number">7</div>
+                <div class="stat-label">Goals Completed</div>
+            </div>
+        </div>
+
+        <div class="chart-card">
+            <h2>Weekly Activity</h2>
+            <div class="activity-chart">
+                <div class="chart-bar" style="height: 80%;">
+                    <div class="chart-bar-label">Mon</div>
+                </div>
+                <div class="chart-bar" style="height: 90%;">
+                    <div class="chart-bar-label">Tue</div>
+                </div>
+                <div class="chart-bar" style="height: 75%;">
+                    <div class="chart-bar-label">Wed</div>
+                </div>
+                <div class="chart-bar" style="height: 95%;">
+                    <div class="chart-bar-label">Thu</div>
+                </div>
+                <div class="chart-bar" style="height: 85%;">
+                    <div class="chart-bar-label">Fri</div>
+                </div>
+                <div class="chart-bar" style="height: 70%;">
+                    <div class="chart-bar-label">Sat</div>
+                </div>
+                <div class="chart-bar" style="height: 100%;">
+                    <div class="chart-bar-label">Sun</div>
+                </div>
+            </div>
+            <div class="chart-legend">
+                <div class="legend-item">
+                    <div class="legend-color" style="background: var(--org-primary, #667eea);"></div>
+                    <span>Meetings Attended</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: var(--org-secondary, #764ba2);"></div>
+                    <span>Journal Entries</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-card">
+            <h2>Recent Milestones</h2>
+            <div class="milestone-timeline">
+                <div class="timeline-line"></div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">December 10, 2024</div>
+                        <div class="timeline-title">14-Day Streak Achieved! 🔥</div>
+                        <div class="timeline-desc">Maintained daily engagement for two weeks straight</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">December 5, 2024</div>
+                        <div class="timeline-title">Completed Career Goal 🎯</div>
+                        <div class="timeline-desc">Finished online certification course</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">November 28, 2024</div>
+                        <div class="timeline-title">25 Meetings Milestone 🏠</div>
+                        <div class="timeline-desc">Attended 25th recovery meeting</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">November 15, 2024</div>
+                        <div class="timeline-title">30 Days in Program 🎉</div>
+                        <div class="timeline-desc">One month of commitment and growth</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/config.js"></script>
+    <script src="js/theming-engine.js"></script>
+    <script src="js/mobile-nav.js"></script>
+    <script>
+        if (window.themingEngine) window.themingEngine.init();
+    </script>
+</body>
+</html>
