@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         updateStatsGrid(userData.stats, userData.points);
         
         // Apply role-based feature visibility
-        window.authHelper.hideRoleBasedFeatures(role);
+        window.authHelper.applyRoleBasedVisibility(role);
 
         // Check for milestones
         window.authHelper.checkMilestones(userData);
@@ -60,14 +60,14 @@ document.addEventListener('DOMContentLoaded', async function() {
 });
 
 /**
- * Update welcome banner with greeting and user info
+ * Update welcome banner with user info
  */
 function updateWelcomeBanner(profile, userData) {
     const greeting = window.authHelper.getGreeting();
     const quote = window.authHelper.getDailyQuote();
-
+    
     document.getElementById('greeting-icon').textContent = greeting.icon;
-    document.getElementById('greeting-text').textContent = greeting.text + '!';
+    document.getElementById('greeting-text').textContent = greeting.text;
     document.getElementById('user-name').textContent = profile.full_name || 'Friend';
     document.getElementById('daily-quote').textContent = `"${quote}"`;
 }
@@ -81,235 +81,158 @@ function updateEncouragementBar() {
 }
 
 /**
- * Update streak display with 7-day visualization
+ * Update streak display
  */
-function updateStreakDisplay(streakData) {
-    const streakDaysContainer = document.getElementById('streak-days');
-    const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+function updateStreakDisplay(streak) {
+    const streakDays = window.authHelper.calculateStreakDays(
+        streak.current_streak,
+        streak.last_activity
+    );
     
-    // Get today's day of week (0 = Sunday, 1 = Monday, etc.)
-    const today = new Date().getDay();
-    const todayIndex = today === 0 ? 6 : today - 1; // Convert to Monday = 0
-
-    streakDaysContainer.innerHTML = '';
-
-    days.forEach((day, index) => {
-        const dayDiv = document.createElement('div');
-        dayDiv.className = 'streak-day';
-
-        const labelDiv = document.createElement('div');
-        labelDiv.className = 'streak-day-label';
-        labelDiv.textContent = day;
-
-        const circleDiv = document.createElement('div');
-        circleDiv.className = 'streak-circle';
-        
-        // Check if this day has activity
-        const hasActivity = streakData?.streak_days?.[index] || false;
-        
-        if (hasActivity) {
-            circleDiv.classList.add('active');
-            circleDiv.textContent = '✓';
-        } else {
-            circleDiv.textContent = '○';
-        }
-
-        // Mark today with special styling
-        if (index === todayIndex) {
-            circleDiv.classList.add('today');
-        }
-
-        dayDiv.appendChild(labelDiv);
-        dayDiv.appendChild(circleDiv);
-        streakDaysContainer.appendChild(dayDiv);
-    });
-
-    // If user has a current streak, update encouragement
-    if (streakData?.current_streak > 0) {
-        const streakHeader = document.querySelector('.streak-header');
-        streakHeader.textContent = `YOUR MOMENTUM - ${streakData.current_streak} DAY STREAK 🔥`;
-    }
+    const streakContainer = document.getElementById('streak-days');
+    streakContainer.innerHTML = streakDays.map(day => `
+        <div class="streak-day">
+            <div class="streak-circle ${day.isActive ? 'active' : ''} ${day.isToday ? 'today' : ''}">
+                ${day.isActive ? '✓' : ''}
+            </div>
+            <div class="streak-day-label">${day.dayName}</div>
+        </div>
+    `).join('');
 }
 
 /**
  * Update stats grid with user statistics
  */
 function updateStatsGrid(stats, points) {
-    // Animate numbers counting up
-    animateCounter('meetings-count', 0, stats.meetings || 0, 1000);
-    animateCounter('journal-count', 0, stats.journals || 0, 1000);
-    animateCounter('goals-count', 0, stats.goals || 0, 1000);
-    animateCounter('points-count', 0, points.total_earned || 0, 1500);
+    animateCounter('meetings-count', stats.meetings_attended || 0);
+    animateCounter('journal-count', stats.journal_entries || 0);
+    animateCounter('goals-count', stats.goals_completed || 0);
+    animateCounter('points-count', points.total_earned || 0);
     
     // Update available points in rewards card
     const availablePointsEl = document.getElementById('available-points');
     if (availablePointsEl) {
-        animateCounter('available-points', 0, points.available_points || 0, 1000);
+        animateCounter('available-points', points.available_points || 0);
     }
 }
 
 /**
- * Animate number counting effect
+ * Animate counter from 0 to target value
  */
-function animateCounter(elementId, start, end, duration) {
+function animateCounter(elementId, targetValue, duration = 1000) {
     const element = document.getElementById(elementId);
     if (!element) return;
-
-    const range = end - start;
-    const increment = range / (duration / 16); // 60fps
-    let current = start;
-
-    const timer = setInterval(() => {
-        current += increment;
-        if ((increment > 0 && current >= end) || (increment < 0 && current <= end)) {
-            current = end;
-            clearInterval(timer);
+    
+    const startValue = 0;
+    const startTime = performance.now();
+    
+    function update(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        
+        // Easing function for smooth animation
+        const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+        const currentValue = Math.floor(startValue + (targetValue - startValue) * easeOutQuart);
+        
+        element.textContent = currentValue.toLocaleString();
+        
+        if (progress < 1) {
+            requestAnimationFrame(update);
+        } else {
+            element.textContent = targetValue.toLocaleString();
         }
-        element.textContent = Math.floor(current);
-    }, 16);
+    }
+    
+    requestAnimationFrame(update);
 }
 
 /**
- * Handle feature card clicks (can add analytics here)
+ * Initialize mobile navigation
  */
-document.addEventListener('click', function(e) {
-    const featureCard = e.target.closest('.feature-card');
-    if (featureCard) {
-        const featureName = featureCard.querySelector('h3')?.textContent;
-        console.log('📍 Feature clicked:', featureName);
-        // Could send analytics here
+if (window.mobileNav) {
+    window.mobileNav.init();
+}
+
+/**
+ * PWA Install Prompt Handling
+ */
+let deferredPrompt;
+const installBanner = document.getElementById('install-banner');
+const installButton = document.getElementById('install-button');
+const dismissInstall = document.getElementById('dismiss-install');
+
+window.addEventListener('beforeinstallprompt', (e) => {
+    console.log('💾 PWA install prompt available');
+    e.preventDefault();
+    deferredPrompt = e;
+    
+    // Show install banner if it exists
+    if (installBanner) {
+        installBanner.style.display = 'flex';
+    }
+});
+
+if (installButton) {
+    installButton.addEventListener('click', async () => {
+        if (!deferredPrompt) {
+            console.log('❌ No install prompt available');
+            return;
+        }
+        
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        console.log(`👤 User response to install prompt: ${outcome}`);
+        
+        deferredPrompt = null;
+        if (installBanner) {
+            installBanner.style.display = 'none';
+        }
+    });
+}
+
+if (dismissInstall) {
+    dismissInstall.addEventListener('click', () => {
+        if (installBanner) {
+            installBanner.style.display = 'none';
+        }
+        localStorage.setItem('install-dismissed', 'true');
+    });
+}
+
+window.addEventListener('appinstalled', () => {
+    console.log('✅ PWA installed successfully');
+    deferredPrompt = null;
+    if (installBanner) {
+        installBanner.style.display = 'none';
     }
 });
 
 /**
- * Handle celebration modal close
+ * Service Worker Registration
  */
-window.closeCelebration = function() {
-    window.authHelper.closeCelebration();
-};
-
-/**
- * Add pull-to-refresh functionality for mobile
- */
-let touchStartY = 0;
-let touchEndY = 0;
-
-document.addEventListener('touchstart', function(e) {
-    touchStartY = e.touches[0].clientY;
-}, { passive: true });
-
-document.addEventListener('touchend', function(e) {
-    touchEndY = e.changedTouches[0].clientY;
-    handleSwipe();
-}, { passive: true });
-
-function handleSwipe() {
-    const swipeDistance = touchEndY - touchStartY;
-    
-    // If user swiped down from top of page
-    if (swipeDistance > 100 && window.scrollY === 0) {
-        console.log('🔄 Pull to refresh detected');
-        location.reload();
-    }
-}
-
-// Add keyboard shortcuts
-document.addEventListener('keydown', function(e) {
-    // Ctrl/Cmd + K for search
-    if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-        e.preventDefault();
-        window.location.href = 'search.html';
-    }
-    
-    // Escape to close modals
-    if (e.key === 'Escape') {
-        window.authHelper.closeCelebration();
-    }
-});
-
-// Service Worker registration for PWA
 if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function() {
-        navigator.serviceWorker.register('/Own-Today/sw.js')
-            .then(function(registration) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/Own-Today/sw.js', { scope: '/Own-Today/' })
+            .then(registration => {
                 console.log('✅ Service Worker registered:', registration.scope);
             })
-            .catch(function(error) {
+            .catch(error => {
                 console.log('❌ Service Worker registration failed:', error);
             });
     });
 }
 
-// Add install prompt handling
-let deferredPrompt;
-
-window.addEventListener('beforeinstallprompt', function(e) {
-    console.log('💾 Install prompt available');
-    e.preventDefault();
-    deferredPrompt = e;
-    
-    // Could show a custom install button here
-    showInstallButton();
+/**
+ * Handle online/offline status
+ */
+window.addEventListener('online', () => {
+    console.log('✅ Back online');
+    const banner = document.getElementById('offline-banner');
+    if (banner) banner.style.display = 'none';
 });
 
-function showInstallButton() {
-    // Create install banner if it doesn't exist
-    if (document.getElementById('install-banner')) return;
-
-    const banner = document.createElement('div');
-    banner.id = 'install-banner';
-    banner.style.cssText = `
-        position: fixed;
-        bottom: 80px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: white;
-        padding: 15px 25px;
-        border-radius: 30px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        z-index: 1000;
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        animation: slideUp 0.3s ease;
-    `;
-
-    banner.innerHTML = `
-        <span>📱</span>
-        <span style="font-weight: 600;">Install Own Today app</span>
-        <button id="install-button" style="
-            background: linear-gradient(135deg, var(--org-primary, #667eea), var(--org-secondary, #764ba2));
-            color: white;
-            border: none;
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-weight: 600;
-            cursor: pointer;
-        ">Install</button>
-        <button id="dismiss-install" style="
-            background: transparent;
-            border: none;
-            color: #999;
-            cursor: pointer;
-            font-size: 20px;
-        ">×</button>
-    `;
-
-    document.body.appendChild(banner);
-
-    document.getElementById('install-button').addEventListener('click', async function() {
-        if (deferredPrompt) {
-            deferredPrompt.prompt();
-            const { outcome } = await deferredPrompt.userChoice;
-            console.log('📱 Install outcome:', outcome);
-            deferredPrompt = null;
-            banner.remove();
-        }
-    });
-
-    document.getElementById('dismiss-install').addEventListener('click', function() {
-        banner.remove();
-    });
-}
-
-console.log('📄 client-portal.js loaded');
+window.addEventListener('offline', () => {
+    console.log('📡 Offline mode');
+    const banner = document.getElementById('offline-banner');
+    if (banner) banner.style.display = 'block';
+});
