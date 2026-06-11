@@ -13,7 +13,8 @@
     
     <!-- White-label CSS -->
     <link rel="stylesheet" href="css/white-label.css">
-        <link rel="stylesheet" href="css/mobile-nav.css">
+    <link rel="stylesheet" href="css/client-portal.css">
+    <link rel="stylesheet" href="css/mobile-nav.css">
     
     <style>
         * {
@@ -288,6 +289,107 @@
             text-transform: uppercase;
         }
 
+        /* Professional Footer */
+        .professional-footer {
+            background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.98) 100%);
+            border-top: 3px solid rgba(102, 126, 234, 0.3);
+            padding: 40px 20px 30px;
+            margin-top: 60px;
+            text-align: center;
+            border-radius: 20px 20px 0 0;
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.1);
+        }
+
+        .footer-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .footer-branding {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .footer-company-name {
+            font-size: 1.6rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-text {
+            color: #555;
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        .footer-link {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .footer-link:hover {
+            color: #764ba2;
+            transform: translateY(-2px);
+        }
+
+        .footer-link i {
+            font-size: 0.9rem;
+        }
+
+        .footer-divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.3), transparent);
+            margin: 25px 0;
+        }
+
+        .footer-copyright {
+            color: #888;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .footer-copyright strong {
+            color: #667eea;
+            font-weight: 700;
+        }
+
         /* Animations */
         @keyframes slideDown {
             from {
@@ -408,6 +510,24 @@
 
             .streak-day-label {
                 font-size: 10px;
+            }
+
+            .professional-footer {
+                padding: 30px 15px 20px;
+                margin-top: 40px;
+            }
+            
+            .footer-links {
+                gap: 15px;
+                flex-direction: column;
+            }
+
+            .footer-company-name {
+                font-size: 1.3rem;
+            }
+
+            .footer-text {
+                font-size: 0.9rem;
             }
         }
 
@@ -702,7 +822,60 @@
                     <div class="feature-btn">Provider Tools 👨‍⚕️</div>
                     <div class="feature-points">Provider only</div>
                 </a>
+
+                <!-- Admin Portal -->
+                <a href="admin-portal.html" class="feature-card admin-only" style="animation-delay: 2.6s;">
+                    <span class="admin-badge" style="background: linear-gradient(135deg, #e94560 0%, #d63d54 100%);">Admin</span>
+                    <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h3>Admin Portal</h3>
+                    <div class="feature-subtitle">Full control center</div>
+                    <p>White-label branding, meetings, rewards, user management, and reports.</p>
+                    <div class="feature-btn">Admin Center 🛡️</div>
+                    <div class="feature-points">Admin only</div>
+                </a>
             </div>
+
+            <!-- Professional Footer -->
+            <footer class="professional-footer">
+                <div class="footer-content">
+                    <div class="footer-branding">
+                        <div class="footer-logo">
+                            <i class="fas fa-hands-helping"></i>
+                        </div>
+                        <div class="footer-company-name">Own Today</div>
+                    </div>
+                    
+                    <p class="footer-text">
+                        This platform is proprietary software developed and maintained by <strong>Own Today</strong>. 
+                        Empowering recovery through innovative technology and compassionate support since 2024.
+                    </p>
+                    
+                    <div class="footer-links">
+                        <a href="#" class="footer-link">
+                            <i class="fas fa-info-circle"></i> About Us
+                        </a>
+                        <a href="#" class="footer-link">
+                            <i class="fas fa-life-ring"></i> Support
+                        </a>
+                        <a href="#" class="footer-link">
+                            <i class="fas fa-shield-alt"></i> Privacy Policy
+                        </a>
+                        <a href="#" class="footer-link">
+                            <i class="fas fa-file-contract"></i> Terms of Service
+                        </a>
+                        <a href="admin-portal.html" class="footer-link admin-only">
+                            <i class="fas fa-cog"></i> Admin Portal
+                        </a>
+                    </div>
+                    
+                    <div class="footer-divider"></div>
+                    
+                    <div class="footer-copyright">
+                        <strong>© 2024 Own Today</strong>. All rights reserved.<br>
+                        White-Label Recovery Engagement Platform | Transforming Lives Through Technology
+                    </div>
+                </div>
+            </footer>
         </div>
     </div>
 
