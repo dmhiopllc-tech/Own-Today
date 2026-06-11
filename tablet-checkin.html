@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Check-In - Own Today</title>
+    <link rel="stylesheet" href="css/white-label.css">
+    <link rel="stylesheet" href="css/mobile-nav.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 0;
+            margin: 0;
+        }
+
+        .checkin-container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .checkin-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .checkin-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: pulse 2s ease infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .checkin-card h1 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 28px;
+        }
+
+        .checkin-card p {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .qr-placeholder {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 30px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            color: #667eea;
+            border: 3px dashed #667eea;
+        }
+
+        .manual-checkin-btn {
+            background: linear-gradient(135deg, var(--org-primary, #667eea) 0%, var(--org-secondary, #764ba2) 100%);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 15px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .manual-checkin-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .manual-checkin-btn i {
+            margin-right: 10px;
+        }
+
+        .back-btn {
+            background: #f1f3f5;
+            color: #495057;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.2s;
+        }
+
+        .back-btn:hover {
+            background: #e9ecef;
+        }
+
+        .recent-checkins {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .recent-checkins h3 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+
+        .checkin-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .checkin-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .checkin-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .checkin-info i {
+            font-size: 24px;
+            color: var(--org-primary, #667eea);
+        }
+
+        .checkin-details h4 {
+            color: #333;
+            margin: 0 0 5px 0;
+            font-size: 16px;
+        }
+
+        .checkin-details p {
+            color: #868e96;
+            margin: 0;
+            font-size: 13px;
+        }
+
+        .points-badge {
+            background: linear-gradient(135deg, #ffd93d 0%, #ff9100 100%);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .success-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .success-modal.active {
+            display: flex;
+        }
+
+        .success-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            max-width: 400px;
+            margin: 20px;
+            animation: successPop 0.5s ease;
+        }
+
+        @keyframes successPop {
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .success-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: bounce 0.8s ease;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .success-content h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 28px;
+        }
+
+        .success-content p {
+            color: #666;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .points-earned {
+            font-size: 48px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffd93d 0%, #ff9100 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 20px 0;
+        }
+
+        .close-success-btn {
+            background: linear-gradient(135deg, var(--org-primary, #667eea) 0%, var(--org-secondary, #764ba2) 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .checkin-container {
+                padding: 15px;
+            }
+
+            .checkin-card {
+                padding: 30px 20px;
+            }
+
+            .checkin-card h1 {
+                font-size: 24px;
+            }
+
+            .qr-placeholder {
+                width: 160px;
+                height: 160px;
+                font-size: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="checkin-container">
+        <div class="checkin-card">
+            <div class="checkin-icon">📱</div>
+            <h1>Quick Check-In</h1>
+            <p>Scan the QR code at your meeting location or use manual check-in below</p>
+            
+            <div class="qr-placeholder">
+                <i class="fas fa-qrcode"></i>
+            </div>
+
+            <button class="manual-checkin-btn" onclick="performCheckin()">
+                <i class="fas fa-check-circle"></i>
+                Manual Check-In
+            </button>
+
+            <button class="back-btn" onclick="window.location.href='client-portal.html'">
+                Back to Dashboard
+            </button>
+        </div>
+
+        <div class="recent-checkins">
+            <h3>Recent Check-Ins</h3>
+            <div class="checkin-item">
+                <div class="checkin-info">
+                    <i class="fas fa-check-circle"></i>
+                    <div class="checkin-details">
+                        <h4>Hope Recovery Center</h4>
+                        <p>Today at 10:30 AM</p>
+                    </div>
+                </div>
+                <div class="points-badge">+50</div>
+            </div>
+            <div class="checkin-item">
+                <div class="checkin-info">
+                    <i class="fas fa-check-circle"></i>
+                    <div class="checkin-details">
+                        <h4>Downtown AA Meeting</h4>
+                        <p>Yesterday at 6:00 PM</p>
+                    </div>
+                </div>
+                <div class="points-badge">+50</div>
+            </div>
+            <div class="checkin-item">
+                <div class="checkin-info">
+                    <i class="fas fa-check-circle"></i>
+                    <div class="checkin-details">
+                        <h4>Serenity Group</h4>
+                        <p>2 days ago at 7:00 PM</p>
+                    </div>
+                </div>
+                <div class="points-badge">+50</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="success-modal" id="successModal">
+        <div class="success-content">
+            <div class="success-icon">🎉</div>
+            <h2>Check-In Successful!</h2>
+            <p>Great job showing up today!</p>
+            <div class="points-earned">+50 Points</div>
+            <p style="color: #999; font-size: 14px; margin-top: 10px;">Keep building your recovery!</p>
+            <button class="close-success-btn" onclick="closeSuccess()">Continue</button>
+        </div>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <div id="mobile-nav"></div>
+
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/theming-engine.js"></script>
+    <script src="js/mobile-nav.js"></script>
+
+    <script>
+        // Initialize theming
+        window.themingEngine.init();
+
+        // Initialize mobile nav
+        if (window.mobileNav) {
+            window.mobileNav.init();
+        }
+
+        function performCheckin() {
+            // Show success modal
+            document.getElementById('successModal').classList.add('active');
+
+            // Add confetti effect
+            createConfetti();
+
+            // Add to recent check-ins
+            setTimeout(() => {
+                addRecentCheckin();
+            }, 2000);
+        }
+
+        function closeSuccess() {
+            document.getElementById('successModal').classList.remove('active');
+        }
+
+        function addRecentCheckin() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+            
+            const checkinItem = document.createElement('div');
+            checkinItem.className = 'checkin-item';
+            checkinItem.style.animation = 'slideUp 0.5s ease';
+            checkinItem.innerHTML = `
+                <div class="checkin-info">
+                    <i class="fas fa-check-circle"></i>
+                    <div class="checkin-details">
+                        <h4>Manual Check-In</h4>
+                        <p>Today at ${timeString}</p>
+                    </div>
+                </div>
+                <div class="points-badge">+50</div>
+            `;
+
+            const recentSection = document.querySelector('.recent-checkins');
+            const firstItem = recentSection.querySelector('.checkin-item');
+            if (firstItem) {
+                recentSection.insertBefore(checkinItem, firstItem);
+            }
+        }
+
+        function createConfetti() {
+            const colors = ['#667eea', '#764ba2', '#ffd93d', '#ff9100', '#ff6b6b'];
+            const confettiCount = 50;
+
+            for (let i = 0; i < confettiCount; i++) {
+                const confetti = document.createElement('div');
+                confetti.style.position = 'fixed';
+                confetti.style.width = '10px';
+                confetti.style.height = '10px';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.top = '-10px';
+                confetti.style.opacity = '1';
+                confetti.style.transform = 'rotate(' + Math.random() * 360 + 'deg)';
+                confetti.style.transition = 'all 3s ease-out';
+                confetti.style.zIndex = '9999';
+                confetti.style.pointerEvents = 'none';
+                document.body.appendChild(confetti);
+
+                setTimeout(() => {
+                    confetti.style.top = '100vh';
+                    confetti.style.opacity = '0';
+                    confetti.style.transform = 'rotate(' + (Math.random() * 720 + 360) + 'deg)';
+                }, 50);
+
+                setTimeout(() => {
+                    confetti.remove();
+                }, 3000);
+            }
+        }
+
+        // Simulate QR code scanner (for demo purposes)
+        let scanAttempts = 0;
+        document.querySelector('.qr-placeholder').addEventListener('click', function() {
+            this.style.animation = 'pulse 0.5s ease';
+            setTimeout(() => {
+                this.style.animation = 'pulse 2s ease infinite';
+            }, 500);
+
+            scanAttempts++;
+            if (scanAttempts >= 3) {
+                performCheckin();
+                scanAttempts = 0;
+            }
+        });
+    </script>
+</body>
+</html>
