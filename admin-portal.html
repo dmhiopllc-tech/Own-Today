@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Literature Library - Own Today</title>
+    <link rel="stylesheet" href="css/white-label.css">
+    <link rel="stylesheet" href="css/mobile-nav.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        .literature-page {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px 20px 100px;
+        }
+
+        .page-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .back-button {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--org-primary, #667eea);
+            cursor: pointer;
+            margin-right: 15px;
+            padding: 8px;
+        }
+
+        .page-header h1 {
+            font-size: 28px;
+            color: #333;
+            margin: 0;
+        }
+
+        .program-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+
+        .program-tab {
+            background: white;
+            border: 2px solid #e9ecef;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 500;
+            color: #495057;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .program-tab.active {
+            background: var(--org-primary, #667eea);
+            color: white;
+            border-color: var(--org-primary, #667eea);
+        }
+
+        .program-tab:hover {
+            border-color: var(--org-primary, #667eea);
+        }
+
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        .book-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+        }
+
+        .book-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        .program-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .program-badge.aa {
+            background: #e7f5ff;
+            color: #1971c2;
+        }
+
+        .program-badge.na {
+            background: #d3f9d8;
+            color: #2f9e44;
+        }
+
+        .program-badge.smart {
+            background: #fff3bf;
+            color: #f59f00;
+        }
+
+        .program-badge.lifering {
+            background: #f3f0ff;
+            color: #6741d9;
+        }
+
+        .program-badge.celebrate {
+            background: #ffe3e3;
+            color: #c92a2a;
+        }
+
+        .featured-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, #ffd93d 0%, #ff9100 100%);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .purchase-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #10b981;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .book-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        .book-category {
+            color: #868e96;
+            font-size: 13px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .book-description {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .book-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .tag {
+            background: #f8f9fa;
+            color: #495057;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+        }
+
+        .book-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            flex: 1;
+            background: var(--org-primary, #667eea);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .btn-primary:hover {
+            background: var(--org-secondary, #764ba2);
+        }
+
+        .btn-purchase {
+            flex: 1;
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .btn-purchase:hover {
+            background: #059669;
+        }
+
+        .btn-save {
+            background: #f8f9fa;
+            color: #495057;
+            border: 2px solid #e9ecef;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-save:hover {
+            border-color: var(--org-primary, #667eea);
+            color: var(--org-primary, #667eea);
+        }
+
+        .btn-save.saved {
+            background: var(--org-primary, #667eea);
+            color: white;
+            border-color: var(--org-primary, #667eea);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .empty-state i {
+            font-size: 64px;
+            color: #ced4da;
+            margin-bottom: 20px;
+        }
+
+        .empty-state h3 {
+            color: #495057;
+            margin-bottom: 10px;
+        }
+
+        .empty-state p {
+            color: #868e96;
+        }
+
+        @media (max-width: 768px) {
+            .literature-page {
+                padding: 15px 15px 100px;
+            }
+
+            .page-header h1 {
+                font-size: 24px;
+            }
+
+            .books-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .program-tabs {
+                flex-wrap: nowrap;
+                overflow-x: scroll;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="literature-page">
+        <div class="page-header">
+            <button class="back-button" onclick="window.location.href='client-portal.html'">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <h1>Literature Library</h1>
+        </div>
+
+        <div class="program-tabs">
+            <button class="program-tab active" onclick="filterByProgram('all', event)">
+                <i class="fas fa-th"></i> All Programs
+            </button>
+            <button class="program-tab" onclick="filterByProgram('AA', event)">
+                AA (Alcoholics Anonymous)
+            </button>
+            <button class="program-tab" onclick="filterByProgram('NA', event)">
+                NA (Narcotics Anonymous)
+            </button>
+            <button class="program-tab" onclick="filterByProgram('SMART Recovery', event)">
+                SMART Recovery
+            </button>
+            <button class="program-tab" onclick="filterByProgram('LifeRing', event)">
+                LifeRing
+            </button>
+            <button class="program-tab" onclick="filterByProgram('Celebrate Recovery', event)">
+                Celebrate Recovery
+            </button>
+        </div>
+
+        <div class="books-grid" id="booksGrid">
+            <!-- Books will be populated by JavaScript -->
+        </div>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <div id="mobile-nav"></div>
+
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/theming-engine.js"></script>
+    <script src="js/mobile-nav.js"></script>
+
+    <script>
+        // Initialize theming
+        window.themingEngine.init();
+
+        // Initialize mobile nav
+        if (window.mobileNav) {
+            window.mobileNav.init();
+        }
+
+        // Demo literature data for all 5 programs
+        const DEMO_LITERATURE = [
+            // AA Literature (Free Online Access at AA.org)
+            {id: '1', title: 'The Big Book - Alcoholics Anonymous', program: 'AA', category: 'Core Text', description: 'The basic text of Alcoholics Anonymous, containing personal stories and the 12 Steps. Read online for free at AA.org.', file_url: 'https://www.aa.org/the-big-book', is_purchase: false, tags: ['12 Steps', 'Recovery', 'Sobriety', 'Core Text', 'Free'], difficulty_level: 'All Levels', featured: true},
+            {id: '2', title: 'Twelve Steps and Twelve Traditions', program: 'AA', category: 'Core Text', description: 'Detailed explanations of the 12 Steps and 12 Traditions of AA. Read online for free at AA.org.', file_url: 'https://www.aa.org/twelve-and-twelve', is_purchase: false, tags: ['12 Steps', '12 Traditions', 'Spiritual', 'Free'], difficulty_level: 'Intermediate', featured: true},
+            {id: '3', title: 'Living Sober', program: 'AA', category: 'Practical Guide', description: 'Practical tips for staying sober day by day. Read online for free at AA.org.', file_url: 'https://www.aa.org/living-sober', is_purchase: false, tags: ['Daily Living', 'Practical Tips', 'Sobriety', 'Free'], difficulty_level: 'Beginner', featured: false},
+            {id: '4', title: 'Daily Reflections', program: 'AA', category: 'Daily Reading', description: 'A book of reflections by AA members for AA members. Read online for free at AA.org.', file_url: 'https://www.aa.org/daily-reflections', is_purchase: false, tags: ['Daily', 'Meditation', 'Reflection', 'Free'], difficulty_level: 'All Levels', featured: false},
+            {id: '5', title: 'Is AA For You? - Self-Assessment', program: 'AA', category: 'Free PDF', description: '12 questions to help determine if AA is right for you. Free self-assessment at AA.org.', file_url: 'https://www.aa.org/self-assessment', is_purchase: false, tags: ['Newcomer', 'Self-Assessment', 'Free'], difficulty_level: 'Beginner', featured: true},
+            {id: '6', title: 'AA for the Older Alcoholic', program: 'AA', category: 'Free PDF', description: 'Information for older adults in recovery. Read online at AA.org.', file_url: 'https://www.aa.org/aa-older-alcoholic', is_purchase: false, tags: ['Seniors', 'Age-Specific', 'Free'], difficulty_level: 'All Levels', featured: false},
+            
+            // NA Literature (Free PDFs Available)
+            {id: '11', title: 'Narcotics Anonymous (Basic Text)', program: 'NA', category: 'Core Text', description: 'The basic text of Narcotics Anonymous containing the 12 Steps adapted for addiction. Free PDF from NA.org.', file_url: 'https://www.na.org/', is_purchase: false, tags: ['12 Steps', 'Recovery', 'Addiction', 'Core Text', 'Free'], difficulty_level: 'All Levels', featured: true},
+            {id: '12', title: 'Just for Today', program: 'NA', category: 'Daily Reading', description: 'Daily meditation book with readings for each day of the year. Access daily readings online at NA.org.', file_url: 'https://www.na.org/', is_purchase: false, tags: ['Daily', 'Meditation', 'Inspiration', 'Free'], difficulty_level: 'All Levels', featured: true},
+            {id: '13', title: 'NA White Booklet', program: 'NA', category: 'Free PDF', description: 'Introduction to Narcotics Anonymous for newcomers. Free PDF download from NA.org.', file_url: 'https://www.na.org/', is_purchase: false, tags: ['Newcomer', 'Introduction', 'Basics', 'Free'], difficulty_level: 'Beginner', featured: true},
+            {id: '14', title: 'Information Pamphlet #1', program: 'NA', category: 'Free PDF', description: 'Who, What, How, and Why - Introduction to NA. Free PDF download.', file_url: 'https://www.na.org/', is_purchase: false, tags: ['Newcomer', 'Introduction', 'Free'], difficulty_level: 'Beginner', featured: false},
+            {id: '15', title: 'Sponsorship (IP #11)', program: 'NA', category: 'Free PDF', description: 'Information about sponsorship in NA. Free PDF download.', file_url: 'https://www.na.org/', is_purchase: false, tags: ['Sponsorship', 'Support', 'Guidance', 'Free'], difficulty_level: 'All Levels', featured: false},
+            
+            // SMART Recovery Literature (Free Resources)
+            {id: '21', title: 'SMART Recovery Handbook', program: 'SMART Recovery', category: 'Core Text', description: 'The official handbook covering all 4 Points of SMART Recovery. Available for purchase with free online resources.', file_url: 'https://www.smartrecovery.org/smart-recovery-toolbox/', is_purchase: true, tags: ['4-Point Program', 'CBT', 'Self-Management'], difficulty_level: 'All Levels', featured: true},
+            {id: '22', title: 'SMART Recovery Toolbox', program: 'SMART Recovery', category: 'Free PDF', description: 'Collection of cognitive behavioral tools and exercises. Free access online.', file_url: 'https://www.smartrecovery.org/smart-recovery-toolbox/', is_purchase: false, tags: ['Tools', 'Exercises', 'CBT', 'Worksheets', 'Free'], difficulty_level: 'All Levels', featured: true},
+            {id: '23', title: 'Introduction to SMART Recovery', program: 'SMART Recovery', category: 'Free PDF', description: 'Overview of the SMART Recovery 4-Point Program. Free information online.', file_url: 'https://www.smartrecovery.org/intro/', is_purchase: false, tags: ['Newcomer', 'Introduction', '4-Point Program', 'Free'], difficulty_level: 'Beginner', featured: true},
+            {id: '24', title: 'Cost-Benefit Analysis Worksheet', program: 'SMART Recovery', category: 'Free PDF', description: 'Tool for analyzing pros and cons of substance use. Free worksheet download.', file_url: 'https://www.smartrecovery.org/', is_purchase: false, tags: ['Worksheet', 'Decision Making', 'Tool', 'Free'], difficulty_level: 'Beginner', featured: false},
+            {id: '25', title: 'ABC Tool - REBT Worksheet', program: 'SMART Recovery', category: 'Free PDF', description: 'Cognitive behavioral tool for challenging irrational beliefs. Free worksheet download.', file_url: 'https://www.smartrecovery.org/', is_purchase: false, tags: ['CBT', 'Worksheet', 'Beliefs', 'Thoughts', 'Free'], difficulty_level: 'Intermediate', featured: false},
+            {id: '26', title: 'DISARM - Destructive Images', program: 'SMART Recovery', category: 'Free PDF', description: 'Tool for managing urges and cravings. Free worksheet download.', file_url: 'https://www.smartrecovery.org/disarm/', is_purchase: false, tags: ['Urges', 'Cravings', 'Tool', 'Free'], difficulty_level: 'All Levels', featured: false},
+            
+            // LifeRing Literature (Free Resources)
+            {id: '31', title: 'Recovery by Choice Workbook', program: 'LifeRing', category: 'Workbook', description: 'Self-directed recovery workbook based on the 3-S philosophy. Available for purchase from LifeRing.', file_url: 'https://lifering.org/product/recovery-by-choice-a-workbook/', is_purchase: true, tags: ['Workbook', '3-S Philosophy', 'Self-Help'], difficulty_level: 'All Levels', featured: true},
+            {id: '32', title: 'LifeRing Basic Text', program: 'LifeRing', category: 'Core Text', description: 'Empowering Your Sober Self - The basic text of LifeRing Secular Recovery. Available for purchase.', file_url: 'https://lifering.org/product/empowering-your-sober-self/', is_purchase: true, tags: ['Secular', 'Core Text', 'Philosophy'], difficulty_level: 'Beginner', featured: true},
+            {id: '33', title: 'The 3 S Philosophy', program: 'LifeRing', category: 'Free PDF', description: 'Sobriety, Secularity, and Self-Help explained. Free information online.', file_url: 'https://lifering.org/about-lifering/how-lifering-works/', is_purchase: false, tags: ['Philosophy', 'Secular', 'Self-Help', 'Free'], difficulty_level: 'Beginner', featured: true},
+            {id: '34', title: 'How Was Your Week?', program: 'LifeRing', category: 'Free PDF', description: 'Guide to LifeRing\'s signature meeting format. Free information online.', file_url: 'https://lifering.org/how-lifering-works/how-was-your-week/', is_purchase: false, tags: ['Meeting Format', 'Support', 'Sharing', 'Free'], difficulty_level: 'All Levels', featured: false},
+            {id: '35', title: 'LifeRing Meeting Handbook', program: 'LifeRing', category: 'Free PDF', description: 'Comprehensive guide for running LifeRing meetings. Free PDF download.', file_url: 'https://lifering.org/', is_purchase: false, tags: ['Meeting Guide', 'Leadership', 'Free'], difficulty_level: 'Intermediate', featured: false},
+            
+            // Celebrate Recovery Literature (Christian-Based)
+            {id: '41', title: 'The Journey Begins - Participant Guide 1', program: 'Celebrate Recovery', category: 'Core Text', description: 'Introduction to the Celebrate Recovery 12 Steps and 8 Principles. Available for purchase.', file_url: 'https://www.celebraterecovery.com/crstore', is_purchase: true, tags: ['12 Steps', '8 Principles', 'Christian', 'Introduction'], difficulty_level: 'Beginner', featured: true},
+            {id: '42', title: 'Life\'s Healing Choices', program: 'Celebrate Recovery', category: 'Core Text', description: 'Making healing choices based on Biblical principles. Available for purchase.', file_url: 'https://www.celebraterecovery.com/crstore', is_purchase: true, tags: ['Healing', 'Choices', 'Christian', 'Principles'], difficulty_level: 'All Levels', featured: true},
+            {id: '43', title: 'Taking an Honest Inventory', program: 'Celebrate Recovery', category: 'Workbook', description: 'Participant Guide 2 - Working through Step 4. Available for purchase.', file_url: 'https://www.celebraterecovery.com/crstore', is_purchase: true, tags: ['Step 4', 'Inventory', 'Christian', 'Workbook'], difficulty_level: 'Intermediate', featured: false},
+            {id: '44', title: 'Celebrate Recovery 8 Principles', program: 'Celebrate Recovery', category: 'Free PDF', description: 'Overview of the 8 Recovery Principles based on the Beatitudes. Free information online.', file_url: 'https://www.celebraterecovery.com/resources/cr-tools', is_purchase: false, tags: ['8 Principles', 'Christian', 'Introduction', 'Free'], difficulty_level: 'Beginner', featured: true},
+            {id: '45', title: 'Celebrate Recovery Testimony Guidelines', program: 'Celebrate Recovery', category: 'Free PDF', description: 'Guidelines for sharing your story in Celebrate Recovery. Free resource.', file_url: 'https://www.celebraterecovery.com/resources/cr-tools', is_purchase: false, tags: ['Testimony', 'Sharing', 'Guidelines', 'Free'], difficulty_level: 'All Levels', featured: false}
+        ];
+
+        let currentProgram = 'all';
+        let allLiterature = DEMO_LITERATURE;
+
+        function renderBooks(program = 'all') {
+            const grid = document.getElementById('booksGrid');
+            
+            let filteredBooks = program === 'all' 
+                ? allLiterature 
+                : allLiterature.filter(book => book.program === program);
+
+            if (filteredBooks.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-book-open"></i>
+                        <h3>No Literature Found</h3>
+                        <p>Try selecting a different program.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = filteredBooks.map(book => {
+                const programClass = book.program.toLowerCase().replace(/ /g, '-').replace(/recovery/g, '').trim();
+                const badge = book.featured ? '<div class="featured-badge">⭐ Featured</div>' : 
+                              book.is_purchase ? '<div class="purchase-badge">💳 Purchase</div>' : '';
+                const buttonText = book.is_purchase ? 'View to Purchase' : 'Read Online';
+                const buttonClass = book.is_purchase ? 'btn-purchase' : 'btn-primary';
+                const buttonIcon = book.is_purchase ? 'fa-shopping-cart' : 'fa-book-open';
+
+                return `
+                    <div class="book-card">
+                        ${badge}
+                        <div class="program-badge ${programClass}">${book.program}</div>
+                        <div class="book-title">${book.title}</div>
+                        <div class="book-category">
+                            <i class="fas fa-folder"></i> ${book.category}
+                        </div>
+                        <div class="book-description">${book.description}</div>
+                        ${book.tags && book.tags.length > 0 ? `
+                            <div class="book-tags">
+                                ${book.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                            </div>
+                        ` : ''}
+                        <div class="book-actions">
+                            <button class="${buttonClass}" onclick="openBook('${book.file_url}')">
+                                <i class="fas ${buttonIcon}"></i>
+                                ${buttonText}
+                            </button>
+                            <button class="btn-save" onclick="toggleSave(this, ${book.id})">
+                                <i class="fas fa-bookmark"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function filterByProgram(program, event) {
+            currentProgram = program;
+            
+            // Update active tab
+            document.querySelectorAll('.program-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Render filtered books
+            renderBooks(program);
+        }
+
+        function openBook(url) {
+            window.open(url, '_blank');
+        }
+
+        function toggleSave(button, bookId) {
+            button.classList.toggle('saved');
+            const icon = button.querySelector('i');
+            
+            if (button.classList.contains('saved')) {
+                icon.className = 'fas fa-bookmark';
+                console.log('Saved book:', bookId);
+                alert('Book saved to My Literature!');
+            } else {
+                icon.className = 'fas fa-bookmark';
+                console.log('Unsaved book:', bookId);
+            }
+        }
+
+        // Initial render
+        renderBooks('all');
+    </script>
+</body>
+</html>
