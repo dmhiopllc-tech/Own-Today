@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meditation - Own Today</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/white-label.css">
+    <link rel="stylesheet" href="css/mobile-nav.css">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            padding-bottom: 80px;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        .page-header {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .back-button {
+            background: linear-gradient(135deg, var(--org-primary, #667eea), var(--org-secondary, #764ba2));
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+        .back-button:hover { transform: scale(1.1); }
+        .page-header-content h1 {
+            color: var(--org-primary, #667eea);
+            font-size: 32px;
+            margin-bottom: 5px;
+        }
+        .page-header-content p { color: #666; font-size: 16px; }
+        
+        .meditation-player {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .player-icon {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 30px;
+            background: linear-gradient(135deg, var(--org-primary, #667eea), var(--org-secondary, #764ba2));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            color: white;
+            animation: breathe 4s infinite;
+        }
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        .player-title {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .player-duration {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .play-button {
+            background: linear-gradient(135deg, var(--org-primary, #667eea), var(--org-secondary, #764ba2));
+            color: white;
+            border: none;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            font-size: 30px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+        .play-button:hover { transform: scale(1.1); }
+        .timer { 
+            font-size: 48px; 
+            font-weight: 700; 
+            color: var(--org-primary, #667eea);
+            margin: 20px 0;
+        }
+        
+        .sessions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .session-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .session-card:hover { transform: translateY(-5px); }
+        .session-card h3 { color: #333; margin-bottom: 10px; }
+        .session-card p { color: #666; font-size: 14px; }
+        .session-duration {
+            color: var(--org-primary, #667eea);
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        @media (max-width: 768px) {
+            .sessions-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div id="mobile-nav"></div>
+    <div class="container">
+        <div class="page-header">
+            <button class="back-button" onclick="window.location.href='client-portal.html'">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <div class="page-header-content">
+                <h1>Meditation</h1>
+                <p>Find your inner peace</p>
+            </div>
+        </div>
+
+        <div class="meditation-player">
+            <div class="player-icon" id="player-icon">
+                <i class="fas fa-spa"></i>
+            </div>
+            <h2 class="player-title" id="session-title">Select a meditation below</h2>
+            <p class="player-duration" id="session-duration"></p>
+            <div class="timer" id="timer">--:--</div>
+            <button class="play-button" id="play-button" onclick="togglePlay()" style="display: none;">
+                <i class="fas fa-play"></i>
+            </button>
+        </div>
+
+        <div class="sessions-grid">
+            <div class="session-card" onclick="loadSession('Breathing Exercise', 5, '🌬️')">
+                <h3>🌬️ Breathing Exercise</h3>
+                <p>Focus on your breath to calm the mind and reduce stress.</p>
+                <div class="session-duration">5 minutes • +30 points</div>
+            </div>
+            <div class="session-card" onclick="loadSession('Body Scan', 10, '💆')">
+                <h3>💆 Body Scan</h3>
+                <p>Progressive relaxation through body awareness.</p>
+                <div class="session-duration">10 minutes • +30 points</div>
+            </div>
+            <div class="session-card" onclick="loadSession('Mindfulness Practice', 15, '🧘')">
+                <h3>🧘 Mindfulness Practice</h3>
+                <p>Stay present and cultivate awareness of the moment.</p>
+                <div class="session-duration">15 minutes • +30 points</div>
+            </div>
+            <div class="session-card" onclick="loadSession('Gratitude Meditation', 10, '🙏')">
+                <h3>🙏 Gratitude Meditation</h3>
+                <p>Reflect on things you're grateful for in your life.</p>
+                <div class="session-duration">10 minutes • +30 points</div>
+            </div>
+            <div class="session-card" onclick="loadSession('Stress Relief', 8, '☮️')">
+                <h3>☮️ Stress Relief</h3>
+                <p>Release tension and find calm during difficult times.</p>
+                <div class="session-duration">8 minutes • +30 points</div>
+            </div>
+            <div class="session-card" onclick="loadSession('Sleep Preparation', 20, '😴')">
+                <h3>😴 Sleep Preparation</h3>
+                <p>Wind down and prepare for restful sleep.</p>
+                <div class="session-duration">20 minutes • +30 points</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/config.js"></script>
+    <script src="js/theming-engine.js"></script>
+    <script src="js/mobile-nav.js"></script>
+    <script>
+        if (window.themingEngine) window.themingEngine.init();
+        
+        let isPlaying = false;
+        let timeLeft = 0;
+        let totalTime = 0;
+        let timer = null;
+
+        function loadSession(name, minutes, emoji) {
+            document.getElementById('session-title').textContent = name;
+            document.getElementById('session-duration').textContent = `${minutes} minute guided meditation`;
+            document.getElementById('player-icon').innerHTML = `<span style="font-size: 80px;">${emoji}</span>`;
+            timeLeft = minutes * 60;
+            totalTime = timeLeft;
+            updateTimerDisplay();
+            document.getElementById('play-button').style.display = 'block';
+            isPlaying = false;
+            document.querySelector('#play-button i').className = 'fas fa-play';
+            if (timer) clearInterval(timer);
+        }
+
+        function togglePlay() {
+            isPlaying = !isPlaying;
+            const icon = document.querySelector('#play-button i');
+            
+            if (isPlaying) {
+                icon.className = 'fas fa-pause';
+                timer = setInterval(() => {
+                    timeLeft--;
+                    updateTimerDisplay();
+                    if (timeLeft <= 0) {
+                        clearInterval(timer);
+                        completeSession();
+                    }
+                }, 1000);
+            } else {
+                icon.className = 'fas fa-play';
+                clearInterval(timer);
+            }
+        }
+
+        function updateTimerDisplay() {
+            const mins = Math.floor(timeLeft / 60);
+            const secs = timeLeft % 60;
+            document.getElementById('timer').textContent = 
+                `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function completeSession() {
+            alert('🧘 Session Complete!\n\n+30 points earned\n\nGreat job taking time for yourself! 🌟');
+            isPlaying = false;
+            document.querySelector('#play-button i').className = 'fas fa-play';
+        }
+    </script>
+</body>
+</html>
