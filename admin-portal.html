@@ -3,40 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Literature Library - Own Today</title>
-    <link rel="stylesheet" href="css/white-label.css">
-    <link rel="stylesheet" href="css/mobile-nav.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <title>Admin Portal - Own Today</title>
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        .literature-page {
+        :root {
+            --admin-primary: #1a1a2e;
+            --admin-secondary: #16213e;
+            --admin-accent: #0f3460;
+            --admin-highlight: #e94560;
+            --success-green: #10b981;
+            --warning-orange: #f59e0b;
+            --danger-red: #ef4444;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--admin-primary) 0%, var(--admin-secondary) 100%);
+            min-height: 100vh;
+            color: #fff;
+        }
+
+        .admin-container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 20px 20px 100px;
+            padding: 20px;
         }
 
-        .page-header {
+        /* Hero Section */
+        .admin-hero {
+            background: linear-gradient(135deg, var(--admin-accent) 0%, var(--admin-highlight) 100%);
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+
+        .admin-hero h1 {
+            font-size: 2.5rem;
+            margin: 0 0 10px 0;
             display: flex;
             align-items: center;
-            margin-bottom: 30px;
+            gap: 15px;
         }
 
-        .back-button {
-            background: none;
-            border: none;
-            font-size: 24px;
-            color: var(--org-primary, #667eea);
-            cursor: pointer;
-            margin-right: 15px;
-            padding: 8px;
+        .admin-hero .subtitle {
+            opacity: 0.9;
+            font-size: 1.1rem;
         }
 
-        .page-header h1 {
-            font-size: 28px;
-            color: #333;
-            margin: 0;
-        }
-
-        .program-tabs {
+        /* Navigation Tabs */
+        .admin-nav {
             display: flex;
             gap: 10px;
             margin-bottom: 30px;
@@ -44,440 +60,1370 @@
             padding-bottom: 10px;
         }
 
-        .program-tab {
-            background: white;
-            border: 2px solid #e9ecef;
+        .admin-nav-btn {
+            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.2);
+            color: #fff;
             padding: 12px 24px;
-            border-radius: 25px;
+            border-radius: 10px;
             cursor: pointer;
-            font-size: 15px;
-            font-weight: 500;
-            color: #495057;
-            transition: all 0.3s;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
             white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .program-tab.active {
-            background: var(--org-primary, #667eea);
-            color: white;
-            border-color: var(--org-primary, #667eea);
+        .admin-nav-btn:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
         }
 
-        .program-tab:hover {
-            border-color: var(--org-primary, #667eea);
+        .admin-nav-btn.active {
+            background: var(--admin-highlight);
+            border-color: var(--admin-highlight);
+            box-shadow: 0 4px 12px rgba(233, 69, 96, 0.4);
         }
 
-        .books-grid {
+        /* Section Containers */
+        .admin-section {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .admin-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .section-card h2 {
+            font-size: 1.8rem;
+            margin: 0 0 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #fff;
+        }
+
+        .section-card h3 {
+            font-size: 1.3rem;
+            margin: 25px 0 15px 0;
+            color: var(--admin-highlight);
+        }
+
+        /* Form Styles */
+        .form-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 25px;
-        }
-
-        .book-card {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            transition: transform 0.2s, box-shadow 0.2s;
-            position: relative;
-        }
-
-        .book-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
-        }
-
-        .program-badge {
-            display: inline-block;
-            padding: 6px 12px;
-            border-radius: 15px;
-            font-size: 12px;
-            font-weight: 600;
-            margin-bottom: 15px;
-        }
-
-        .program-badge.aa {
-            background: #e7f5ff;
-            color: #1971c2;
-        }
-
-        .program-badge.na {
-            background: #d3f9d8;
-            color: #2f9e44;
-        }
-
-        .program-badge.smart {
-            background: #fff3bf;
-            color: #f59f00;
-        }
-
-        .program-badge.lifering {
-            background: #f3f0ff;
-            color: #6741d9;
-        }
-
-        .program-badge.celebrate {
-            background: #ffe3e3;
-            color: #c92a2a;
-        }
-
-        .featured-badge {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: linear-gradient(135deg, #ffd93d 0%, #ff9100 100%);
-            color: white;
-            padding: 6px 12px;
-            border-radius: 15px;
-            font-size: 11px;
-            font-weight: 700;
-        }
-
-        .purchase-badge {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: #10b981;
-            color: white;
-            padding: 6px 12px;
-            border-radius: 15px;
-            font-size: 11px;
-            font-weight: 700;
-        }
-
-        .book-title {
-            font-size: 20px;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 10px;
-            line-height: 1.3;
-        }
-
-        .book-category {
-            color: #868e96;
-            font-size: 13px;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .book-description {
-            color: #666;
-            font-size: 14px;
-            line-height: 1.6;
-            margin-bottom: 15px;
-        }
-
-        .book-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 15px;
-        }
-
-        .tag {
-            background: #f8f9fa;
-            color: #495057;
-            padding: 5px 12px;
-            border-radius: 15px;
-            font-size: 12px;
-        }
-
-        .book-actions {
-            display: flex;
-            gap: 10px;
-        }
-
-        .btn-primary {
-            flex: 1;
-            background: var(--org-primary, #667eea);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: all 0.2s;
-        }
-
-        .btn-primary:hover {
-            background: var(--org-secondary, #764ba2);
-        }
-
-        .btn-purchase {
-            flex: 1;
-            background: #10b981;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: all 0.2s;
-        }
-
-        .btn-purchase:hover {
-            background: #059669;
-        }
-
-        .btn-save {
-            background: #f8f9fa;
-            color: #495057;
-            border: 2px solid #e9ecef;
-            padding: 10px 16px;
-            border-radius: 8px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .btn-save:hover {
-            border-color: var(--org-primary, #667eea);
-            color: var(--org-primary, #667eea);
-        }
-
-        .btn-save.saved {
-            background: var(--org-primary, #667eea);
-            color: white;
-            border-color: var(--org-primary, #667eea);
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .empty-state i {
-            font-size: 64px;
-            color: #ced4da;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
             margin-bottom: 20px;
         }
 
-        .empty-state h3 {
-            color: #495057;
-            margin-bottom: 10px;
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
 
-        .empty-state p {
-            color: #868e96;
+        .form-group label {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.9);
         }
 
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--admin-highlight);
+            background: rgba(255,255,255,0.15);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* Color Picker */
+        .color-picker-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .color-preview {
+            width: 60px;
+            height: 40px;
+            border-radius: 8px;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        input[type="color"] {
+            width: 60px;
+            height: 40px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        /* Logo Upload */
+        .logo-upload-area {
+            background: rgba(255,255,255,0.05);
+            border: 2px dashed rgba(255,255,255,0.3);
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logo-upload-area:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: var(--admin-highlight);
+        }
+
+        .logo-preview {
+            max-width: 200px;
+            max-height: 100px;
+            margin: 10px auto;
+            display: block;
+            border-radius: 8px;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: var(--admin-highlight);
+            color: #fff;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary:hover {
+            background: #d63d54;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(233, 69, 96, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .btn-success {
+            background: var(--success-green);
+            color: #fff;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .btn-danger {
+            background: var(--danger-red);
+            color: #fff;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* Tables */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .data-table thead {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .data-table th {
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid rgba(255,255,255,0.2);
+        }
+
+        .data-table td {
+            padding: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .data-table tbody tr:hover {
+            background: rgba(255,255,255,0.05);
+        }
+
+        /* Status Badges */
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-active { background: var(--success-green); color: #fff; }
+        .status-pending { background: var(--warning-orange); color: #fff; }
+        .status-at-risk { background: var(--danger-red); color: #fff; }
+        .status-inactive { background: rgba(255,255,255,0.2); color: #fff; }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stat-card .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--admin-highlight);
+            margin: 10px 0;
+        }
+
+        .stat-card .stat-label {
+            font-size: 0.95rem;
+            opacity: 0.8;
+        }
+
+        /* Point Value Editor */
+        .point-editor {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .point-item {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .point-item label {
+            font-weight: 600;
+        }
+
+        .point-item input {
+            width: 80px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            padding: 8px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--admin-secondary);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 16px;
+            padding: 30px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: #fff;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .modal-close:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* Action Buttons in Tables */
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-buttons button {
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .btn-edit {
+            background: rgba(59, 130, 246, 0.8);
+            color: #fff;
+        }
+
+        .btn-edit:hover {
+            background: rgb(59, 130, 246);
+        }
+
+        .btn-delete {
+            background: rgba(239, 68, 68, 0.8);
+            color: #fff;
+        }
+
+        .btn-delete:hover {
+            background: rgb(239, 68, 68);
+        }
+
+        /* Geo-Fence Settings */
+        .geo-settings {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .geo-settings .range-input {
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        .range-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--admin-highlight);
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        /* Success Message */
+        .success-message {
+            background: var(--success-green);
+            color: #fff;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+            align-items: center;
+            gap: 10px;
+            animation: slideDown 0.3s ease;
+        }
+
+        .success-message.show {
+            display: flex;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
-            .literature-page {
-                padding: 15px 15px 100px;
+            .admin-hero h1 {
+                font-size: 1.8rem;
             }
 
-            .page-header h1 {
-                font-size: 24px;
-            }
-
-            .books-grid {
+            .form-grid {
                 grid-template-columns: 1fr;
             }
 
-            .program-tabs {
-                flex-wrap: nowrap;
-                overflow-x: scroll;
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-nav {
+                flex-wrap: wrap;
+            }
+
+            .data-table {
+                font-size: 0.85rem;
+            }
+
+            .data-table th,
+            .data-table td {
+                padding: 8px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="literature-page">
-        <div class="page-header">
-            <button class="back-button" onclick="window.location.href='client-portal.html'">
-                <i class="fas fa-arrow-left"></i>
-            </button>
-            <h1>Literature Library</h1>
+    <div class="admin-container">
+        <!-- Hero Section -->
+        <div class="admin-hero">
+            <h1>
+                <i class="fas fa-shield-alt"></i>
+                Admin Portal
+            </h1>
+            <p class="subtitle">Complete control center for your Own Today platform</p>
         </div>
 
-        <div class="program-tabs">
-            <button class="program-tab active" onclick="filterByProgram('all', event)">
-                <i class="fas fa-th"></i> All Programs
+        <!-- Success Message -->
+        <div class="success-message" id="successMessage">
+            <i class="fas fa-check-circle"></i>
+            <span id="successText">Changes saved successfully!</span>
+        </div>
+
+        <!-- Navigation -->
+        <div class="admin-nav">
+            <button class="admin-nav-btn active" onclick="showSection('branding')">
+                <i class="fas fa-palette"></i> Branding
             </button>
-            <button class="program-tab" onclick="filterByProgram('AA', event)">
-                AA (Alcoholics Anonymous)
+            <button class="admin-nav-btn" onclick="showSection('meetings')">
+                <i class="fas fa-calendar-alt"></i> Meetings
             </button>
-            <button class="program-tab" onclick="filterByProgram('NA', event)">
-                NA (Narcotics Anonymous)
+            <button class="admin-nav-btn" onclick="showSection('rewards')">
+                <i class="fas fa-gift"></i> Rewards
             </button>
-            <button class="program-tab" onclick="filterByProgram('SMART Recovery', event)">
-                SMART Recovery
+            <button class="admin-nav-btn" onclick="showSection('users')">
+                <i class="fas fa-users"></i> Users
             </button>
-            <button class="program-tab" onclick="filterByProgram('LifeRing', event)">
-                LifeRing
+            <button class="admin-nav-btn" onclick="showSection('reports')">
+                <i class="fas fa-chart-line"></i> Reports
             </button>
-            <button class="program-tab" onclick="filterByProgram('Celebrate Recovery', event)">
-                Celebrate Recovery
+            <button class="admin-nav-btn" onclick="showSection('settings')">
+                <i class="fas fa-cog"></i> Settings
             </button>
         </div>
 
-        <div class="books-grid" id="booksGrid">
-            <!-- Books will be populated by JavaScript -->
+        <!-- Branding Section -->
+        <div id="branding" class="admin-section active">
+            <div class="section-card">
+                <h2><i class="fas fa-palette"></i> White-Label Branding</h2>
+                <p>Customize the platform to match your organization's brand identity.</p>
+
+                <h3>Organization Details</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Organization Name</label>
+                        <input type="text" id="orgName" value="Hope Recovery Center" placeholder="Enter organization name">
+                    </div>
+                    <div class="form-group">
+                        <label>Tagline</label>
+                        <input type="text" id="orgTagline" value="Your journey to recovery starts here" placeholder="Enter tagline">
+                    </div>
+                    <div class="form-group">
+                        <label>Contact Email</label>
+                        <input type="email" id="orgEmail" value="contact@hoperecovery.org" placeholder="contact@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input type="tel" id="orgPhone" value="(555) 123-4567" placeholder="(555) 123-4567">
+                    </div>
+                </div>
+
+                <h3>Logo Upload</h3>
+                <div class="logo-upload-area" onclick="document.getElementById('logoInput').click()">
+                    <i class="fas fa-cloud-upload-alt" style="font-size: 3rem; color: var(--admin-highlight); margin-bottom: 10px;"></i>
+                    <p><strong>Click to upload your logo</strong></p>
+                    <p style="font-size: 0.9rem; opacity: 0.7;">PNG, JPG, or SVG • Max 2MB • Recommended: 400x100px</p>
+                    <img id="logoPreview" class="logo-preview" style="display: none;">
+                    <input type="file" id="logoInput" accept="image/*" style="display: none;" onchange="previewLogo(this)">
+                </div>
+
+                <h3>Color Scheme</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Primary Color</label>
+                        <div class="color-picker-group">
+                            <input type="color" id="primaryColor" value="#6366f1" onchange="updateColorPreview('primary', this.value)">
+                            <div class="color-preview" id="primaryPreview" style="background: #6366f1;"></div>
+                            <input type="text" id="primaryColorHex" value="#6366f1" style="flex: 1;">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Secondary Color</label>
+                        <div class="color-picker-group">
+                            <input type="color" id="secondaryColor" value="#8b5cf6" onchange="updateColorPreview('secondary', this.value)">
+                            <div class="color-preview" id="secondaryPreview" style="background: #8b5cf6;"></div>
+                            <input type="text" id="secondaryColorHex" value="#8b5cf6" style="flex: 1;">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Accent Color</label>
+                        <div class="color-picker-group">
+                            <input type="color" id="accentColor" value="#10b981" onchange="updateColorPreview('accent', this.value)">
+                            <div class="color-preview" id="accentPreview" style="background: #10b981;"></div>
+                            <input type="text" id="accentColorHex" value="#10b981" style="flex: 1;">
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn-primary" onclick="saveBranding()">
+                    <i class="fas fa-save"></i> Save Branding Changes
+                </button>
+            </div>
+        </div>
+
+        <!-- Meetings Section -->
+        <div id="meetings" class="admin-section">
+            <div class="section-card">
+                <h2><i class="fas fa-calendar-alt"></i> Meeting Management</h2>
+                <p>Add, edit, and manage recovery meetings available to your clients.</p>
+
+                <button class="btn-primary" onclick="openMeetingModal()">
+                    <i class="fas fa-plus"></i> Add New Meeting
+                </button>
+
+                <h3>Geo-Fence Settings</h3>
+                <div class="geo-settings">
+                    <label><strong>Auto-Filter Meetings Within Radius</strong></label>
+                    <input type="range" class="range-input" id="geoRadius" min="1" max="100" value="25" oninput="updateGeoRadius(this.value)">
+                    <div class="range-value" id="geoRadiusValue">25 miles</div>
+                    <p style="opacity: 0.8; font-size: 0.9rem;">Only show meetings within this distance from your organization's location</p>
+                    
+                    <div class="form-group" style="margin-top: 20px;">
+                        <label>Organization Address</label>
+                        <input type="text" id="orgAddress" value="123 Recovery Lane, Hope City, ST 12345" placeholder="Enter your address">
+                    </div>
+                </div>
+
+                <h3>Your Meetings</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Meeting Name</th>
+                            <th>Type</th>
+                            <th>Day/Time</th>
+                            <th>Location</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="meetingsTable">
+                        <tr>
+                            <td>Hope Recovery Center</td>
+                            <td><span class="status-badge" style="background: #3b82f6;">AA</span></td>
+                            <td>Mon, Wed, Fri • 6:00 PM</td>
+                            <td>123 Main St</td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn-edit"><i class="fas fa-edit"></i> Edit</button>
+                                    <button class="btn-delete"><i class="fas fa-trash"></i> Delete</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Downtown NA Meeting</td>
+                            <td><span class="status-badge" style="background: #10b981;">NA</span></td>
+                            <td>Tue, Thu • 7:00 PM</td>
+                            <td>456 Center Ave</td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn-edit"><i class="fas fa-edit"></i> Edit</button>
+                                    <button class="btn-delete"><i class="fas fa-trash"></i> Delete</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>SMART Recovery Group</td>
+                            <td><span class="status-badge" style="background: #f59e0b;">SMART</span></td>
+                            <td>Saturday • 10:00 AM</td>
+                            <td>789 Wellness Blvd</td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn-edit"><i class="fas fa-edit"></i> Edit</button>
+                                    <button class="btn-delete"><i class="fas fa-trash"></i> Delete</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Rewards Section -->
+        <div id="rewards" class="admin-section">
+            <div class="section-card">
+                <h2><i class="fas fa-gift"></i> Rewards Management</h2>
+                <p>Create custom rewards and manage redemption requests.</p>
+
+                <button class="btn-primary" onclick="openRewardModal()">
+                    <i class="fas fa-plus"></i> Create New Reward
+                </button>
+
+                <h3>Active Rewards</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Reward Name</th>
+                            <th>Points Required</th>
+                            <th>Category</th>
+                            <th>Available</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="rewardsTable">
+                        <tr>
+                            <td>🎬 Movie Tickets (2)</td>
+                            <td><strong>500 pts</strong></td>
+                            <td>Entertainment</td>
+                            <td><span class="status-badge status-active">Yes</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn-edit"><i class="fas fa-edit"></i> Edit</button>
+                                    <button class="btn-delete"><i class="fas fa-trash"></i> Delete</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>☕ Coffee Shop Gift Card ($10)</td>
+                            <td><strong>300 pts</strong></td>
+                            <td>Food & Beverage</td>
+                            <td><span class="status-badge status-active">Yes</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn-edit"><i class="fas fa-edit"></i> Edit</button>
+                                    <button class="btn-delete"><i class="fas fa-trash"></i> Delete</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>🎧 Wireless Earbuds</td>
+                            <td><strong>2000 pts</strong></td>
+                            <td>Electronics</td>
+                            <td><span class="status-badge status-active">Yes</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn-edit"><i class="fas fa-edit"></i> Edit</button>
+                                    <button class="btn-delete"><i class="fas fa-trash"></i> Delete</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Pending Redemptions</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Client Name</th>
+                            <th>Reward</th>
+                            <th>Points</th>
+                            <th>Date Requested</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="redemptionsTable">
+                        <tr>
+                            <td>Sarah Johnson</td>
+                            <td>Movie Tickets (2)</td>
+                            <td>500 pts</td>
+                            <td>June 10, 2026</td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn-success" onclick="approveRedemption(1)"><i class="fas fa-check"></i> Approve</button>
+                                    <button class="btn-danger" onclick="denyRedemption(1)"><i class="fas fa-times"></i> Deny</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Michael Chen</td>
+                            <td>Coffee Shop Gift Card ($10)</td>
+                            <td>300 pts</td>
+                            <td>June 11, 2026</td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn-success" onclick="approveRedemption(2)"><i class="fas fa-check"></i> Approve</button>
+                                    <button class="btn-danger" onclick="denyRedemption(2)"><i class="fas fa-times"></i> Deny</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Users Section -->
+        <div id="users" class="admin-section">
+            <div class="section-card">
+                <h2><i class="fas fa-users"></i> User Management</h2>
+                <p>Add and manage staff, providers, and administrators.</p>
+
+                <button class="btn-primary" onclick="openUserModal()">
+                    <i class="fas fa-user-plus"></i> Add New User
+                </button>
+
+                <h3>Active Users</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTable">
+                        <tr>
+                            <td>Dr. Emily Richards</td>
+                            <td>emily.richards@hoperecovery.org</td>
+                            <td><span class="status-badge" style="background: #8b5cf6;">Provider</span></td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn-edit"><i class="fas fa-edit"></i> Edit</button>
+                                    <button class="btn-delete"><i class="fas fa-user-times"></i> Deactivate</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>James Wilson</td>
+                            <td>james.wilson@hoperecovery.org</td>
+                            <td><span class="status-badge" style="background: #3b82f6;">Staff</span></td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn-edit"><i class="fas fa-edit"></i> Edit</button>
+                                    <button class="btn-delete"><i class="fas fa-user-times"></i> Deactivate</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Amanda Foster</td>
+                            <td>amanda.foster@hoperecovery.org</td>
+                            <td><span class="status-badge" style="background: #ef4444;">Admin</span></td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn-edit"><i class="fas fa-edit"></i> Edit</button>
+                                    <button class="btn-delete"><i class="fas fa-user-times"></i> Deactivate</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Reports Section -->
+        <div id="reports" class="admin-section">
+            <div class="section-card">
+                <h2><i class="fas fa-chart-line"></i> Client Reports & Analytics</h2>
+                <p>Monitor client progress and identify those who may need additional support.</p>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <i class="fas fa-users" style="font-size: 2rem; color: var(--admin-highlight);"></i>
+                        <div class="stat-value">147</div>
+                        <div class="stat-label">Active Clients</div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-exclamation-triangle" style="font-size: 2rem; color: #f59e0b;"></i>
+                        <div class="stat-value">8</div>
+                        <div class="stat-label">At-Risk Clients</div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-calendar-check" style="font-size: 2rem; color: var(--success-green);"></i>
+                        <div class="stat-value">89%</div>
+                        <div class="stat-label">Completion Rate</div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-trophy" style="font-size: 2rem; color: #6366f1;"></i>
+                        <div class="stat-value">342</div>
+                        <div class="stat-label">Meetings Logged</div>
+                    </div>
+                </div>
+
+                <h3>At-Risk Clients</h3>
+                <p style="opacity: 0.8; margin-bottom: 15px;">Clients who haven't logged activity in 7+ days or show declining engagement</p>
+                
+                <button class="btn-secondary" onclick="exportReport()">
+                    <i class="fas fa-download"></i> Export Report (CSV)
+                </button>
+
+                <table class="data-table" style="margin-top: 20px;">
+                    <thead>
+                        <tr>
+                            <th>Client Name</th>
+                            <th>Last Activity</th>
+                            <th>Days Clean</th>
+                            <th>Risk Level</th>
+                            <th>Assigned Provider</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="atRiskTable">
+                        <tr>
+                            <td>John Martinez</td>
+                            <td>9 days ago</td>
+                            <td>45 days</td>
+                            <td><span class="status-badge" style="background: #f59e0b;">Medium</span></td>
+                            <td>Dr. Emily Richards</td>
+                            <td>
+                                <button class="btn-secondary" onclick="viewClientDetails(1)">
+                                    <i class="fas fa-eye"></i> View Details
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Lisa Thompson</td>
+                            <td>12 days ago</td>
+                            <td>23 days</td>
+                            <td><span class="status-badge status-at-risk">High</span></td>
+                            <td>Dr. Emily Richards</td>
+                            <td>
+                                <button class="btn-secondary" onclick="viewClientDetails(2)">
+                                    <i class="fas fa-eye"></i> View Details
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>David Park</td>
+                            <td>8 days ago</td>
+                            <td>67 days</td>
+                            <td><span class="status-badge" style="background: #f59e0b;">Medium</span></td>
+                            <td>Dr. Sarah Johnson</td>
+                            <td>
+                                <button class="btn-secondary" onclick="viewClientDetails(3)">
+                                    <i class="fas fa-eye"></i> View Details
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Settings Section -->
+        <div id="settings" class="admin-section">
+            <div class="section-card">
+                <h2><i class="fas fa-cog"></i> System Settings</h2>
+                <p>Configure platform features and point values.</p>
+
+                <h3>Point Values Configuration</h3>
+                <p style="opacity: 0.8; margin-bottom: 15px;">Customize how many points clients earn for each activity</p>
+                
+                <div class="point-editor">
+                    <div class="point-item">
+                        <label><i class="fas fa-calendar-check"></i> Attend Meeting</label>
+                        <input type="number" value="100" min="0">
+                    </div>
+                    <div class="point-item">
+                        <label><i class="fas fa-book"></i> Journal Entry</label>
+                        <input type="number" value="50" min="0">
+                    </div>
+                    <div class="point-item">
+                        <label><i class="fas fa-clipboard-check"></i> Check-In</label>
+                        <input type="number" value="50" min="0">
+                    </div>
+                    <div class="point-item">
+                        <label><i class="fas fa-bullseye"></i> Complete Goal</label>
+                        <input type="number" value="150" min="0">
+                    </div>
+                    <div class="point-item">
+                        <label><i class="fas fa-om"></i> Meditation Session</label>
+                        <input type="number" value="30" min="0">
+                    </div>
+                    <div class="point-item">
+                        <label><i class="fas fa-fire"></i> 7-Day Streak</label>
+                        <input type="number" value="200" min="0">
+                    </div>
+                </div>
+
+                <h3>Feature Toggles</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label style="display: flex; align-items: center; gap: 10px;">
+                            <input type="checkbox" checked style="width: auto;">
+                            Enable Rewards System
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label style="display: flex; align-items: center; gap: 10px;">
+                            <input type="checkbox" checked style="width: auto;">
+                            Enable Points & Streaks
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label style="display: flex; align-items: center; gap: 10px;">
+                            <input type="checkbox" checked style="width: auto;">
+                            Enable Alumni Portal
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label style="display: flex; align-items: center; gap: 10px;">
+                            <input type="checkbox" checked style="width: auto;">
+                            Enable Tablet Check-In
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label style="display: flex; align-items: center; gap: 10px;">
+                            <input type="checkbox" checked style="width: auto;">
+                            Enable Meditation Tools
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label style="display: flex; align-items: center; gap: 10px;">
+                            <input type="checkbox" checked style="width: auto;">
+                            Enable Literature Library
+                        </label>
+                    </div>
+                </div>
+
+                <h3>Notification Settings</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label style="display: flex; align-items: center; gap: 10px;">
+                            <input type="checkbox" checked style="width: auto;">
+                            Email alerts for at-risk clients
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label style="display: flex; align-items: center; gap: 10px;">
+                            <input type="checkbox" checked style="width: auto;">
+                            Daily activity summary emails
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label style="display: flex; align-items: center; gap: 10px;">
+                            <input type="checkbox" checked style="width: auto;">
+                            Weekly engagement reports
+                        </label>
+                    </div>
+                </div>
+
+                <button class="btn-primary" onclick="saveSettings()">
+                    <i class="fas fa-save"></i> Save Settings
+                </button>
+            </div>
+        </div>
+
+        <!-- Back to Portal Button -->
+        <div style="text-align: center; margin: 30px 0;">
+            <a href="client-portal.html" class="btn-secondary" style="display: inline-block; text-decoration: none; padding: 12px 32px;">
+                <i class="fas fa-arrow-left"></i> Back to Client Portal
+            </a>
         </div>
     </div>
 
-    <!-- Mobile Navigation -->
-    <div id="mobile-nav"></div>
+    <!-- Meeting Modal -->
+    <div id="meetingModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeMeetingModal()">×</button>
+            <h2><i class="fas fa-calendar-plus"></i> Add New Meeting</h2>
+            
+            <div class="form-group">
+                <label>Meeting Name</label>
+                <input type="text" placeholder="e.g., Evening Hope Group">
+            </div>
+            
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Meeting Type</label>
+                    <select>
+                        <option>AA - Alcoholics Anonymous</option>
+                        <option>NA - Narcotics Anonymous</option>
+                        <option>SMART Recovery</option>
+                        <option>LifeRing</option>
+                        <option>Celebrate Recovery</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Meeting Format</label>
+                    <select>
+                        <option>Open Meeting</option>
+                        <option>Closed Meeting</option>
+                        <option>Discussion</option>
+                        <option>Speaker Meeting</option>
+                        <option>Step Study</option>
+                    </select>
+                </div>
+            </div>
 
-    <!-- Scripts -->
-    <script src="js/config.js"></script>
-    <script src="js/theming-engine.js"></script>
-    <script src="js/mobile-nav.js"></script>
+            <div class="form-group">
+                <label>Address</label>
+                <input type="text" placeholder="123 Main Street, City, State ZIP">
+            </div>
 
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Day(s) of Week</label>
+                    <select multiple style="height: 120px;">
+                        <option>Monday</option>
+                        <option>Tuesday</option>
+                        <option>Wednesday</option>
+                        <option>Thursday</option>
+                        <option>Friday</option>
+                        <option>Saturday</option>
+                        <option>Sunday</option>
+                    </select>
+                    <small style="opacity: 0.7;">Hold Ctrl/Cmd to select multiple days</small>
+                </div>
+                <div class="form-group">
+                    <label>Time</label>
+                    <input type="time" value="18:00">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Description</label>
+                <textarea placeholder="Enter meeting details, special notes, etc."></textarea>
+            </div>
+
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button class="btn-primary" onclick="addMeeting()">
+                    <i class="fas fa-plus"></i> Add Meeting
+                </button>
+                <button class="btn-secondary" onclick="closeMeetingModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reward Modal -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeRewardModal()">×</button>
+            <h2><i class="fas fa-gift"></i> Create New Reward</h2>
+            
+            <div class="form-group">
+                <label>Reward Name</label>
+                <input type="text" placeholder="e.g., Coffee Shop Gift Card">
+            </div>
+
+            <div class="form-group">
+                <label>Emoji/Icon (optional)</label>
+                <input type="text" placeholder="e.g., ☕ 🎬 🎧" maxlength="2">
+            </div>
+            
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Points Required</label>
+                    <input type="number" placeholder="e.g., 300" min="0">
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <select>
+                        <option>Food & Beverage</option>
+                        <option>Entertainment</option>
+                        <option>Electronics</option>
+                        <option>Personal Care</option>
+                        <option>Activities</option>
+                        <option>Gift Cards</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Description</label>
+                <textarea placeholder="Describe the reward and any terms/conditions"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label style="display: flex; align-items: center; gap: 10px;">
+                    <input type="checkbox" checked style="width: auto;">
+                    Available for redemption
+                </label>
+            </div>
+
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button class="btn-primary" onclick="addReward()">
+                    <i class="fas fa-plus"></i> Create Reward
+                </button>
+                <button class="btn-secondary" onclick="closeRewardModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Modal -->
+    <div id="userModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeUserModal()">×</button>
+            <h2><i class="fas fa-user-plus"></i> Add New User</h2>
+            
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>First Name</label>
+                    <input type="text" placeholder="John">
+                </div>
+                <div class="form-group">
+                    <label>Last Name</label>
+                    <input type="text" placeholder="Smith">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" placeholder="john.smith@example.com">
+            </div>
+            
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Role</label>
+                    <select id="userRole">
+                        <option value="staff">Staff</option>
+                        <option value="provider">Provider</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Phone (optional)</label>
+                    <input type="tel" placeholder="(555) 123-4567">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Temporary Password</label>
+                <input type="text" value="Welcome2024!" placeholder="User will be prompted to change">
+                <small style="opacity: 0.7;">User will be required to change password on first login</small>
+            </div>
+
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button class="btn-primary" onclick="addUser()">
+                    <i class="fas fa-user-plus"></i> Add User
+                </button>
+                <button class="btn-secondary" onclick="closeUserModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth-helper.js"></script>
     <script>
-        // Initialize theming
-        window.themingEngine.init();
-
-        // Initialize mobile nav
-        if (window.mobileNav) {
-            window.mobileNav.init();
+        // Section Navigation
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.admin-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active state from all nav buttons
+            document.querySelectorAll('.admin-nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Add active state to clicked button
+            event.target.classList.add('active');
         }
 
-        // Demo literature data for all 5 programs
-        const DEMO_LITERATURE = [
-            // AA Literature (Free Online Access at AA.org)
-            {id: '1', title: 'The Big Book - Alcoholics Anonymous', program: 'AA', category: 'Core Text', description: 'The basic text of Alcoholics Anonymous, containing personal stories and the 12 Steps. Read online for free at AA.org.', file_url: 'https://www.aa.org/the-big-book', is_purchase: false, tags: ['12 Steps', 'Recovery', 'Sobriety', 'Core Text', 'Free'], difficulty_level: 'All Levels', featured: true},
-            {id: '2', title: 'Twelve Steps and Twelve Traditions', program: 'AA', category: 'Core Text', description: 'Detailed explanations of the 12 Steps and 12 Traditions of AA. Read online for free at AA.org.', file_url: 'https://www.aa.org/twelve-and-twelve', is_purchase: false, tags: ['12 Steps', '12 Traditions', 'Spiritual', 'Free'], difficulty_level: 'Intermediate', featured: true},
-            {id: '3', title: 'Living Sober', program: 'AA', category: 'Practical Guide', description: 'Practical tips for staying sober day by day. Read online for free at AA.org.', file_url: 'https://www.aa.org/living-sober', is_purchase: false, tags: ['Daily Living', 'Practical Tips', 'Sobriety', 'Free'], difficulty_level: 'Beginner', featured: false},
-            {id: '4', title: 'Daily Reflections', program: 'AA', category: 'Daily Reading', description: 'A book of reflections by AA members for AA members. Read online for free at AA.org.', file_url: 'https://www.aa.org/daily-reflections', is_purchase: false, tags: ['Daily', 'Meditation', 'Reflection', 'Free'], difficulty_level: 'All Levels', featured: false},
-            {id: '5', title: 'Is AA For You? - Self-Assessment', program: 'AA', category: 'Free PDF', description: '12 questions to help determine if AA is right for you. Free self-assessment at AA.org.', file_url: 'https://www.aa.org/self-assessment', is_purchase: false, tags: ['Newcomer', 'Self-Assessment', 'Free'], difficulty_level: 'Beginner', featured: true},
-            {id: '6', title: 'AA for the Older Alcoholic', program: 'AA', category: 'Free PDF', description: 'Information for older adults in recovery. Read online at AA.org.', file_url: 'https://www.aa.org/aa-older-alcoholic', is_purchase: false, tags: ['Seniors', 'Age-Specific', 'Free'], difficulty_level: 'All Levels', featured: false},
-            
-            // NA Literature (Free PDFs Available)
-            {id: '11', title: 'Narcotics Anonymous (Basic Text)', program: 'NA', category: 'Core Text', description: 'The basic text of Narcotics Anonymous containing the 12 Steps adapted for addiction. Free PDF from NA.org.', file_url: 'https://www.na.org/', is_purchase: false, tags: ['12 Steps', 'Recovery', 'Addiction', 'Core Text', 'Free'], difficulty_level: 'All Levels', featured: true},
-            {id: '12', title: 'Just for Today', program: 'NA', category: 'Daily Reading', description: 'Daily meditation book with readings for each day of the year. Access daily readings online at NA.org.', file_url: 'https://www.na.org/', is_purchase: false, tags: ['Daily', 'Meditation', 'Inspiration', 'Free'], difficulty_level: 'All Levels', featured: true},
-            {id: '13', title: 'NA White Booklet', program: 'NA', category: 'Free PDF', description: 'Introduction to Narcotics Anonymous for newcomers. Free PDF download from NA.org.', file_url: 'https://www.na.org/', is_purchase: false, tags: ['Newcomer', 'Introduction', 'Basics', 'Free'], difficulty_level: 'Beginner', featured: true},
-            {id: '14', title: 'Information Pamphlet #1', program: 'NA', category: 'Free PDF', description: 'Who, What, How, and Why - Introduction to NA. Free PDF download.', file_url: 'https://www.na.org/', is_purchase: false, tags: ['Newcomer', 'Introduction', 'Free'], difficulty_level: 'Beginner', featured: false},
-            {id: '15', title: 'Sponsorship (IP #11)', program: 'NA', category: 'Free PDF', description: 'Information about sponsorship in NA. Free PDF download.', file_url: 'https://www.na.org/', is_purchase: false, tags: ['Sponsorship', 'Support', 'Guidance', 'Free'], difficulty_level: 'All Levels', featured: false},
-            
-            // SMART Recovery Literature (Free Resources)
-            {id: '21', title: 'SMART Recovery Handbook', program: 'SMART Recovery', category: 'Core Text', description: 'The official handbook covering all 4 Points of SMART Recovery. Available for purchase with free online resources.', file_url: 'https://www.smartrecovery.org/smart-recovery-toolbox/', is_purchase: true, tags: ['4-Point Program', 'CBT', 'Self-Management'], difficulty_level: 'All Levels', featured: true},
-            {id: '22', title: 'SMART Recovery Toolbox', program: 'SMART Recovery', category: 'Free PDF', description: 'Collection of cognitive behavioral tools and exercises. Free access online.', file_url: 'https://www.smartrecovery.org/smart-recovery-toolbox/', is_purchase: false, tags: ['Tools', 'Exercises', 'CBT', 'Worksheets', 'Free'], difficulty_level: 'All Levels', featured: true},
-            {id: '23', title: 'Introduction to SMART Recovery', program: 'SMART Recovery', category: 'Free PDF', description: 'Overview of the SMART Recovery 4-Point Program. Free information online.', file_url: 'https://www.smartrecovery.org/intro/', is_purchase: false, tags: ['Newcomer', 'Introduction', '4-Point Program', 'Free'], difficulty_level: 'Beginner', featured: true},
-            {id: '24', title: 'Cost-Benefit Analysis Worksheet', program: 'SMART Recovery', category: 'Free PDF', description: 'Tool for analyzing pros and cons of substance use. Free worksheet download.', file_url: 'https://www.smartrecovery.org/', is_purchase: false, tags: ['Worksheet', 'Decision Making', 'Tool', 'Free'], difficulty_level: 'Beginner', featured: false},
-            {id: '25', title: 'ABC Tool - REBT Worksheet', program: 'SMART Recovery', category: 'Free PDF', description: 'Cognitive behavioral tool for challenging irrational beliefs. Free worksheet download.', file_url: 'https://www.smartrecovery.org/', is_purchase: false, tags: ['CBT', 'Worksheet', 'Beliefs', 'Thoughts', 'Free'], difficulty_level: 'Intermediate', featured: false},
-            {id: '26', title: 'DISARM - Destructive Images', program: 'SMART Recovery', category: 'Free PDF', description: 'Tool for managing urges and cravings. Free worksheet download.', file_url: 'https://www.smartrecovery.org/disarm/', is_purchase: false, tags: ['Urges', 'Cravings', 'Tool', 'Free'], difficulty_level: 'All Levels', featured: false},
-            
-            // LifeRing Literature (Free Resources)
-            {id: '31', title: 'Recovery by Choice Workbook', program: 'LifeRing', category: 'Workbook', description: 'Self-directed recovery workbook based on the 3-S philosophy. Available for purchase from LifeRing.', file_url: 'https://lifering.org/product/recovery-by-choice-a-workbook/', is_purchase: true, tags: ['Workbook', '3-S Philosophy', 'Self-Help'], difficulty_level: 'All Levels', featured: true},
-            {id: '32', title: 'LifeRing Basic Text', program: 'LifeRing', category: 'Core Text', description: 'Empowering Your Sober Self - The basic text of LifeRing Secular Recovery. Available for purchase.', file_url: 'https://lifering.org/product/empowering-your-sober-self/', is_purchase: true, tags: ['Secular', 'Core Text', 'Philosophy'], difficulty_level: 'Beginner', featured: true},
-            {id: '33', title: 'The 3 S Philosophy', program: 'LifeRing', category: 'Free PDF', description: 'Sobriety, Secularity, and Self-Help explained. Free information online.', file_url: 'https://lifering.org/about-lifering/how-lifering-works/', is_purchase: false, tags: ['Philosophy', 'Secular', 'Self-Help', 'Free'], difficulty_level: 'Beginner', featured: true},
-            {id: '34', title: 'How Was Your Week?', program: 'LifeRing', category: 'Free PDF', description: 'Guide to LifeRing\'s signature meeting format. Free information online.', file_url: 'https://lifering.org/how-lifering-works/how-was-your-week/', is_purchase: false, tags: ['Meeting Format', 'Support', 'Sharing', 'Free'], difficulty_level: 'All Levels', featured: false},
-            {id: '35', title: 'LifeRing Meeting Handbook', program: 'LifeRing', category: 'Free PDF', description: 'Comprehensive guide for running LifeRing meetings. Free PDF download.', file_url: 'https://lifering.org/', is_purchase: false, tags: ['Meeting Guide', 'Leadership', 'Free'], difficulty_level: 'Intermediate', featured: false},
-            
-            // Celebrate Recovery Literature (Christian-Based)
-            {id: '41', title: 'The Journey Begins - Participant Guide 1', program: 'Celebrate Recovery', category: 'Core Text', description: 'Introduction to the Celebrate Recovery 12 Steps and 8 Principles. Available for purchase.', file_url: 'https://www.celebraterecovery.com/crstore', is_purchase: true, tags: ['12 Steps', '8 Principles', 'Christian', 'Introduction'], difficulty_level: 'Beginner', featured: true},
-            {id: '42', title: 'Life\'s Healing Choices', program: 'Celebrate Recovery', category: 'Core Text', description: 'Making healing choices based on Biblical principles. Available for purchase.', file_url: 'https://www.celebraterecovery.com/crstore', is_purchase: true, tags: ['Healing', 'Choices', 'Christian', 'Principles'], difficulty_level: 'All Levels', featured: true},
-            {id: '43', title: 'Taking an Honest Inventory', program: 'Celebrate Recovery', category: 'Workbook', description: 'Participant Guide 2 - Working through Step 4. Available for purchase.', file_url: 'https://www.celebraterecovery.com/crstore', is_purchase: true, tags: ['Step 4', 'Inventory', 'Christian', 'Workbook'], difficulty_level: 'Intermediate', featured: false},
-            {id: '44', title: 'Celebrate Recovery 8 Principles', program: 'Celebrate Recovery', category: 'Free PDF', description: 'Overview of the 8 Recovery Principles based on the Beatitudes. Free information online.', file_url: 'https://www.celebraterecovery.com/resources/cr-tools', is_purchase: false, tags: ['8 Principles', 'Christian', 'Introduction', 'Free'], difficulty_level: 'Beginner', featured: true},
-            {id: '45', title: 'Celebrate Recovery Testimony Guidelines', program: 'Celebrate Recovery', category: 'Free PDF', description: 'Guidelines for sharing your story in Celebrate Recovery. Free resource.', file_url: 'https://www.celebraterecovery.com/resources/cr-tools', is_purchase: false, tags: ['Testimony', 'Sharing', 'Guidelines', 'Free'], difficulty_level: 'All Levels', featured: false}
-        ];
+        // Branding Functions
+        function previewLogo(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const preview = document.getElementById('logoPreview');
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
 
-        let currentProgram = 'all';
-        let allLiterature = DEMO_LITERATURE;
+        function updateColorPreview(type, value) {
+            document.getElementById(type + 'Preview').style.background = value;
+            document.getElementById(type + 'ColorHex').value = value;
+        }
 
-        function renderBooks(program = 'all') {
-            const grid = document.getElementById('booksGrid');
+        function saveBranding() {
+            showSuccessMessage('Branding settings saved successfully!');
+            // In production: save to database via API
+        }
+
+        // Meeting Functions
+        function openMeetingModal() {
+            document.getElementById('meetingModal').classList.add('active');
+        }
+
+        function closeMeetingModal() {
+            document.getElementById('meetingModal').classList.remove('active');
+        }
+
+        function addMeeting() {
+            showSuccessMessage('Meeting added successfully!');
+            closeMeetingModal();
+            // In production: add meeting via API
+        }
+
+        function updateGeoRadius(value) {
+            document.getElementById('geoRadiusValue').textContent = value + ' miles';
+        }
+
+        // Reward Functions
+        function openRewardModal() {
+            document.getElementById('rewardModal').classList.add('active');
+        }
+
+        function closeRewardModal() {
+            document.getElementById('rewardModal').classList.remove('active');
+        }
+
+        function addReward() {
+            showSuccessMessage('Reward created successfully!');
+            closeRewardModal();
+            // In production: add reward via API
+        }
+
+        function approveRedemption(id) {
+            if (confirm('Approve this reward redemption?')) {
+                showSuccessMessage('Redemption approved! Client will be notified.');
+                // In production: update redemption status via API
+            }
+        }
+
+        function denyRedemption(id) {
+            if (confirm('Deny this reward redemption? Points will be returned to the client.')) {
+                showSuccessMessage('Redemption denied. Points have been returned.');
+                // In production: update redemption status via API
+            }
+        }
+
+        // User Functions
+        function openUserModal() {
+            document.getElementById('userModal').classList.add('active');
+        }
+
+        function closeUserModal() {
+            document.getElementById('userModal').classList.remove('active');
+        }
+
+        function addUser() {
+            showSuccessMessage('User added successfully! Welcome email sent.');
+            closeUserModal();
+            // In production: create user via API
+        }
+
+        // Report Functions
+        function exportReport() {
+            showSuccessMessage('Report exported! Check your downloads folder.');
+            // In production: generate and download CSV
+        }
+
+        function viewClientDetails(clientId) {
+            alert('Opening detailed client report... (In production: navigate to client detail page)');
+        }
+
+        // Settings Functions
+        function saveSettings() {
+            showSuccessMessage('Settings saved successfully!');
+            // In production: save settings via API
+        }
+
+        // Success Message
+        function showSuccessMessage(message) {
+            const messageEl = document.getElementById('successMessage');
+            const textEl = document.getElementById('successText');
+            textEl.textContent = message;
+            messageEl.classList.add('show');
             
-            let filteredBooks = program === 'all' 
-                ? allLiterature 
-                : allLiterature.filter(book => book.program === program);
+            setTimeout(() => {
+                messageEl.classList.remove('show');
+            }, 3000);
+        }
 
-            if (filteredBooks.length === 0) {
-                grid.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-book-open"></i>
-                        <h3>No Literature Found</h3>
-                        <p>Try selecting a different program.</p>
-                    </div>
-                `;
+        // Close modals on outside click
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.remove('active');
+            }
+        };
+
+        // Auth check on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            const session = window.authHelper.getSession();
+            
+            if (!session) {
+                window.location.href = 'index.html';
                 return;
             }
 
-            grid.innerHTML = filteredBooks.map(book => {
-                const programClass = book.program.toLowerCase().replace(/ /g, '-').replace(/recovery/g, '').trim();
-                const badge = book.featured ? '<div class="featured-badge">⭐ Featured</div>' : 
-                              book.is_purchase ? '<div class="purchase-badge">💳 Purchase</div>' : '';
-                const buttonText = book.is_purchase ? 'View to Purchase' : 'Read Online';
-                const buttonClass = book.is_purchase ? 'btn-purchase' : 'btn-primary';
-                const buttonIcon = book.is_purchase ? 'fa-shopping-cart' : 'fa-book-open';
-
-                return `
-                    <div class="book-card">
-                        ${badge}
-                        <div class="program-badge ${programClass}">${book.program}</div>
-                        <div class="book-title">${book.title}</div>
-                        <div class="book-category">
-                            <i class="fas fa-folder"></i> ${book.category}
-                        </div>
-                        <div class="book-description">${book.description}</div>
-                        ${book.tags && book.tags.length > 0 ? `
-                            <div class="book-tags">
-                                ${book.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
-                            </div>
-                        ` : ''}
-                        <div class="book-actions">
-                            <button class="${buttonClass}" onclick="openBook('${book.file_url}')">
-                                <i class="fas ${buttonIcon}"></i>
-                                ${buttonText}
-                            </button>
-                            <button class="btn-save" onclick="toggleSave(this, ${book.id})">
-                                <i class="fas fa-bookmark"></i>
-                            </button>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function filterByProgram(program, event) {
-            currentProgram = program;
-            
-            // Update active tab
-            document.querySelectorAll('.program-tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            
-            // Render filtered books
-            renderBooks(program);
-        }
-
-        function openBook(url) {
-            window.open(url, '_blank');
-        }
-
-        function toggleSave(button, bookId) {
-            button.classList.toggle('saved');
-            const icon = button.querySelector('i');
-            
-            if (button.classList.contains('saved')) {
-                icon.className = 'fas fa-bookmark';
-                console.log('Saved book:', bookId);
-                alert('Book saved to My Literature!');
-            } else {
-                icon.className = 'fas fa-bookmark';
-                console.log('Unsaved book:', bookId);
+            // Check if user is admin
+            if (session.role !== 'admin') {
+                alert('Access denied. Admin privileges required.');
+                window.location.href = 'client-portal.html';
+                return;
             }
-        }
-
-        // Initial render
-        renderBooks('all');
+        });
     </script>
 </body>
 </html>
