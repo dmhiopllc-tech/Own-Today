@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community - Own Today</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/white-label.css">
+    <link rel="stylesheet" href="css/mobile-nav.css">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            padding-bottom: 80px;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .page-header {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .back-button {
+            background: linear-gradient(135deg, var(--org-primary, #667eea), var(--org-secondary, #764ba2));
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+        .back-button:hover { transform: scale(1.1); }
+        .page-header-content h1 { color: var(--org-primary, #667eea); font-size: 32px; margin-bottom: 5px; }
+        .page-header-content p { color: #666; font-size: 16px; }
+        
+        .posts-container {
+            display: grid;
+            gap: 20px;
+        }
+        .post-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .post-header {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .post-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--org-primary, #667eea), var(--org-secondary, #764ba2));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: 700;
+        }
+        .post-author-info {
+            flex: 1;
+        }
+        .post-author {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 3px;
+        }
+        .post-time {
+            color: #999;
+            font-size: 14px;
+        }
+        .post-content {
+            color: #333;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .post-actions {
+            display: flex;
+            gap: 20px;
+            padding-top: 15px;
+            border-top: 2px solid #f0f0f0;
+        }
+        .action-btn {
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        .action-btn:hover { color: var(--org-primary, #667eea); }
+        .action-btn.active { color: var(--org-primary, #667eea); }
+        
+        .new-post-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .new-post-textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 100px;
+            margin-bottom: 15px;
+        }
+        .new-post-textarea:focus {
+            outline: none;
+            border-color: var(--org-primary, #667eea);
+        }
+        .post-btn {
+            background: linear-gradient(135deg, var(--org-primary, #667eea), var(--org-secondary, #764ba2));
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .post-btn:hover { transform: scale(1.05); }
+        
+        .support-badge {
+            display: inline-block;
+            background: #4caf50;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .page-header { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div id="mobile-nav"></div>
+    <div class="container">
+        <div class="page-header">
+            <button class="back-button" onclick="window.location.href='client-portal.html'">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <div class="page-header-content">
+                <h1>Community</h1>
+                <p>Connect and support each other</p>
+            </div>
+        </div>
+
+        <div class="new-post-card">
+            <textarea class="new-post-textarea" placeholder="Share your thoughts, experiences, or encouragement..."></textarea>
+            <button class="post-btn" onclick="alert('Post shared! 📣')">
+                <i class="fas fa-paper-plane"></i> Share Post
+            </button>
+        </div>
+
+        <div class="posts-container">
+            <div class="post-card">
+                <div class="post-header">
+                    <div class="post-avatar">J</div>
+                    <div class="post-author-info">
+                        <div class="post-author">
+                            John M.
+                            <span class="support-badge">14 Days</span>
+                        </div>
+                        <div class="post-time">2 hours ago</div>
+                    </div>
+                </div>
+                <div class="post-content">
+                    Just hit my 2-week milestone! Feeling grateful for this community and everyone's support. One day at a time really works. 💪
+                </div>
+                <div class="post-actions">
+                    <button class="action-btn">
+                        <i class="fas fa-heart"></i> <span>12 Supports</span>
+                    </button>
+                    <button class="action-btn">
+                        <i class="fas fa-comment"></i> <span>5 Comments</span>
+                    </button>
+                    <button class="action-btn">
+                        <i class="fas fa-share"></i> <span>Share</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="post-card">
+                <div class="post-header">
+                    <div class="post-avatar">S</div>
+                    <div class="post-author-info">
+                        <div class="post-author">
+                            Sarah K.
+                            <span class="support-badge">42 Days</span>
+                        </div>
+                        <div class="post-time">5 hours ago</div>
+                    </div>
+                </div>
+                <div class="post-content">
+                    Today was tough, but I made it through without giving up. Reached out to my sponsor and went to a meeting. So grateful for the tools I've learned here. Remember: progress, not perfection. 🌈
+                </div>
+                <div class="post-actions">
+                    <button class="action-btn active">
+                        <i class="fas fa-heart"></i> <span>24 Supports</span>
+                    </button>
+                    <button class="action-btn">
+                        <i class="fas fa-comment"></i> <span>8 Comments</span>
+                    </button>
+                    <button class="action-btn">
+                        <i class="fas fa-share"></i> <span>Share</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="post-card">
+                <div class="post-header">
+                    <div class="post-avatar">M</div>
+                    <div class="post-author-info">
+                        <div class="post-author">
+                            Mike R.
+                            <span class="support-badge">90 Days</span>
+                        </div>
+                        <div class="post-time">1 day ago</div>
+                    </div>
+                </div>
+                <div class="post-content">
+                    90 days clean today! 🎉 Never thought I'd make it here, but with this community's support and taking it one day at a time, anything is possible. To anyone struggling today: you've got this. Keep going!
+                </div>
+                <div class="post-actions">
+                    <button class="action-btn active">
+                        <i class="fas fa-heart"></i> <span>47 Supports</span>
+                    </button>
+                    <button class="action-btn">
+                        <i class="fas fa-comment"></i> <span>15 Comments</span>
+                    </button>
+                    <button class="action-btn">
+                        <i class="fas fa-share"></i> <span>Share</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="post-card">
+                <div class="post-header">
+                    <div class="post-avatar">A</div>
+                    <div class="post-author-info">
+                        <div class="post-author">
+                            Anna L.
+                            <span class="support-badge">120 Days</span>
+                        </div>
+                        <div class="post-time">2 days ago</div>
+                    </div>
+                </div>
+                <div class="post-content">
+                    Reminder: It's okay to have bad days. It's okay to ask for help. It's okay to not be perfect. What matters is that you keep showing up. We're all in this together. ❤️
+                </div>
+                <div class="post-actions">
+                    <button class="action-btn active">
+                        <i class="fas fa-heart"></i> <span>35 Supports</span>
+                    </button>
+                    <button class="action-btn">
+                        <i class="fas fa-comment"></i> <span>12 Comments</span>
+                    </button>
+                    <button class="action-btn">
+                        <i class="fas fa-share"></i> <span>Share</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="post-card">
+                <div class="post-header">
+                    <div class="post-avatar">D</div>
+                    <div class="post-author-info">
+                        <div class="post-author">
+                            David P.
+                            <span class="support-badge">7 Days</span>
+                        </div>
+                        <div class="post-time">3 days ago</div>
+                    </div>
+                </div>
+                <div class="post-content">
+                    Week one complete! Thanks to everyone who reached out and shared their experiences. Reading your stories gives me hope. Looking forward to my second week! 🌟
+                </div>
+                <div class="post-actions">
+                    <button class="action-btn active">
+                        <i class="fas fa-heart"></i> <span>28 Supports</span>
+                    </button>
+                    <button class="action-btn">
+                        <i class="fas fa-comment"></i> <span>9 Comments</span>
+                    </button>
+                    <button class="action-btn">
+                        <i class="fas fa-share"></i> <span>Share</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/config.js"></script>
+    <script src="js/theming-engine.js"></script>
+    <script src="js/mobile-nav.js"></script>
+    <script>
+        if (window.themingEngine) window.themingEngine.init();
+
+        // Support button toggle
+        document.querySelectorAll('.action-btn').forEach(btn => {
+            if (btn.querySelector('.fa-heart')) {
+                btn.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    const count = this.querySelector('span');
+                    const num = parseInt(count.textContent.split(' ')[0]);
+                    count.textContent = this.classList.contains('active') ? 
+                        `${num + 1} Supports` : `${num} Supports`;
+                });
+            }
+        });
+    </script>
+</body>
+</html>
