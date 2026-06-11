@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search - Own Today</title>
+    <link rel="stylesheet" href="css/white-label.css">
+    <link rel="stylesheet" href="css/mobile-nav.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        .search-page {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px 20px 100px;
+        }
+
+        .page-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .back-button {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--org-primary, #667eea);
+            cursor: pointer;
+            margin-right: 15px;
+            padding: 8px;
+        }
+
+        .page-header h1 {
+            font-size: 28px;
+            color: #333;
+            margin: 0;
+        }
+
+        .search-container {
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .search-box {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 18px 55px 18px 55px;
+            border: 3px solid #e9ecef;
+            border-radius: 50px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--org-primary, #667eea);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 22px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #adb5bd;
+            font-size: 18px;
+        }
+
+        .clear-button {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #adb5bd;
+            font-size: 18px;
+            cursor: pointer;
+            display: none;
+        }
+
+        .clear-button.visible {
+            display: block;
+        }
+
+        .filter-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .filter-pill {
+            padding: 10px 20px;
+            border: 2px solid #e9ecef;
+            background: white;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-pill.active {
+            background: var(--org-primary, #667eea);
+            color: white;
+            border-color: var(--org-primary, #667eea);
+        }
+
+        .filter-pill:hover {
+            border-color: var(--org-primary, #667eea);
+        }
+
+        .recent-searches {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+
+        .recent-searches h3 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .clear-all-btn {
+            background: none;
+            border: none;
+            color: var(--org-primary, #667eea);
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .recent-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .recent-item:hover {
+            background: #e9ecef;
+        }
+
+        .recent-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .recent-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .recent-icon {
+            color: #868e96;
+            font-size: 18px;
+        }
+
+        .recent-text {
+            color: #333;
+            font-size: 15px;
+        }
+
+        .remove-recent {
+            background: none;
+            border: none;
+            color: #adb5bd;
+            cursor: pointer;
+            padding: 5px 10px;
+            font-size: 16px;
+        }
+
+        .search-results {
+            display: none;
+        }
+
+        .search-results.active {
+            display: block;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .results-count {
+            color: #666;
+            font-size: 15px;
+        }
+
+        .sort-dropdown {
+            padding: 8px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 14px;
+            cursor: pointer;
+            background: white;
+        }
+
+        .result-item {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .result-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        .result-type {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .result-type.meeting {
+            background: #e7f5ff;
+            color: #1971c2;
+        }
+
+        .result-type.literature {
+            background: #d3f9d8;
+            color: #2f9e44;
+        }
+
+        .result-type.journal {
+            background: #fff3bf;
+            color: #f59f00;
+        }
+
+        .result-type.goal {
+            background: #ffe3e3;
+            color: #c92a2a;
+        }
+
+        .result-type.reward {
+            background: #f3f0ff;
+            color: #6741d9;
+        }
+
+        .result-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .result-description {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .result-meta {
+            display: flex;
+            gap: 15px;
+            color: #868e96;
+            font-size: 13px;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .no-results i {
+            font-size: 64px;
+            color: #ced4da;
+            margin-bottom: 20px;
+        }
+
+        .no-results h3 {
+            color: #495057;
+            margin-bottom: 10px;
+        }
+
+        .no-results p {
+            color: #868e96;
+        }
+
+        @media (max-width: 768px) {
+            .search-page {
+                padding: 15px 15px 100px;
+            }
+
+            .page-header h1 {
+                font-size: 24px;
+            }
+
+            .search-container {
+                padding: 20px;
+            }
+
+            .search-box input {
+                padding: 15px 50px 15px 50px;
+            }
+
+            .filter-pills {
+                overflow-x: auto;
+                flex-wrap: nowrap;
+            }
+
+            .results-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="search-page">
+        <div class="page-header">
+            <button class="back-button" onclick="window.location.href='client-portal.html'">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <h1>Search</h1>
+        </div>
+
+        <div class="search-container">
+            <div class="search-box">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" id="searchInput" placeholder="Search meetings, literature, journals, goals..." autocomplete="off">
+                <button class="clear-button" id="clearButton" onclick="clearSearch()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div class="filter-pills">
+                <button class="filter-pill active" data-filter="all">
+                    <i class="fas fa-globe"></i>
+                    All
+                </button>
+                <button class="filter-pill" data-filter="meetings">
+                    <i class="fas fa-users"></i>
+                    Meetings
+                </button>
+                <button class="filter-pill" data-filter="literature">
+                    <i class="fas fa-book"></i>
+                    Literature
+                </button>
+                <button class="filter-pill" data-filter="journals">
+                    <i class="fas fa-pen"></i>
+                    Journals
+                </button>
+                <button class="filter-pill" data-filter="goals">
+                    <i class="fas fa-bullseye"></i>
+                    Goals
+                </button>
+                <button class="filter-pill" data-filter="rewards">
+                    <i class="fas fa-gift"></i>
+                    Rewards
+                </button>
+            </div>
+        </div>
+
+        <div class="recent-searches" id="recentSearches">
+            <h3>
+                Recent Searches
+                <button class="clear-all-btn" onclick="clearAllRecent()">Clear All</button>
+            </h3>
+            <div id="recentList">
+                <div class="recent-item" onclick="performSearch('meditation')">
+                    <div class="recent-left">
+                        <i class="fas fa-clock recent-icon"></i>
+                        <span class="recent-text">meditation</span>
+                    </div>
+                    <button class="remove-recent" onclick="event.stopPropagation(); removeRecent(this)">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="recent-item" onclick="performSearch('AA meetings near me')">
+                    <div class="recent-left">
+                        <i class="fas fa-clock recent-icon"></i>
+                        <span class="recent-text">AA meetings near me</span>
+                    </div>
+                    <button class="remove-recent" onclick="event.stopPropagation(); removeRecent(this)">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="recent-item" onclick="performSearch('The Big Book')">
+                    <div class="recent-left">
+                        <i class="fas fa-clock recent-icon"></i>
+                        <span class="recent-text">The Big Book</span>
+                    </div>
+                    <button class="remove-recent" onclick="event.stopPropagation(); removeRecent(this)">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="search-results" id="searchResults">
+            <div class="results-header">
+                <span class="results-count" id="resultsCount">0 results found</span>
+                <select class="sort-dropdown">
+                    <option value="relevance">Most Relevant</option>
+                    <option value="recent">Most Recent</option>
+                    <option value="popular">Most Popular</option>
+                </select>
+            </div>
+            <div id="resultsList">
+                <!-- Results will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <div id="mobile-nav"></div>
+
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/theming-engine.js"></script>
+    <script src="js/mobile-nav.js"></script>
+
+    <script>
+        // Initialize theming
+        window.themingEngine.init();
+
+        // Initialize mobile nav
+        if (window.mobileNav) {
+            window.mobileNav.init();
+        }
+
+        // Demo search data
+        const searchData = [
+            {
+                type: 'meeting',
+                title: 'Hope Recovery Center',
+                description: 'Daily AA meetings with experienced facilitators. Open to all seeking support.',
+                meta: ['0.5 miles away', '6:00 PM', 'Open Meeting']
+            },
+            {
+                type: 'meeting',
+                title: 'Downtown NA Group',
+                description: 'Narcotics Anonymous meeting in the heart of downtown.',
+                meta: ['1.2 miles away', '7:30 PM', 'Closed Meeting']
+            },
+            {
+                type: 'literature',
+                title: 'The Big Book',
+                description: 'The basic text for Alcoholics Anonymous - fundamental guide to recovery.',
+                meta: ['Alcoholics Anonymous', '575 pages', '4.8 rating']
+            },
+            {
+                type: 'literature',
+                title: 'Living Clean',
+                description: 'The journey continues - Narcotics Anonymous guide to living in recovery.',
+                meta: ['Narcotics Anonymous', '432 pages', '4.7 rating']
+            },
+            {
+                type: 'journal',
+                title: 'Feeling Grateful Today',
+                description: 'Woke up this morning feeling really grateful for my support system...',
+                meta: ['June 11, 2024', 'Amazing mood', 'Private']
+            },
+            {
+                type: 'goal',
+                title: 'Attend 90 meetings in 90 days',
+                description: 'Complete the foundational recovery challenge.',
+                meta: ['65% complete', 'Active', '750 points']
+            },
+            {
+                type: 'reward',
+                title: 'One-on-One Counseling Session',
+                description: 'Extra individual therapy session with your counselor.',
+                meta: ['500 points', 'Wellness category', 'Popular']
+            }
+        ];
+
+        let currentFilter = 'all';
+        const searchInput = document.getElementById('searchInput');
+        const clearButton = document.getElementById('clearButton');
+        const searchResults = document.getElementById('searchResults');
+        const recentSearches = document.getElementById('recentSearches');
+        const resultsList = document.getElementById('resultsList');
+        const resultsCount = document.getElementById('resultsCount');
+
+        // Search input handling
+        searchInput.addEventListener('input', function() {
+            const query = this.value.trim();
+            
+            if (query.length > 0) {
+                clearButton.classList.add('visible');
+                performSearch(query, false);
+            } else {
+                clearButton.classList.remove('visible');
+                searchResults.classList.remove('active');
+                recentSearches.style.display = 'block';
+            }
+        });
+
+        // Filter pills
+        document.querySelectorAll('.filter-pill').forEach(pill => {
+            pill.addEventListener('click', function() {
+                document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+                this.classList.add('active');
+                currentFilter = this.dataset.filter;
+                
+                if (searchInput.value.trim().length > 0) {
+                    performSearch(searchInput.value.trim(), false);
+                }
+            });
+        });
+
+        function performSearch(query, updateInput = true) {
+            if (updateInput) {
+                searchInput.value = query;
+                clearButton.classList.add('visible');
+            }
+
+            // Filter results
+            let results = searchData.filter(item => {
+                const matchesQuery = item.title.toLowerCase().includes(query.toLowerCase()) ||
+                                   item.description.toLowerCase().includes(query.toLowerCase());
+                const matchesFilter = currentFilter === 'all' || item.type === currentFilter.slice(0, -1);
+                return matchesQuery && matchesFilter;
+            });
+
+            // Show results
+            recentSearches.style.display = 'none';
+            searchResults.classList.add('active');
+            resultsCount.textContent = `${results.length} result${results.length !== 1 ? 's' : ''} found`;
+
+            if (results.length === 0) {
+                resultsList.innerHTML = `
+                    <div class="no-results">
+                        <i class="fas fa-search"></i>
+                        <h3>No results found</h3>
+                        <p>Try adjusting your search or filters</p>
+                    </div>
+                `;
+            } else {
+                resultsList.innerHTML = results.map(result => `
+                    <div class="result-item" onclick="openResult('${result.type}', '${result.title}')">
+                        <span class="result-type ${result.type}">${capitalizeFirst(result.type)}</span>
+                        <div class="result-title">${highlightQuery(result.title, query)}</div>
+                        <div class="result-description">${highlightQuery(result.description, query)}</div>
+                        <div class="result-meta">
+                            ${result.meta.map(m => `<span><i class="fas fa-circle" style="font-size: 4px; vertical-align: middle;"></i> ${m}</span>`).join('')}
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function highlightQuery(text, query) {
+            const regex = new RegExp(`(${query})`, 'gi');
+            return text.replace(regex, '<strong style="background: #fff3bf;">$1</strong>');
+        }
+
+        function capitalizeFirst(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+
+        function clearSearch() {
+            searchInput.value = '';
+            clearButton.classList.remove('visible');
+            searchResults.classList.remove('active');
+            recentSearches.style.display = 'block';
+            searchInput.focus();
+        }
+
+        function clearAllRecent() {
+            if (confirm('Clear all recent searches?')) {
+                document.getElementById('recentList').innerHTML = '<p style="color: #adb5bd; text-align: center; padding: 20px;">No recent searches</p>';
+            }
+        }
+
+        function removeRecent(btn) {
+            btn.closest('.recent-item').remove();
+        }
+
+        function openResult(type, title) {
+            const pages = {
+                meeting: 'meeting-guide.html',
+                literature: 'literature.html',
+                journal: 'journal-history.html',
+                goal: 'goals.html',
+                reward: 'rewards.html'
+            };
+            
+            window.location.href = pages[type] || 'client-portal.html';
+        }
+
+        // Auto-focus search input
+        searchInput.focus();
+    </script>
+</body>
+</html>
