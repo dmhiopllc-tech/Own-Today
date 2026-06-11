@@ -630,6 +630,10 @@
                             <i class="fas fa-cog"></i>
                             <span>Settings</span>
                         </div>
+                        <a href="admin-portal.html" class="quick-action-btn admin-only" style="text-decoration: none; color: inherit; background: linear-gradient(135deg, #e94560 0%, #d63d54 100%); color: white;">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Admin Portal</span>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -643,6 +647,7 @@
     <script src="js/config.js"></script>
     <script src="js/theming-engine.js"></script>
     <script src="js/mobile-nav.js"></script>
+    <script src="js/auth-helper.js"></script>
 
     <script>
         // Initialize theming
@@ -652,6 +657,21 @@
         if (window.mobileNav) {
             window.mobileNav.init();
         }
+
+        // Check auth and apply role-based visibility
+        window.addEventListener('DOMContentLoaded', function() {
+            const session = window.authHelper.getSession();
+            
+            if (!session) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            // Apply role-based visibility (admin-only elements)
+            if (window.authHelper && window.authHelper.applyRoleBasedVisibility) {
+                window.authHelper.applyRoleBasedVisibility(session.role);
+            }
+        });
 
         // Client item interactions
         document.querySelectorAll('.client-item').forEach(item => {
@@ -663,7 +683,10 @@
 
         // Quick action interactions
         document.querySelectorAll('.quick-action-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
+            btn.addEventListener('click', function(e) {
+                // Don't show alert if it's a link (Admin Portal button)
+                if (this.tagName === 'A') return;
+                
                 const action = this.querySelector('span').textContent;
                 alert(`Opening: ${action}`);
             });
