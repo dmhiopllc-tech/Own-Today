@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Literature Library - Own Today</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/white-label.css">
+    <link rel="stylesheet" href="css/mobile-nav.css">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            padding-bottom: 80px;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .page-header {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .back-button {
+            background: linear-gradient(135deg, var(--org-primary, #667eea), var(--org-secondary, #764ba2));
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+        .back-button:hover { transform: scale(1.1); }
+        .page-header-content h1 { color: var(--org-primary, #667eea); font-size: 32px; margin-bottom: 5px; }
+        .page-header-content p { color: #666; font-size: 16px; }
+        
+        .search-bar {
+            background: white;
+            border-radius: 15px;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .search-bar input {
+            flex: 1;
+            border: none;
+            font-size: 16px;
+        }
+        .search-bar input:focus { outline: none; }
+        
+        .categories {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .category-btn {
+            padding: 10px 20px;
+            border: 2px solid white;
+            background: white;
+            color: var(--org-primary, #667eea);
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .category-btn:hover, .category-btn.active {
+            background: linear-gradient(135deg, var(--org-primary, #667eea), var(--org-secondary, #764ba2));
+            color: white;
+        }
+        
+        .literature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .literature-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .literature-card:hover { transform: translateY(-10px); }
+        .literature-cover {
+            height: 200px;
+            background: linear-gradient(135deg, var(--org-primary, #667eea), var(--org-secondary, #764ba2));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            color: white;
+        }
+        .literature-content {
+            padding: 20px;
+        }
+        .literature-category {
+            background: var(--org-primary, #667eea);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        .literature-card h3 {
+            color: #333;
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+        .literature-author {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        .literature-description {
+            color: #666;
+            font-size: 13px;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        .literature-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .btn-read {
+            flex: 1;
+            background: linear-gradient(135deg, var(--org-primary, #667eea), var(--org-secondary, #764ba2));
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .btn-read:hover { transform: scale(1.05); }
+        .btn-save {
+            background: #f0f0f0;
+            color: #666;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn-save:hover, .btn-save.saved {
+            background: #4caf50;
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .literature-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div id="mobile-nav"></div>
+    <div class="container">
+        <div class="page-header">
+            <button class="back-button" onclick="window.location.href='client-portal.html'">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <div class="page-header-content">
+                <h1>Literature Library</h1>
+                <p>Knowledge is power in recovery</p>
+            </div>
+        </div>
+
+        <div class="search-bar">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Search books, articles, and resources...">
+        </div>
+
+        <div class="categories">
+            <button class="category-btn active">All</button>
+            <button class="category-btn">12-Step</button>
+            <button class="category-btn">Meditation</button>
+            <button class="category-btn">Self-Help</button>
+            <button class="category-btn">Spirituality</button>
+            <button class="category-btn">Mindfulness</button>
+        </div>
+
+        <div class="literature-grid">
+            <div class="literature-card">
+                <div class="literature-cover">📖</div>
+                <div class="literature-content">
+                    <span class="literature-category">12-Step</span>
+                    <h3>The Big Book</h3>
+                    <div class="literature-author">Alcoholics Anonymous</div>
+                    <div class="literature-description">
+                        The basic text for Alcoholics Anonymous, sharing stories and principles of recovery.
+                    </div>
+                    <div class="literature-actions">
+                        <button class="btn-read" onclick="alert('📖 Opening reading...')">
+                            <i class="fas fa-book-open"></i> Read
+                        </button>
+                        <button class="btn-save" onclick="this.classList.toggle('saved')">
+                            <i class="fas fa-bookmark"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="literature-card">
+                <div class="literature-cover">🧘</div>
+                <div class="literature-content">
+                    <span class="literature-category">Meditation</span>
+                    <h3>Daily Reflections</h3>
+                    <div class="literature-author">AA World Services</div>
+                    <div class="literature-description">
+                        366 daily meditations from AA members sharing hope and experience.
+                    </div>
+                    <div class="literature-actions">
+                        <button class="btn-read" onclick="alert('📖 Opening reading...')">
+                            <i class="fas fa-book-open"></i> Read
+                        </button>
+                        <button class="btn-save" onclick="this.classList.toggle('saved')">
+                            <i class="fas fa-bookmark"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="literature-card">
+                <div class="literature-cover">💪</div>
+                <div class="literature-content">
+                    <span class="literature-category">Self-Help</span>
+                    <h3>Living Clean</h3>
+                    <div class="literature-author">Narcotics Anonymous</div>
+                    <div class="literature-description">
+                        The journey continues - living life in recovery beyond the basics.
+                    </div>
+                    <div class="literature-actions">
+                        <button class="btn-read" onclick="alert('📖 Opening reading...')">
+                            <i class="fas fa-book-open"></i> Read
+                        </button>
+                        <button class="btn-save saved" onclick="this.classList.toggle('saved')">
+                            <i class="fas fa-bookmark"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="literature-card">
+                <div class="literature-cover">🙏</div>
+                <div class="literature-content">
+                    <span class="literature-category">Spirituality</span>
+                    <h3>The Language of Letting Go</h3>
+                    <div class="literature-author">Melody Beattie</div>
+                    <div class="literature-description">
+                        Daily meditations for codependents, focusing on self-care and boundaries.
+                    </div>
+                    <div class="literature-actions">
+                        <button class="btn-read" onclick="alert('📖 Opening reading...')">
+                            <i class="fas fa-book-open"></i> Read
+                        </button>
+                        <button class="btn-save" onclick="this.classList.toggle('saved')">
+                            <i class="fas fa-bookmark"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="literature-card">
+                <div class="literature-cover">🌟</div>
+                <div class="literature-content">
+                    <span class="literature-category">Mindfulness</span>
+                    <h3>The Power of Now</h3>
+                    <div class="literature-author">Eckhart Tolle</div>
+                    <div class="literature-description">
+                        A guide to spiritual enlightenment through present moment awareness.
+                    </div>
+                    <div class="literature-actions">
+                        <button class="btn-read" onclick="alert('📖 Opening reading...')">
+                            <i class="fas fa-book-open"></i> Read
+                        </button>
+                        <button class="btn-save" onclick="this.classList.toggle('saved')">
+                            <i class="fas fa-bookmark"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="literature-card">
+                <div class="literature-cover">📚</div>
+                <div class="literature-content">
+                    <span class="literature-category">12-Step</span>
+                    <h3>Twelve Steps and Twelve Traditions</h3>
+                    <div class="literature-author">AA World Services</div>
+                    <div class="literature-description">
+                        In-depth exploration of the principles that guide the program.
+                    </div>
+                    <div class="literature-actions">
+                        <button class="btn-read" onclick="alert('📖 Opening reading...')">
+                            <i class="fas fa-book-open"></i> Read
+                        </button>
+                        <button class="btn-save" onclick="this.classList.toggle('saved')">
+                            <i class="fas fa-bookmark"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/config.js"></script>
+    <script src="js/theming-engine.js"></script>
+    <script src="js/mobile-nav.js"></script>
+    <script>
+        if (window.themingEngine) window.themingEngine.init();
+
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
