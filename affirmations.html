@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Affirmations - Own Today</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/white-label.css">
+    <link rel="stylesheet" href="css/mobile-nav.css">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            padding-bottom: 80px;
+        }
+        .container { max-width: 800px; margin: 0 auto; }
+        .page-header {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .back-button {
+            background: linear-gradient(135deg, var(--org-primary, #667eea), var(--org-secondary, #764ba2));
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+        .back-button:hover { transform: scale(1.1); }
+        .page-header-content h1 { color: var(--org-primary, #667eea); font-size: 32px; margin-bottom: 5px; }
+        .page-header-content p { color: #666; font-size: 16px; }
+        
+        .affirmation-card {
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            min-height: 350px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .affirmation-icon {
+            font-size: 60px;
+            margin-bottom: 30px;
+        }
+        .affirmation-text {
+            font-size: 32px;
+            line-height: 1.5;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+        .affirmation-author {
+            color: var(--org-primary, #667eea);
+            font-size: 18px;
+            font-weight: 600;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        .btn {
+            flex: 1;
+            padding: 15px 30px;
+            border-radius: 10px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--org-primary, #667eea), var(--org-secondary, #764ba2));
+            color: white;
+        }
+        .btn-primary:hover { transform: scale(1.05); }
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #666;
+        }
+        .btn-secondary:hover { background: #e0e0e0; }
+        
+        .affirmations-list {
+            display: grid;
+            gap: 15px;
+        }
+        .affirmation-item {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .affirmation-item:hover { transform: translateX(10px); }
+        .affirmation-item-icon { font-size: 30px; }
+        .affirmation-item-text {
+            flex: 1;
+            font-size: 16px;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        @media (max-width: 768px) {
+            .affirmation-card { padding: 30px; }
+            .affirmation-text { font-size: 24px; }
+            .action-buttons { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div id="mobile-nav"></div>
+    <div class="container">
+        <div class="page-header">
+            <button class="back-button" onclick="window.location.href='client-portal.html'">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <div class="page-header-content">
+                <h1>Daily Affirmations</h1>
+                <p>Start your day with positive energy</p>
+            </div>
+        </div>
+
+        <div class="affirmation-card" id="affirmation-display">
+            <div class="affirmation-icon">💛</div>
+            <div class="affirmation-text" id="affirmation-text">
+                "I am stronger than my struggles. Today, I choose hope."
+            </div>
+            <div class="affirmation-author">- Daily Affirmation</div>
+            
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="newAffirmation()">
+                    <i class="fas fa-redo"></i> New Affirmation
+                </button>
+                <button class="btn btn-secondary" onclick="shareAffirmation()">
+                    <i class="fas fa-share"></i> Share
+                </button>
+            </div>
+        </div>
+
+        <div class="affirmations-list" id="affirmations-list">
+            <!-- Will be populated -->
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/config.js"></script>
+    <script src="js/theming-engine.js"></script>
+    <script src="js/mobile-nav.js"></script>
+    <script>
+        if (window.themingEngine) window.themingEngine.init();
+
+        const affirmations = [
+            { text: "I am stronger than my struggles. Today, I choose hope.", icon: "💛" },
+            { text: "Every day, I am becoming a better version of myself.", icon: "🌟" },
+            { text: "I deserve love, peace, and happiness in my life.", icon: "💝" },
+            { text: "My past does not define my future. I am in control.", icon: "🦋" },
+            { text: "I am worthy of recovery and all the good things coming my way.", icon: "🌈" },
+            { text: "One day at a time, I am making progress.", icon: "📅" },
+            { text: "I choose to replace fear with faith and courage.", icon: "💪" },
+            { text: "I am grateful for my journey and the lessons it teaches.", icon: "🙏" },
+            { text: "My recovery is a gift I give myself every single day.", icon: "🎁" },
+            { text: "I have the power to create positive change in my life.", icon: "✨" },
+            { text: "I am surrounded by love and support on my journey.", icon: "❤️" },
+            { text: "Every challenge is an opportunity for growth and strength.", icon: "🌱" },
+            { text: "I trust myself to make healthy choices today.", icon: "🎯" },
+            { text: "I am enough, just as I am right now.", icon: "🌺" },
+            { text: "My voice matters. My story matters. I matter.", icon: "📣" }
+        ];
+
+        let currentIndex = 0;
+
+        function displayAffirmation(index) {
+            const aff = affirmations[index];
+            document.getElementById('affirmation-text').textContent = `"${aff.text}"`;
+            document.querySelector('.affirmation-icon').textContent = aff.icon;
+        }
+
+        function newAffirmation() {
+            currentIndex = Math.floor(Math.random() * affirmations.length);
+            displayAffirmation(currentIndex);
+        }
+
+        function shareAffirmation() {
+            const text = affirmations[currentIndex].text;
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Daily Affirmation',
+                    text: text
+                });
+            } else {
+                navigator.clipboard.writeText(text);
+                alert('Affirmation copied to clipboard! 📋');
+            }
+        }
+
+        // Load all affirmations
+        const listContainer = document.getElementById('affirmations-list');
+        affirmations.forEach((aff, index) => {
+            const item = document.createElement('div');
+            item.className = 'affirmation-item';
+            item.innerHTML = `
+                <div class="affirmation-item-icon">${aff.icon}</div>
+                <div class="affirmation-item-text">${aff.text}</div>
+            `;
+            item.onclick = () => {
+                currentIndex = index;
+                displayAffirmation(index);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            };
+            listContainer.appendChild(item);
+        });
+
+        // Show random affirmation on load
+        newAffirmation();
+    </script>
+</body>
+</html>
