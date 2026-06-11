@@ -3,422 +3,511 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Own Today - White-label client engagement platform for treatment centers. Take charge. Live empowered.">
-    <title>Own Today | Client Engagement Platform for Treatment Centers</title>
-    
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>Own Today - Recovery Platform Login</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Styles -->
-    <link rel="stylesheet" href="css/white-label.css">
-    
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: 'Inter', sans-serif;
-            line-height: 1.6;
-            color: #2C2C2C;
-        }
-        
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(135deg, #0D7C9E 0%, #0A5F7A 100%);
-            color: white;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            text-align: center;
-            padding: 2rem;
-            position: relative;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             overflow: hidden;
+            max-width: 1000px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            animation: slideUp 0.6s ease;
         }
-        
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>');
-            opacity: 0.3;
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-        
-        .hero-content {
-            max-width: 1200px;
-            z-index: 1;
+
+        .login-left {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+
+        .platform-branding {
+            margin-bottom: 40px;
+        }
+
+        .platform-logo {
+            width: 120px;
+            height: 120px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            margin: 0 auto 20px;
+            border: 4px solid rgba(255,255,255,0.3);
+        }
+
+        .platform-name {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .platform-tagline {
+            font-size: 1.1rem;
+            opacity: 0.95;
+            font-weight: 500;
+        }
+
+        .features-list {
+            text-align: left;
+            margin-top: 40px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+
+        .feature-item i {
+            font-size: 1.5rem;
+            opacity: 0.9;
+        }
+
+        .login-right {
+            padding: 60px 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .client-branding {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .client-logo-upload {
+            width: 100px;
+            height: 100px;
+            background: #f8f9fa;
+            border: 3px dashed #dee2e6;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            overflow: hidden;
             position: relative;
         }
-        
-        .hero-logo {
-            max-width: 500px;
+
+        .client-logo-upload:hover {
+            border-color: #667eea;
+            background: #f0f2ff;
+        }
+
+        .client-logo-upload input[type="file"] {
+            display: none;
+        }
+
+        .client-logo-preview {
             width: 100%;
-            margin: 0 auto 2rem;
-            filter: drop-shadow(0 10px 30px rgba(0,0,0,0.2));
+            height: 100%;
+            object-fit: contain;
+            display: none;
         }
-        
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            text-shadow: 0 4px 12px rgba(0,0,0,0.2);
+
+        .upload-placeholder {
+            text-align: center;
+            color: #adb5bd;
         }
-        
-        .hero .tagline {
-            font-size: 1.8rem;
-            font-weight: 300;
-            margin-bottom: 2rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: #F89A2E;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+
+        .upload-placeholder i {
+            font-size: 2rem;
+            margin-bottom: 8px;
+            display: block;
         }
-        
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 3rem;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            opacity: 0.95;
-        }
-        
-        .cta-buttons {
-            display: flex;
-            gap: 1.5rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        
-        .btn-large {
-            padding: 1.25rem 3rem;
-            font-size: 1.2rem;
-            border-radius: 50px;
+
+        .upload-placeholder span {
+            font-size: 0.85rem;
             font-weight: 600;
+        }
+
+        .client-org-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .welcome-text {
+            color: #868e96;
+            font-size: 1rem;
+            margin-bottom: 30px;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: #495057;
+            font-size: 0.95rem;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #adb5bd;
+            font-size: 1.1rem;
+        }
+
+        .form-group input {
+            padding: 14px 15px 14px 45px;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+
+        .options-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #495057;
+        }
+
+        .remember-me input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .forgot-password {
+            color: #667eea;
             text-decoration: none;
+            font-weight: 600;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        .login-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .login-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .login-button:active {
+            transform: translateY(0);
+        }
+
+        .demo-credentials {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .demo-credentials strong {
+            color: #856404;
+            font-size: 0.9rem;
+        }
+
+        .demo-credentials p {
+            color: #856404;
+            font-size: 0.85rem;
+            margin: 5px 0 0 0;
+        }
+
+        .powered-by {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .powered-by-text {
+            font-size: 0.85rem;
+            color: #868e96;
+            margin-bottom: 8px;
+        }
+
+        .own-today-logo {
             display: inline-flex;
             align-items: center;
-            gap: 0.75rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-        }
-        
-        .btn-primary {
-            background: #F89A2E;
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            background: #E88915;
-            transform: translateY(-3px);
-            box-shadow: 0 12px 28px rgba(248, 154, 46, 0.4);
-        }
-        
-        .btn-secondary {
-            background: white;
-            color: #0D7C9E;
-        }
-        
-        .btn-secondary:hover {
-            background: #f0f0f0;
-            transform: translateY(-3px);
-            box-shadow: 0 12px 28px rgba(255,255,255,0.3);
-        }
-        
-        /* Features Section */
-        .features {
-            padding: 6rem 2rem;
-            background: white;
-        }
-        
-        .features-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: #0D7C9E;
-            margin-bottom: 1rem;
-        }
-        
-        .section-subtitle {
-            text-align: center;
-            font-size: 1.2rem;
-            color: #666;
-            margin-bottom: 4rem;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 3rem;
-        }
-        
-        .feature-card {
-            text-align: center;
-            padding: 2rem;
-            border-radius: 20px;
-            transition: all 0.3s ease;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 12px 32px rgba(0,0,0,0.1);
-        }
-        
-        .feature-icon {
-            font-size: 3.5rem;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, #0D7C9E 0%, #F89A2E 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .feature-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: #2C2C2C;
-        }
-        
-        .feature-card p {
-            color: #666;
-            line-height: 1.8;
-        }
-        
-        /* CTA Section */
-        .cta-section {
-            background: linear-gradient(135deg, #F89A2E 0%, #E87A0F 100%);
-            padding: 6rem 2rem;
-            text-align: center;
-            color: white;
-        }
-        
-        .cta-section h2 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-        }
-        
-        .cta-section p {
-            font-size: 1.3rem;
-            margin-bottom: 2.5rem;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        /* Footer */
-        .footer {
-            background: #1A1A1A;
-            color: white;
-            padding: 3rem 2rem;
-            text-align: center;
-        }
-        
-        .footer-logo {
-            max-width: 250px;
-            margin: 0 auto 1.5rem;
-        }
-        
-        .footer p {
-            color: #999;
-            margin-bottom: 1rem;
-        }
-        
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-top: 2rem;
-            flex-wrap: wrap;
-        }
-        
-        .footer-links a {
-            color: #F89A2E;
+            gap: 8px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #667eea;
             text-decoration: none;
-            transition: color 0.3s ease;
         }
-        
-        .footer-links a:hover {
-            color: #FFC166;
+
+        .own-today-logo i {
+            font-size: 1.5rem;
         }
-        
-        /* Responsive */
+
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
+            .login-container {
+                grid-template-columns: 1fr;
             }
-            
-            .hero .tagline {
-                font-size: 1.3rem;
+
+            .login-left {
+                padding: 40px 30px;
             }
-            
-            .hero p {
-                font-size: 1.1rem;
+
+            .login-right {
+                padding: 40px 30px;
             }
-            
-            .cta-buttons {
-                flex-direction: column;
+
+            .platform-name {
+                font-size: 2rem;
             }
-            
-            .btn-large {
-                width: 100%;
-                justify-content: center;
+
+            .features-list {
+                display: none;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <img src="https://www.genspark.ai/api/files/s/LuSkQujA" alt="Own Today Logo" class="hero-logo">
-            
-            <h1>White-Label Client Engagement</h1>
-            <p class="tagline">Take Charge. Live Empowered.</p>
-            
-            <p>
-                The complete platform for treatment centers to deploy a fully branded 
-                client engagement app with meetings, rewards, progress tracking, and more.
-            </p>
-            
-            <div class="cta-buttons">
-                <a href="#demo" class="btn-large btn-primary">
-                    <i class="fas fa-rocket"></i>
-                    Request Demo
-                </a>
-                <a href="#features" class="btn-large btn-secondary">
-                    <i class="fas fa-info-circle"></i>
-                    Learn More
-                </a>
+    <div class="login-container">
+        <!-- Left Side - Platform Branding -->
+        <div class="login-left">
+            <div class="platform-branding">
+                <div class="platform-logo">
+                    <i class="fas fa-hands-helping"></i>
+                </div>
+                <h1 class="platform-name">Own Today</h1>
+                <p class="platform-tagline">White-Label Recovery Engagement Platform</p>
             </div>
-        </div>
-    </section>
-    
-    <!-- Features Section -->
-    <section id="features" class="features">
-        <div class="features-container">
-            <h2 class="section-title">Everything Your Clients Need</h2>
-            <p class="section-subtitle">
-                A complete engagement platform that keeps clients connected, motivated, and progressing.
-            </p>
-            
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <h3>Meeting Guide</h3>
-                    <p>
-                        Find AA, NA, and other recovery meetings in your area. 
-                        Check in with geolocation verification and earn points.
-                    </p>
+
+            <div class="features-list">
+                <div class="feature-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Track meetings & progress</span>
                 </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-gift"></i>
-                    </div>
-                    <h3>Rewards System</h3>
-                    <p>
-                        Create custom rewards your clients can redeem. 
-                        Gift cards, privileges, sessions - you decide!
-                    </p>
+                <div class="feature-item">
+                    <i class="fas fa-trophy"></i>
+                    <span>Earn rewards & achievements</span>
                 </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <h3>Progress Tracking</h3>
-                    <p>
-                        Clients track their journey with streak counters, 
-                        points earned, and achievement milestones.
-                    </p>
+                <div class="feature-item">
+                    <i class="fas fa-users"></i>
+                    <span>Connect with community</span>
                 </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-palette"></i>
-                    </div>
-                    <h3>Your Branding</h3>
-                    <p>
-                        Upload your logo, pick your colors, and launch 
-                        a fully branded app in hours, not months.
-                    </p>
+                <div class="feature-item">
+                    <i class="fas fa-book"></i>
+                    <span>Access recovery resources</span>
                 </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-user-tie"></i>
-                    </div>
-                    <h3>Admin Portal</h3>
-                    <p>
-                        Manage providers, approve clients, customize rewards, 
-                        and track engagement from one dashboard.
-                    </p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-mobile-alt"></i>
-                    </div>
-                    <h3>Mobile Ready</h3>
-                    <p>
-                        Responsive design works perfectly on phones, 
-                        tablets, and desktop. Progressive Web App capable.
-                    </p>
+                <div class="feature-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Monitor your journey</span>
                 </div>
             </div>
         </div>
-    </section>
-    
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <h2>Ready to Launch Your Branded App?</h2>
-        <p>
-            Join treatment centers across the country using Own Today to 
-            boost client engagement and improve outcomes.
-        </p>
-        <a href="#contact" class="btn-large btn-secondary">
-            <i class="fas fa-envelope"></i>
-            Contact Sales
-        </a>
-    </section>
-    
-    <!-- Footer -->
-    <footer class="footer">
-        <img src="https://www.genspark.ai/api/files/s/LuSkQujA" alt="Own Today Logo" class="footer-logo">
-        <p>White-label client engagement platform for treatment centers</p>
-        <p class="tagline" style="color: #F89A2E; font-weight: 600; letter-spacing: 2px;">
-            TAKE CHARGE. LIVE EMPOWERED.
-        </p>
-        
-        <div class="footer-links">
-            <a href="#features">Features</a>
-            <a href="#pricing">Pricing</a>
-            <a href="#demo">Request Demo</a>
-            <a href="#support">Support</a>
-            <a href="#privacy">Privacy Policy</a>
+
+        <!-- Right Side - Login Form -->
+        <div class="login-right">
+            <div class="client-branding">
+                <div class="client-logo-upload" onclick="document.getElementById('clientLogoInput').click()">
+                    <img id="clientLogoPreview" class="client-logo-preview" alt="Organization Logo">
+                    <div class="upload-placeholder" id="uploadPlaceholder">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <span>Upload Your Logo</span>
+                    </div>
+                    <input type="file" id="clientLogoInput" accept="image/*" onchange="previewClientLogo(this)">
+                </div>
+                <h2 class="client-org-name" id="orgName">Your Organization</h2>
+                <p class="welcome-text">Sign in to your recovery portal</p>
+            </div>
+
+            <form class="login-form" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="email" placeholder="Enter your email" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" placeholder="Enter your password" required>
+                    </div>
+                </div>
+
+                <div class="options-row">
+                    <label class="remember-me">
+                        <input type="checkbox" id="remember">
+                        <span>Remember me</span>
+                    </label>
+                    <a href="#" class="forgot-password">Forgot password?</a>
+                </div>
+
+                <button type="submit" class="login-button">
+                    Sign In to Portal
+                </button>
+            </form>
+
+            <div class="demo-credentials">
+                <strong><i class="fas fa-info-circle"></i> Demo Mode</strong>
+                <p>Use any email/password to explore the platform</p>
+            </div>
+
+            <div class="powered-by">
+                <div class="powered-by-text">Platform powered and maintained by</div>
+                <a href="#" class="own-today-logo">
+                    <i class="fas fa-hands-helping"></i>
+                    <span>Own Today</span>
+                </a>
+            </div>
         </div>
-        
-        <p style="margin-top: 2rem; font-size: 0.9rem;">
-            &copy; 2026 Own Today. All rights reserved.
-        </p>
-    </footer>
+    </div>
+
+    <script>
+        // Preview client logo upload
+        function previewClientLogo(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const preview = document.getElementById('clientLogoPreview');
+                    const placeholder = document.getElementById('uploadPlaceholder');
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                    placeholder.style.display = 'none';
+                    
+                    // Save to localStorage
+                    localStorage.setItem('clientLogo', e.target.result);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // Handle login form submission
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const orgName = document.getElementById('orgName').textContent;
+            
+            // Save session data
+            localStorage.setItem('userEmail', email);
+            localStorage.setItem('organizationName', orgName);
+            
+            // Create demo session
+            const demoSession = {
+                user: { id: 'demo-user-123', email: email },
+                profile: { role: 'admin', full_name: 'Demo User', avatar_url: null },
+                role: 'admin',
+                isDemo: true
+            };
+            localStorage.setItem('session', JSON.stringify(demoSession));
+            
+            // Redirect to client portal
+            window.location.href = 'client-portal.html';
+        }
+
+        // Load saved logo and org name on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            const savedLogo = localStorage.getItem('clientLogo');
+            const savedOrgName = localStorage.getItem('organizationName');
+            
+            if (savedLogo) {
+                const preview = document.getElementById('clientLogoPreview');
+                const placeholder = document.getElementById('uploadPlaceholder');
+                preview.src = savedLogo;
+                preview.style.display = 'block';
+                placeholder.style.display = 'none';
+            }
+            
+            if (savedOrgName) {
+                document.getElementById('orgName').textContent = savedOrgName;
+            }
+        });
+
+        // Allow editing organization name
+        document.getElementById('orgName').addEventListener('click', function() {
+            const newName = prompt('Enter your organization name:', this.textContent);
+            if (newName && newName.trim()) {
+                this.textContent = newName.trim();
+                localStorage.setItem('organizationName', newName.trim());
+            }
+        });
+    </script>
 </body>
 </html>
