@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Achievements - Own Today</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/white-label.css">
+    <link rel="stylesheet" href="css/mobile-nav.css">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            padding-bottom: 80px;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .page-header {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .back-button {
+            background: linear-gradient(135deg, var(--org-primary, #667eea), var(--org-secondary, #764ba2));
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+        .back-button:hover { transform: scale(1.1); }
+        .page-header-content h1 { color: var(--org-primary, #667eea); font-size: 32px; margin-bottom: 5px; }
+        .page-header-content p { color: #666; font-size: 16px; }
+        
+        .achievements-stats {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+        }
+        .stat-item h3 {
+            font-size: 36px;
+            color: var(--org-primary, #667eea);
+            margin-bottom: 5px;
+        }
+        .stat-item p { color: #666; font-weight: 600; }
+        
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .achievement-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+        .achievement-card:hover { transform: translateY(-10px); }
+        .achievement-card.locked { opacity: 0.5; }
+        .achievement-icon {
+            font-size: 80px;
+            margin-bottom: 15px;
+        }
+        .achievement-card h3 {
+            color: #333;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        .achievement-card p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .achievement-progress {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid #f0f0f0;
+        }
+        .progress-text {
+            color: var(--org-primary, #667eea);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .progress-bar-container {
+            background: #e0e0e0;
+            height: 8px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--org-primary, #667eea), var(--org-secondary, #764ba2));
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+        .unlocked-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #4caf50;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        
+        @media (max-width: 768px) {
+            .achievements-stats { flex-direction: column; gap: 15px; }
+            .achievements-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div id="mobile-nav"></div>
+    <div class="container">
+        <div class="page-header">
+            <button class="back-button" onclick="window.location.href='client-portal.html'">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <div class="page-header-content">
+                <h1>Achievements</h1>
+                <p>Celebrate your victories</p>
+            </div>
+        </div>
+
+        <div class="achievements-stats">
+            <div class="stat-item">
+                <h3>12</h3>
+                <p>Unlocked</p>
+            </div>
+            <div class="stat-item">
+                <h3>8</h3>
+                <p>In Progress</p>
+            </div>
+            <div class="stat-item">
+                <h3>20</h3>
+                <p>Total Badges</p>
+            </div>
+        </div>
+
+        <div class="achievements-grid">
+            <div class="achievement-card">
+                <span class="unlocked-badge">✓ Unlocked</span>
+                <div class="achievement-icon">🔥</div>
+                <h3>Fire Starter</h3>
+                <p>Started your 7-day streak</p>
+            </div>
+
+            <div class="achievement-card">
+                <span class="unlocked-badge">✓ Unlocked</span>
+                <div class="achievement-icon">📝</div>
+                <h3>Storyteller</h3>
+                <p>Wrote your first journal entry</p>
+            </div>
+
+            <div class="achievement-card">
+                <span class="unlocked-badge">✓ Unlocked</span>
+                <div class="achievement-icon">🏠</div>
+                <h3>Meeting Maven</h3>
+                <p>Attended 10 recovery meetings</p>
+            </div>
+
+            <div class="achievement-card">
+                <div class="achievement-icon">🎯</div>
+                <h3>Goal Getter</h3>
+                <p>Complete 10 personal goals</p>
+                <div class="achievement-progress">
+                    <div class="progress-text">7 / 10 goals</div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" style="width: 70%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="achievement-card">
+                <div class="achievement-icon">🌟</div>
+                <h3>Consistency King</h3>
+                <p>Maintain a 30-day streak</p>
+                <div class="achievement-progress">
+                    <div class="progress-text">14 / 30 days</div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" style="width: 47%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="achievement-card">
+                <span class="unlocked-badge">✓ Unlocked</span>
+                <div class="achievement-icon">💰</div>
+                <h3>Point Collector</h3>
+                <p>Earned 1,000 total points</p>
+            </div>
+
+            <div class="achievement-card locked">
+                <div class="achievement-icon">🏆</div>
+                <h3>Century Club</h3>
+                <p>Attend 100 meetings</p>
+                <div class="achievement-progress">
+                    <div class="progress-text">28 / 100 meetings</div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" style="width: 28%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="achievement-card locked">
+                <div class="achievement-icon">💎</div>
+                <h3>Diamond Status</h3>
+                <p>Earn 10,000 total points</p>
+                <div class="achievement-progress">
+                    <div class="progress-text">3,500 / 10,000 pts</div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" style="width: 35%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="achievement-card locked">
+                <div class="achievement-icon">📚</div>
+                <h3>Bookworm</h3>
+                <p>Complete 50 journal entries</p>
+                <div class="achievement-progress">
+                    <div class="progress-text">42 / 50 entries</div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" style="width: 84%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/config.js"></script>
+    <script src="js/theming-engine.js"></script>
+    <script src="js/mobile-nav.js"></script>
+    <script>
+        if (window.themingEngine) window.themingEngine.init();
+    </script>
+</body>
+</html>
