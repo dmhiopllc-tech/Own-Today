@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rewards Store - Own Today</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/white-label.css">
+    <link rel="stylesheet" href="css/mobile-nav.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            padding-bottom: 80px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .page-header {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .back-button {
+            background: linear-gradient(135deg, var(--org-primary, #667eea), var(--org-secondary, #764ba2));
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .back-button:hover {
+            transform: scale(1.1);
+        }
+
+        .page-header-content {
+            flex: 1;
+        }
+
+        .page-header-content h1 {
+            color: var(--org-primary, #667eea);
+            font-size: 32px;
+            margin-bottom: 5px;
+        }
+
+        .page-header-content p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        /* Points Balance */
+        .points-balance {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(245, 158, 11, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .balance-info h2 {
+            font-size: 48px;
+            margin-bottom: 5px;
+        }
+
+        .balance-info p {
+            opacity: 0.9;
+            font-size: 16px;
+        }
+
+        .balance-icon {
+            font-size: 80px;
+            opacity: 0.3;
+        }
+
+        /* Filter Buttons */
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            border: 2px solid white;
+            background: white;
+            color: var(--org-primary, #667eea);
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: linear-gradient(135deg, var(--org-primary, #667eea), var(--org-secondary, #764ba2));
+            color: white;
+            border-color: var(--org-primary, #667eea);
+        }
+
+        /* Rewards Grid */
+        .rewards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .reward-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .reward-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .reward-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, var(--org-primary, #667eea), var(--org-secondary, #764ba2));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            color: white;
+        }
+
+        .reward-content {
+            padding: 20px;
+        }
+
+        .reward-category {
+            background: linear-gradient(135deg, var(--org-primary, #667eea), var(--org-secondary, #764ba2));
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .reward-card h3 {
+            color: #333;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .reward-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .reward-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-top: 15px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .reward-points {
+            font-size: 24px;
+            font-weight: 700;
+            color: #f59e0b;
+        }
+
+        .reward-stock {
+            color: #666;
+            font-size: 13px;
+        }
+
+        .reward-stock.low {
+            color: #ef4444;
+            font-weight: 600;
+        }
+
+        .redeem-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, var(--org-primary, #667eea), var(--org-secondary, #764ba2));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .redeem-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .redeem-btn:disabled {
+            background: #e0e0e0;
+            color: #999;
+            cursor: not-allowed;
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #ef4444;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        /* Success Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            animation: modalPop 0.5s ease;
+        }
+
+        @keyframes modalPop {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .modal-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+
+        .modal-content h2 {
+            color: var(--org-primary, #667eea);
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        .modal-content p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .modal-btn {
+            background: linear-gradient(135deg, var(--org-primary, #667eea), var(--org-secondary, #764ba2));
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .page-header {
+                padding: 20px;
+            }
+
+            .page-header-content h1 {
+                font-size: 24px;
+            }
+
+            .rewards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .points-balance {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+
+            .balance-icon {
+                font-size: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Mobile Navigation -->
+    <div id="mobile-nav"></div>
+
+    <div class="container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <button class="back-button" onclick="window.location.href='client-portal.html'">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <div class="page-header-content">
+                <h1>Rewards Store</h1>
+                <p>Redeem your hard-earned points</p>
+            </div>
+        </div>
+
+        <!-- Points Balance -->
+        <div class="points-balance">
+            <div class="balance-info">
+                <h2>1,250 Points</h2>
+                <p>Available to spend • 3,500 earned total</p>
+            </div>
+            <div class="balance-icon">
+                <i class="fas fa-coins"></i>
+            </div>
+        </div>
+
+        <!-- Filter Buttons -->
+        <div class="filter-buttons">
+            <button class="filter-btn active">All Rewards</button>
+            <button class="filter-btn">Gift Cards</button>
+            <button class="filter-btn">Privileges</button>
+            <button class="filter-btn">Wellness</button>
+            <button class="filter-btn">Activities</button>
+        </div>
+
+        <!-- Rewards Grid -->
+        <div class="rewards-grid">
+            <!-- Reward 1 -->
+            <div class="reward-card">
+                <span class="popular-badge">🔥 Popular</span>
+                <div class="reward-image">
+                    <i class="fas fa-shopping-bag"></i>
+                </div>
+                <div class="reward-content">
+                    <span class="reward-category">Gift Card</span>
+                    <h3>$10 Amazon Gift Card</h3>
+                    <p>Treat yourself to something special with this Amazon gift card. Perfect for books, essentials, or entertainment.</p>
+                    <div class="reward-meta">
+                        <div class="reward-points">
+                            <i class="fas fa-star"></i> 500 pts
+                        </div>
+                        <div class="reward-stock">25 available</div>
+                    </div>
+                    <button class="redeem-btn" onclick="redeemReward('$10 Amazon Gift Card', 500)">
+                        <i class="fas fa-gift"></i> Redeem Now
+                    </button>
+                </div>
+            </div>
+
+            <!-- Reward 2 -->
+            <div class="reward-card">
+                <div class="reward-image">
+                    <i class="fas fa-coffee"></i>
+                </div>
+                <div class="reward-content">
+                    <span class="reward-category">Gift Card</span>
+                    <h3>$5 Starbucks Card</h3>
+                    <p>Enjoy your favorite coffee or snack. A small reward for staying on track with your recovery journey.</p>
+                    <div class="reward-meta">
+                        <div class="reward-points">
+                            <i class="fas fa-star"></i> 250 pts
+                        </div>
+                        <div class="reward-stock">40 available</div>
+                    </div>
+                    <button class="redeem-btn" onclick="redeemReward('$5 Starbucks Card', 250)">
+                        <i class="fas fa-gift"></i> Redeem Now
+                    </button>
+                </div>
+            </div>
+
+            <!-- Reward 3 -->
+            <div class="reward-card">
+                <span class="popular-badge">🔥 Popular</span>
+                <div class="reward-image">
+                    <i class="fas fa-phone"></i>
+                </div>
+                <div class="reward-content">
+                    <span class="reward-category">Privilege</span>
+                    <h3>30 Min Phone Call Home</h3>
+                    <p>Extra phone time to connect with loved ones. Stay connected with the people who matter most.</p>
+                    <div class="reward-meta">
+                        <div class="reward-points">
+                            <i class="fas fa-star"></i> 150 pts
+                        </div>
+                        <div class="reward-stock">Unlimited</div>
+                    </div>
+                    <button class="redeem-btn" onclick="redeemReward('30 Min Phone Call Home', 150)">
+                        <i class="fas fa-gift"></i> Redeem Now
+                    </button>
+                </div>
+            </div>
+
+            <!-- Reward 4 -->
+            <div class="reward-card">
+                <div class="reward-image">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="reward-content">
+                    <span class="reward-category">Privilege</span>
+                    <h3>Extended Curfew (1 Hour)</h3>
+                    <p>Stay out an extra hour on your next outing. Perfect for special events or spending time with family.</p>
+                    <div class="reward-meta">
+                        <div class="reward-points">
+                            <i class="fas fa-star"></i> 300 pts
+                        </div>
+                        <div class="reward-stock">10 per month</div>
+                    </div>
+                    <button class="redeem-btn" onclick="redeemReward('Extended Curfew', 300)">
+                        <i class="fas fa-gift"></i> Redeem Now
+                    </button>
+                </div>
+            </div>
+
+            <!-- Reward 5 -->
+            <div class="reward-card">
+                <div class="reward-image">
+                    <i class="fas fa-spa"></i>
+                </div>
+                <div class="reward-content">
+                    <span class="reward-category">Wellness</span>
+                    <h3>Massage Therapy Session</h3>
+                    <p>60-minute professional massage to help with stress relief and relaxation. Self-care is important!</p>
+                    <div class="reward-meta">
+                        <div class="reward-points">
+                            <i class="fas fa-star"></i> 800 pts
+                        </div>
+                        <div class="reward-stock low">Only 3 left!</div>
+                    </div>
+                    <button class="redeem-btn" onclick="redeemReward('Massage Therapy Session', 800)">
+                        <i class="fas fa-gift"></i> Redeem Now
+                    </button>
+                </div>
+            </div>
+
+            <!-- Reward 6 -->
+            <div class="reward-card">
+                <div class="reward-image">
+                    <i class="fas fa-film"></i>
+                </div>
+                <div class="reward-content">
+                    <span class="reward-category">Activity</span>
+                    <h3>Movie Theater Tickets (2)</h3>
+                    <p>Enjoy a movie night out with a friend or family member. Great for celebrating milestones!</p>
+                    <div class="reward-meta">
+                        <div class="reward-points">
+                            <i class="fas fa-star"></i> 400 pts
+                        </div>
+                        <div class="reward-stock">15 available</div>
+                    </div>
+                    <button class="redeem-btn" onclick="redeemReward('Movie Theater Tickets', 400)">
+                        <i class="fas fa-gift"></i> Redeem Now
+                    </button>
+                </div>
+            </div>
+
+            <!-- Reward 7 -->
+            <div class="reward-card">
+                <div class="reward-image">
+                    <i class="fas fa-utensils"></i>
+                </div>
+                <div class="reward-content">
+                    <span class="reward-category">Gift Card</span>
+                    <h3>$20 Restaurant Gift Card</h3>
+                    <p>Enjoy a meal at your favorite local restaurant. Choose from participating locations.</p>
+                    <div class="reward-meta">
+                        <div class="reward-points">
+                            <i class="fas fa-star"></i> 600 pts
+                        </div>
+                        <div class="reward-stock">20 available</div>
+                    </div>
+                    <button class="redeem-btn" onclick="redeemReward('$20 Restaurant Gift Card', 600)">
+                        <i class="fas fa-gift"></i> Redeem Now
+                    </button>
+                </div>
+            </div>
+
+            <!-- Reward 8 -->
+            <div class="reward-card">
+                <div class="reward-image">
+                    <i class="fas fa-dumbbell"></i>
+                </div>
+                <div class="reward-content">
+                    <span class="reward-category">Wellness</span>
+                    <h3>Gym Membership (1 Month)</h3>
+                    <p>One month access to local fitness center. Stay healthy and active in your recovery!</p>
+                    <div class="reward-meta">
+                        <div class="reward-points">
+                            <i class="fas fa-star"></i> 1000 pts
+                        </div>
+                        <div class="reward-stock">8 available</div>
+                    </div>
+                    <button class="redeem-btn" onclick="redeemReward('Gym Membership', 1000)">
+                        <i class="fas fa-gift"></i> Redeem Now
+                    </button>
+                </div>
+            </div>
+
+            <!-- Reward 9 - Not enough points -->
+            <div class="reward-card">
+                <div class="reward-image">
+                    <i class="fas fa-laptop"></i>
+                </div>
+                <div class="reward-content">
+                    <span class="reward-category">Activity</span>
+                    <h3>Online Course Voucher</h3>
+                    <p>$50 voucher for Udemy or Coursera. Invest in your education and career development.</p>
+                    <div class="reward-meta">
+                        <div class="reward-points">
+                            <i class="fas fa-star"></i> 1500 pts
+                        </div>
+                        <div class="reward-stock">12 available</div>
+                    </div>
+                    <button class="redeem-btn" disabled title="Not enough points">
+                        <i class="fas fa-lock"></i> Need 250 more points
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="success-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-icon">🎉</div>
+            <h2>Reward Redeemed!</h2>
+            <p id="modal-message">Your reward will be available shortly. Check with staff for details.</p>
+            <button class="modal-btn" onclick="closeModal()">Awesome!</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/config.js"></script>
+    <script src="js/theming-engine.js"></script>
+    <script src="js/mobile-nav.js"></script>
+    
+    <script>
+        // Initialize theming
+        if (window.themingEngine) {
+            window.themingEngine.init();
+        }
+
+        // Current points balance
+        let availablePoints = 1250;
+
+        // Filter buttons
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                console.log('Filter:', this.textContent);
+            });
+        });
+
+        // Redeem reward
+        function redeemReward(rewardName, cost) {
+            if (availablePoints < cost) {
+                alert(`❌ Not enough points!\n\nYou need ${cost - availablePoints} more points to redeem this reward.\n\nKeep earning points by:\n• Checking into meetings (+50)\n• Writing journal entries (+25)\n• Completing goals (+100)`);
+                return;
+            }
+
+            if (confirm(`🎁 Redeem ${rewardName}?\n\nCost: ${cost} points\nRemaining: ${availablePoints - cost} points`)) {
+                // Deduct points
+                availablePoints -= cost;
+                
+                // Update balance display
+                document.querySelector('.balance-info h2').textContent = `${availablePoints} Points`;
+                
+                // Show success modal
+                document.getElementById('modal-message').textContent = 
+                    `You've successfully redeemed ${rewardName}! Staff will be notified and your reward will be processed shortly.`;
+                document.getElementById('success-modal').classList.add('active');
+
+                console.log('Reward redeemed:', rewardName, 'Cost:', cost, 'Remaining:', availablePoints);
+            }
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('success-modal').classList.remove('active');
+        }
+
+        console.log('📄 Rewards page loaded');
+    </script>
+</body>
+</html>
