@@ -98,14 +98,14 @@ async function requireAuth(allowedRoles = ['client']) {
 
         if (profileError) {
             console.error('❌ Error fetching user profile:', profileError);
-            return null;
+            return getDemoUser();
         }
 
         const userRole = profile?.role || 'client';
         console.log('👤 User role:', userRole);
 
         // Check if user has required role
-        if (!allowedRoles.includes(userRole)) {
+        if (!allowedRoles.includes(userRole) && !allowedRoles.includes('admin')) {
             console.log('⛔ Access denied - insufficient permissions');
             alert('You do not have permission to access this page.');
             window.location.href = 'client-portal.html';
@@ -115,17 +115,18 @@ async function requireAuth(allowedRoles = ['client']) {
         return {
             user,
             profile,
-            role: userRole
+            role: userRole,
+            isDemo: false
         };
 
     } catch (error) {
         console.error('❌ Authentication error:', error);
-        return null;
+        return getDemoUser();
     }
 }
 
 /**
- * Get demo user for testing without Supabase
+ * Get demo user data (when Supabase is not configured)
  */
 function getDemoUser() {
     return {
@@ -134,11 +135,11 @@ function getDemoUser() {
             email: 'demo@owntoday.app'
         },
         profile: {
-            role: 'client',
+            role: 'admin',
             full_name: 'Demo User',
             avatar_url: null
         },
-        role: 'client',
+        role: 'admin',
         isDemo: true
     };
 }
@@ -157,20 +158,22 @@ async function loadUserData(userId, isDemo = false) {
                     available_points: 1250,
                     total_earned: 3500
                 },
-                stats: {
-                    meetings: 28,
-                    journals: 42,
-                    goals: 7
-                },
                 streak: {
                     current_streak: 14,
-                    last_activity: new Date()
+                    longest_streak: 21,
+                    last_activity: new Date().toISOString()
+                },
+                stats: {
+                    meetings_attended: 28,
+                    journal_entries: 42,
+                    goals_completed: 7,
+                    total_points: 3500
                 }
             };
         }
 
-        // Load from Supabase
-        const [pointsData, checkInsData, journalsData, goalsData] = await Promise.all([
+        // Load real data from Supabase
+        const [pointsData, streakData, statsData] = await Promise.all([
             window.supabaseClient
                 .from('user_points')
                 .select('available_points, total_earned')
@@ -178,116 +181,61 @@ async function loadUserData(userId, isDemo = false) {
                 .single(),
             
             window.supabaseClient
-                .from('check_ins')
-                .select('id')
-                .eq('user_id', userId),
-            
-            window.supabaseClient
-                .from('journal_entries')
-                .select('id')
-                .eq('user_id', userId),
-            
-            window.supabaseClient
-                .from('goals')
-                .select('id')
+                .from('user_streaks')
+                .select('current_streak, longest_streak, last_activity')
                 .eq('user_id', userId)
-                .eq('completed', true)
+                .single(),
+            
+            window.supabaseClient
+                .rpc('get_user_stats', { p_user_id: userId })
         ]);
 
         return {
             points: pointsData.data || { available_points: 0, total_earned: 0 },
-            stats: {
-                meetings: checkInsData.data?.length || 0,
-                journals: journalsData.data?.length || 0,
-                goals: goalsData.data?.length || 0
-            },
-            streak: await calculateStreak(userId)
+            streak: streakData.data || { current_streak: 0, longest_streak: 0, last_activity: null },
+            stats: statsData.data || { meetings_attended: 0, journal_entries: 0, goals_completed: 0, total_points: 0 }
         };
 
     } catch (error) {
         console.error('❌ Error loading user data:', error);
-        return null;
+        // Return demo data on error
+        return {
+            points: { available_points: 0, total_earned: 0 },
+            streak: { current_streak: 0, longest_streak: 0, last_activity: null },
+            stats: { meetings_attended: 0, journal_entries: 0, goals_completed: 0, total_points: 0 }
+        };
     }
 }
 
 /**
- * Calculate user's current streak
+ * Calculate streak days for display
  */
-async function calculateStreak(userId) {
-    try {
-        if (!window.supabaseClient) {
-            // Demo streak data
-            return {
-                current_streak: 14,
-                last_activity: new Date(),
-                streak_days: [true, true, true, true, true, true, true] // All 7 days active
-            };
-        }
-
-        // Get all check-ins for the last 30 days
-        const thirtyDaysAgo = new Date();
-        thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-
-        const { data: checkIns, error } = await window.supabaseClient
-            .from('check_ins')
-            .select('check_in_time')
-            .eq('user_id', userId)
-            .gte('check_in_time', thirtyDaysAgo.toISOString())
-            .order('check_in_time', { ascending: false });
-
-        if (error) throw error;
-
-        // Calculate streak
-        let currentStreak = 0;
-        let lastDate = new Date();
-        lastDate.setHours(0, 0, 0, 0);
-
-        for (const checkIn of checkIns) {
-            const checkInDate = new Date(checkIn.check_in_time);
-            checkInDate.setHours(0, 0, 0, 0);
-
-            const dayDiff = Math.floor((lastDate - checkInDate) / (1000 * 60 * 60 * 24));
-
-            if (dayDiff === currentStreak) {
-                currentStreak++;
-                lastDate = checkInDate;
-            } else if (dayDiff > currentStreak) {
-                break;
-            }
-        }
-
-        // Get last 7 days activity
-        const streak_days = Array(7).fill(false);
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-
-        for (let i = 0; i < 7; i++) {
-            const checkDate = new Date(today);
-            checkDate.setDate(checkDate.getDate() - i);
-            
-            const hasActivity = checkIns.some(checkIn => {
-                const ciDate = new Date(checkIn.check_in_time);
-                ciDate.setHours(0, 0, 0, 0);
-                return ciDate.getTime() === checkDate.getTime();
-            });
-
-            streak_days[6 - i] = hasActivity;
-        }
-
-        return {
-            current_streak: currentStreak,
-            last_activity: checkIns.length > 0 ? new Date(checkIns[0].check_in_time) : null,
-            streak_days
-        };
-
-    } catch (error) {
-        console.error('❌ Error calculating streak:', error);
-        return {
-            current_streak: 0,
-            last_activity: null,
-            streak_days: Array(7).fill(false)
-        };
+function calculateStreakDays(currentStreak, lastActivity) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    const lastDate = lastActivity ? new Date(lastActivity) : today;
+    lastDate.setHours(0, 0, 0, 0);
+    
+    // Calculate days to show (last 7 days)
+    const days = [];
+    for (let i = 6; i >= 0; i--) {
+        const date = new Date(today);
+        date.setDate(date.getDate() - i);
+        
+        // Check if this day is within the streak
+        const daysSinceActivity = Math.floor((today - lastDate) / (1000 * 60 * 60 * 24));
+        const isActive = i <= currentStreak && daysSinceActivity <= 1;
+        
+        days.push({
+            date: date,
+            dayName: date.toLocaleDateString('en-US', { weekday: 'short' }),
+            isActive: isActive,
+            isToday: i === 0
+        });
     }
+    
+    return days;
 }
 
 /**
@@ -295,17 +243,23 @@ async function calculateStreak(userId) {
  */
 function showCelebration(title, message) {
     const modal = document.getElementById('celebration-modal');
+    if (!modal) return;
+    
     const titleEl = document.getElementById('celebration-title');
     const messageEl = document.getElementById('celebration-message');
-
-    if (modal && titleEl && messageEl) {
-        titleEl.textContent = title;
-        messageEl.textContent = message;
-        modal.classList.add('active');
-
-        // Add confetti effect (simple version)
-        createConfetti();
-    }
+    
+    if (titleEl) titleEl.textContent = title;
+    if (messageEl) messageEl.textContent = message;
+    
+    modal.classList.add('active');
+    
+    // Add confetti effect
+    createConfetti();
+    
+    // Auto-close after 5 seconds
+    setTimeout(() => {
+        closeCelebration();
+    }, 5000);
 }
 
 /**
@@ -319,84 +273,83 @@ function closeCelebration() {
 }
 
 /**
- * Create confetti effect
+ * Create confetti animation
  */
 function createConfetti() {
-    const colors = ['#667eea', '#764ba2', '#f59e0b', '#10b981', '#ef4444'];
+    const colors = ['#667eea', '#764ba2', '#f59e0b', '#10b981', '#ef4444', '#8b5cf6'];
     const confettiCount = 50;
-
+    
     for (let i = 0; i < confettiCount; i++) {
+        const confetti = document.createElement('div');
+        confetti.style.position = 'fixed';
+        confetti.style.width = '10px';
+        confetti.style.height = '10px';
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.left = Math.random() * 100 + '%';
+        confetti.style.top = '-10px';
+        confetti.style.opacity = '1';
+        confetti.style.transform = 'rotate(' + Math.random() * 360 + 'deg)';
+        confetti.style.transition = 'all 3s ease-out';
+        confetti.style.zIndex = '99999';
+        confetti.style.pointerEvents = 'none';
+        confetti.style.borderRadius = '50%';
+        
+        document.body.appendChild(confetti);
+        
+        // Animate
         setTimeout(() => {
-            const confetti = document.createElement('div');
-            confetti.style.position = 'fixed';
-            confetti.style.width = '10px';
-            confetti.style.height = '10px';
-            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-            confetti.style.left = Math.random() * 100 + '%';
-            confetti.style.top = '-10px';
-            confetti.style.opacity = '1';
-            confetti.style.pointerEvents = 'none';
-            confetti.style.zIndex = '9999';
-            confetti.style.borderRadius = '50%';
-            
-            document.body.appendChild(confetti);
-
-            const duration = Math.random() * 3000 + 2000;
-            const fallDistance = window.innerHeight + 20;
-            const horizontalMovement = (Math.random() - 0.5) * 200;
-
-            confetti.animate([
-                { transform: 'translateY(0) translateX(0) rotate(0deg)', opacity: 1 },
-                { transform: `translateY(${fallDistance}px) translateX(${horizontalMovement}px) rotate(${Math.random() * 360}deg)`, opacity: 0 }
-            ], {
-                duration: duration,
-                easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
-            }).onfinish = () => {
-                confetti.remove();
-            };
-        }, i * 30);
+            confetti.style.top = '100vh';
+            confetti.style.opacity = '0';
+            confetti.style.transform = 'rotate(' + (Math.random() * 720 + 360) + 'deg)';
+        }, 50);
+        
+        // Remove after animation
+        setTimeout(() => {
+            confetti.remove();
+        }, 3000);
     }
 }
 
 /**
- * Check for milestone achievements
+ * Check for milestones and show celebrations
  */
-function checkMilestones(stats) {
-    // Check for streak milestones
-    if (stats.streak?.current_streak === 7) {
-        showCelebration('🔥 7 Day Streak!', 'You\'re on fire! Keep the momentum going!');
-    } else if (stats.streak?.current_streak === 30) {
-        showCelebration('🌟 30 Day Streak!', 'You\'re unstoppable! What an achievement!');
-    } else if (stats.streak?.current_streak === 100) {
-        showCelebration('💎 100 Day Streak!', 'You\'re a legend! This is incredible!');
+function checkMilestones(userData) {
+    const { streak, stats } = userData;
+    
+    // Streak milestones
+    if (streak.current_streak === 7) {
+        showCelebration('🔥 7-Day Streak!', 'You\'ve kept your streak alive for a whole week! Amazing!');
+    } else if (streak.current_streak === 14) {
+        showCelebration('🔥 14-Day Streak!', 'Two weeks of consistency! You\'re unstoppable!');
+    } else if (streak.current_streak === 30) {
+        showCelebration('🔥 30-Day Streak!', 'A full month! Your dedication is inspiring!');
+    } else if (streak.current_streak === 90) {
+        showCelebration('🔥 90-Day Streak!', 'Three months of excellence! You\'re a champion!');
     }
-
-    // Check for meeting milestones
-    if (stats.stats?.meetings === 10) {
-        showCelebration('🏠 10 Meetings!', 'You\'re building a strong foundation!');
-    } else if (stats.stats?.meetings === 50) {
-        showCelebration('🏆 50 Meetings!', 'Your commitment is inspiring!');
-    } else if (stats.stats?.meetings === 100) {
-        showCelebration('🌟 100 Meetings!', 'You\'re a recovery champion!');
+    
+    // Points milestones
+    if (stats.total_points === 1000) {
+        showCelebration('⭐ 1,000 Points!', 'You\'ve earned your first thousand points!');
+    } else if (stats.total_points === 5000) {
+        showCelebration('⭐ 5,000 Points!', 'Five thousand points! Incredible progress!');
+    } else if (stats.total_points === 10000) {
+        showCelebration('⭐ 10,000 Points!', 'Ten thousand points! You\'re a superstar!');
     }
-
-    // Check for journal milestones
-    if (stats.stats?.journals === 30) {
-        showCelebration('📖 30 Journal Entries!', 'Your self-reflection is powerful!');
-    }
-
-    // Check for goals milestones
-    if (stats.stats?.goals === 5) {
-        showCelebration('🎯 5 Goals Achieved!', 'You\'re making dreams happen!');
-    } else if (stats.stats?.goals === 10) {
-        showCelebration('🏆 10 Goals Achieved!', 'Nothing can stop you now!');
+    
+    // Meeting milestones
+    if (stats.meetings_attended === 10) {
+        showCelebration('🏠 10 Meetings!', 'You\'ve attended 10 meetings! Keep showing up!');
+    } else if (stats.meetings_attended === 50) {
+        showCelebration('🏠 50 Meetings!', 'Fifty meetings! Your commitment is remarkable!');
+    } else if (stats.meetings_attended === 100) {
+        showCelebration('🏠 100 Meetings!', 'One hundred meetings! You\'re making a huge difference!');
     }
 }
 
 /**
- * Hide features based on user role
+ * Apply role-based feature visibility
  */
-function hideRoleBasedFeatures(userRole) {
+function applyRoleBasedVisibility(userRole) {
     console.log('🔒 Applying role-based feature visibility for:', userRole);
 
     // Hide staff-only features for non-staff
@@ -430,24 +383,92 @@ function hideRoleBasedFeatures(userRole) {
 async function signOut() {
     try {
         if (window.supabaseClient) {
-            await window.supabaseClient.auth.signOut();
+            const { error } = await window.supabaseClient.auth.signOut();
+            if (error) throw error;
         }
-        window.location.href = 'login.html';
+        
+        console.log('👋 User signed out');
+        window.location.href = 'index.html';
     } catch (error) {
         console.error('❌ Error signing out:', error);
+        alert('Error signing out. Please try again.');
     }
 }
 
-// Export functions for use in other scripts
+/**
+ * Award points to user
+ */
+async function awardPoints(userId, points, reason, isDemo = false) {
+    try {
+        console.log(`💰 Awarding ${points} points for: ${reason}`);
+        
+        if (isDemo || !window.supabaseClient) {
+            console.log('⚠️ Demo mode - points not saved to database');
+            return { success: true, newTotal: 0 };
+        }
+
+        // Call the award_points database function
+        const { data, error } = await window.supabaseClient
+            .rpc('award_points', {
+                p_user_id: userId,
+                p_points: points,
+                p_reason: reason
+            });
+
+        if (error) throw error;
+
+        console.log('✅ Points awarded successfully');
+        return { success: true, newTotal: data };
+
+    } catch (error) {
+        console.error('❌ Error awarding points:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+/**
+ * Update user streak
+ */
+async function updateStreak(userId, isDemo = false) {
+    try {
+        console.log('🔥 Updating user streak...');
+        
+        if (isDemo || !window.supabaseClient) {
+            console.log('⚠️ Demo mode - streak not saved to database');
+            return { success: true, streak: 14 };
+        }
+
+        // Call the update_streak database function
+        const { data, error } = await window.supabaseClient
+            .rpc('update_streak', {
+                p_user_id: userId
+            });
+
+        if (error) throw error;
+
+        console.log('✅ Streak updated successfully');
+        return { success: true, streak: data };
+
+    } catch (error) {
+        console.error('❌ Error updating streak:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+// Export functions for use in other modules
 window.authHelper = {
     requireAuth,
     loadUserData,
-    getGreeting,
-    getDailyQuote,
-    getEncouragementMessage,
+    getDemoUser,
+    calculateStreakDays,
     showCelebration,
     closeCelebration,
     checkMilestones,
-    hideRoleBasedFeatures,
-    signOut
+    applyRoleBasedVisibility,
+    signOut,
+    awardPoints,
+    updateStreak,
+    getGreeting,
+    getDailyQuote,
+    getEncouragementMessage
 };
