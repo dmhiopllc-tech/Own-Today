@@ -1,810 +1,969 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8V3QF8VVMZ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-8V3QF8VVMZ');
+    </script>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Goals - Own Today</title>
+    <title>Goal Setting - Desert Mountain Healing IOP</title>
     
-    <!-- Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Styles -->
-    <link rel="stylesheet" href="css/white-label.css">
-    <link rel="stylesheet" href="css/mobile-nav.css">
+    <link rel="stylesheet" href="css/style.css">
     
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --primary: #4A9FBF; --light: #85C1D9; --accent: #3A8FAF;
+            --white: #FFF; --gray: #F5F7FA; --dark: #1F2937;
+            --success: #10B981; --warning: #F59E0B; --danger: #EF4444;
         }
-
+        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-            padding-bottom: 80px;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--gray), var(--white));
+            color: var(--dark);
         }
-
-        .container {
+        
+        .main-content {
             max-width: 1200px;
             margin: 0 auto;
+            padding: 2rem;
         }
-
-        /* Header */
-        .page-header {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
+        
         .back-button {
-            background: linear-gradient(135deg, var(--org-primary, #667eea), var(--org-secondary, #764ba2));
-            color: white;
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 20px;
-            transition: transform 0.3s ease;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: white;
+            color: var(--primary);
+            text-decoration: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            transition: all 0.3s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
-
+        
         .back-button:hover {
-            transform: scale(1.1);
+            transform: translateX(-5px);
         }
-
-        .page-header-content {
-            flex: 1;
-        }
-
-        .page-header-content h1 {
-            color: var(--org-primary, #667eea);
-            font-size: 32px;
-            margin-bottom: 5px;
-        }
-
-        .page-header-content p {
-            color: #666;
-            font-size: 16px;
-        }
-
-        /* Stats Bar */
-        .stats-bar {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .stat-box {
-            flex: 1;
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
+        
+        .page-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
             text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
-
-        .stat-number {
-            font-size: 32px;
-            font-weight: 700;
-            color: var(--org-primary, #667eea);
-            margin-bottom: 5px;
+        
+        .page-header h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 2.5rem;
         }
-
-        .stat-label {
-            color: #666;
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        /* Add Goal Button */
-        .add-goal-btn {
-            background: linear-gradient(135deg, var(--org-primary, #667eea), var(--org-secondary, #764ba2));
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 15px;
-            font-weight: 600;
-            font-size: 16px;
-            cursor: pointer;
+        
+        .action-bar {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
-            transition: transform 0.3s ease;
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+            margin-bottom: 2rem;
+            gap: 1rem;
+            flex-wrap: wrap;
         }
-
-        .add-goal-btn:hover {
-            transform: scale(1.05);
-        }
-
-        /* Tabs */
-        .tabs {
+        
+        .filter-tabs {
             display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            background: white;
-            padding: 10px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            gap: 0.5rem;
         }
-
+        
         .tab {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            background: transparent;
-            color: #666;
-            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border: 2px solid #E5E7EB;
+            background: white;
+            border-radius: 0.5rem;
             cursor: pointer;
-            border-radius: 10px;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
+            font-weight: 600;
         }
-
+        
+        .tab:hover {
+            border-color: var(--primary);
+            background: var(--light);
+        }
+        
         .tab.active {
-            background: linear-gradient(135deg, var(--org-primary, #667eea), var(--org-secondary, #764ba2));
+            border-color: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--accent));
             color: white;
         }
-
-        /* Goals Grid */
+        
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(74,159,191,0.3);
+        }
+        
         .goals-grid {
             display: grid;
-            gap: 20px;
+            gap: 1.5rem;
         }
-
+        
         .goal-card {
             background: white;
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-            position: relative;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            border-left: 4px solid var(--primary);
         }
-
+        
         .goal-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
-
+        
         .goal-card.completed {
-            opacity: 0.8;
-            border: 3px solid #4caf50;
+            border-left-color: var(--success);
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(255, 255, 255, 1));
         }
-
+        
         .goal-header {
             display: flex;
             justify-content: space-between;
-            align-items: start;
-            margin-bottom: 15px;
+            align-items: flex-start;
+            margin-bottom: 1rem;
         }
-
+        
+        .goal-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin: 0 0 0.5rem 0;
+        }
+        
         .goal-category {
-            background: linear-gradient(135deg, var(--org-primary, #667eea), var(--org-secondary, #764ba2));
-            color: white;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 13px;
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.85rem;
             font-weight: 600;
+            margin-bottom: 0.5rem;
         }
-
-        .goal-card h3 {
-            color: #333;
-            font-size: 22px;
-            margin: 15px 0;
-        }
-
-        .goal-card p {
-            color: #666;
+        
+        .category-health { background: #DBEAFE; color: #1E3A8A; }
+        .category-relationships { background: #FCE7F3; color: #831843; }
+        .category-personal { background: #FEF3C7; color: #92400E; }
+        .category-spiritual { background: #E0E7FF; color: #3730A3; }
+        .category-recovery { background: #D1FAE5; color: #065F46; }
+        
+        .goal-description {
+            color: #6B7280;
             line-height: 1.6;
-            margin-bottom: 15px;
+            margin-bottom: 1rem;
         }
-
-        .goal-meta {
+        
+        .goal-smart {
+            background: var(--gray);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .smart-row {
             display: flex;
-            gap: 20px;
-            margin: 15px 0;
-            flex-wrap: wrap;
+            gap: 0.5rem;
+            align-items: flex-start;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
         }
-
-        .meta-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #666;
-            font-size: 14px;
+        
+        .smart-label {
+            font-weight: 700;
+            color: var(--primary);
+            min-width: 80px;
         }
-
-        .meta-item i {
-            color: var(--org-primary, #667eea);
-        }
-
+        
         .goal-progress {
-            margin: 20px 0;
+            margin-bottom: 1rem;
         }
-
-        .progress-label {
+        
+        .progress-header {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 8px;
-            font-size: 14px;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
             font-weight: 600;
-            color: #666;
         }
-
-        .progress-bar-container {
-            background: #e0e0e0;
+        
+        .progress-bar {
             height: 10px;
+            background: #E5E7EB;
             border-radius: 10px;
             overflow: hidden;
         }
-
-        .progress-bar {
+        
+        .progress-fill {
             height: 100%;
-            background: linear-gradient(135deg, var(--org-primary, #667eea), var(--org-secondary, #764ba2));
-            transition: width 0.3s ease;
-            border-radius: 10px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transition: width 0.3s;
         }
-
+        
+        .goal-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #E5E7EB;
+        }
+        
+        .goal-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.85rem;
+            color: #6B7280;
+        }
+        
         .goal-actions {
             display: flex;
-            gap: 10px;
-            margin-top: 20px;
+            gap: 0.5rem;
         }
-
-        .btn {
-            flex: 1;
-            padding: 12px 20px;
-            border-radius: 10px;
+        
+        .btn-icon {
+            padding: 0.5rem;
             border: none;
+            background: transparent;
+            color: #6B7280;
+            cursor: pointer;
+            border-radius: 0.5rem;
+            transition: all 0.3s;
+        }
+        
+        .btn-icon:hover {
+            background: var(--gray);
+            color: var(--primary);
+        }
+        
+        .btn-success {
+            background: var(--success);
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 0.5rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+            transition: all 0.3s;
         }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--org-primary, #667eea), var(--org-secondary, #764ba2));
-            color: white;
+        
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
         }
-
-        .btn-primary:hover {
-            transform: scale(1.05);
-        }
-
-        .btn-success {
-            background: #4caf50;
-            color: white;
-        }
-
-        .btn-secondary {
-            background: #f0f0f0;
-            color: #666;
-        }
-
-        .btn-secondary:hover {
-            background: #e0e0e0;
-        }
-
+        
         .completed-badge {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: #4caf50;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 14px;
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            gap: 5px;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--success);
+            color: white;
+            border-radius: 1rem;
+            font-weight: 600;
         }
-
-        /* Modal */
+        
         .modal {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.7);
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
             z-index: 1000;
             align-items: center;
             justify-content: center;
-            padding: 20px;
         }
-
+        
         .modal.active {
             display: flex;
         }
-
+        
         .modal-content {
             background: white;
-            border-radius: 20px;
-            padding: 30px;
-            max-width: 600px;
-            width: 100%;
+            padding: 2rem;
+            border-radius: 1rem;
+            max-width: 700px;
+            width: 90%;
             max-height: 90vh;
             overflow-y: auto;
         }
-
+        
         .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 1.5rem;
         }
-
+        
         .modal-header h2 {
-            color: var(--org-primary, #667eea);
-            font-size: 28px;
+            margin: 0;
         }
-
+        
         .close-modal {
-            background: #f0f0f0;
+            background: none;
             border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
+            font-size: 1.5rem;
             cursor: pointer;
-            font-size: 20px;
-            color: #666;
+            color: #6B7280;
         }
-
+        
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 1.5rem;
         }
-
+        
         .form-group label {
             display: block;
-            color: #333;
+            margin-bottom: 0.5rem;
             font-weight: 600;
-            margin-bottom: 8px;
+            color: var(--dark);
         }
-
+        
         .form-group input,
-        .form-group select,
-        .form-group textarea {
+        .form-group textarea,
+        .form-group select {
             width: 100%;
-            padding: 12px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 16px;
-            font-family: inherit;
+            padding: 0.75rem;
+            border: 2px solid #E5E7EB;
+            border-radius: 0.5rem;
+            font-family: 'Inter', sans-serif;
         }
-
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--org-primary, #667eea);
-        }
-
+        
         .form-group textarea {
             min-height: 100px;
             resize: vertical;
         }
-
+        
+        .help-text {
+            font-size: 0.85rem;
+            color: #6B7280;
+            margin-top: 0.25rem;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .empty-state i {
+            font-size: 4rem;
+            color: #D1D5DB;
+            margin-bottom: 1rem;
+        }
+        
         @media (max-width: 768px) {
-            .stats-bar {
+            .action-bar {
                 flex-direction: column;
+                align-items: stretch;
             }
-
-            .tabs {
-                flex-direction: column;
-            }
-
-            .goal-meta {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .goal-actions {
-                flex-direction: column;
+            
+            .filter-tabs {
+                flex-wrap: wrap;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Mobile Navigation -->
-    <div id="mobile-nav"></div>
-
-    <div class="container">
-        <!-- Page Header -->
+    <div class="main-content">
+        <a href="index.html" class="back-button">
+            <i class="fas fa-arrow-left"></i>
+            Back to Dashboard
+        </a>
+        
         <div class="page-header">
-            <button class="back-button" onclick="window.location.href='client-portal.html'">
-                <i class="fas fa-arrow-left"></i>
-            </button>
-            <div class="page-header-content">
-                <h1>Goals</h1>
-                <p>Build your future, one goal at a time</p>
-            </div>
+            <h1><i class="fas fa-bullseye"></i> Goal Setting</h1>
+            <p>Create SMART goals and track your recovery journey</p>
         </div>
-
-        <!-- Stats Bar -->
-        <div class="stats-bar">
-            <div class="stat-box">
-                <div class="stat-number">5</div>
-                <div class="stat-label">Active Goals</div>
-            </div>
-            <div class="stat-box">
-                <div class="stat-number">7</div>
-                <div class="stat-label">Completed</div>
-            </div>
-            <div class="stat-box">
-                <div class="stat-number">700</div>
-                <div class="stat-label">Points Earned</div>
-            </div>
-        </div>
-
-        <!-- Add Goal Button -->
-        <button class="add-goal-btn" onclick="openModal()">
-            <i class="fas fa-plus"></i>
-            Create New Goal
-        </button>
-
-        <!-- Tabs -->
-        <div class="tabs">
-            <button class="tab active" onclick="switchTab('active')">
-                Active Goals
-            </button>
-            <button class="tab" onclick="switchTab('completed')">
-                Completed Goals
-            </button>
-        </div>
-
-        <!-- Active Goals Grid -->
-        <div id="active-goals" class="goals-grid">
-            <!-- Goal 1 -->
-            <div class="goal-card">
-                <div class="goal-header">
-                    <div class="goal-category">Personal Growth</div>
-                </div>
-                <h3>Attend 30 meetings in 30 days</h3>
-                <p>Build a strong foundation by consistently attending recovery meetings daily.</p>
-                
-                <div class="goal-meta">
-                    <div class="meta-item">
-                        <i class="fas fa-calendar"></i>
-                        <span>Due: Dec 31, 2024</span>
-                    </div>
-                    <div class="meta-item">
-                        <i class="fas fa-star"></i>
-                        <span>100 points reward</span>
-                    </div>
-                </div>
-
-                <div class="goal-progress">
-                    <div class="progress-label">
-                        <span>Progress</span>
-                        <span>18 / 30 meetings</span>
-                    </div>
-                    <div class="progress-bar-container">
-                        <div class="progress-bar" style="width: 60%"></div>
-                    </div>
-                </div>
-
-                <div class="goal-actions">
-                    <button class="btn btn-primary">
-                        <i class="fas fa-edit"></i> Update Progress
-                    </button>
-                    <button class="btn btn-secondary">
-                        <i class="fas fa-ellipsis-h"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Goal 2 -->
-            <div class="goal-card">
-                <div class="goal-header">
-                    <div class="goal-category">Health & Wellness</div>
-                </div>
-                <h3>Journal 5 times per week</h3>
-                <p>Practice self-reflection and emotional awareness through regular journaling.</p>
-                
-                <div class="goal-meta">
-                    <div class="meta-item">
-                        <i class="fas fa-calendar"></i>
-                        <span>Due: Dec 15, 2024</span>
-                    </div>
-                    <div class="meta-item">
-                        <i class="fas fa-star"></i>
-                        <span>75 points reward</span>
-                    </div>
-                </div>
-
-                <div class="goal-progress">
-                    <div class="progress-label">
-                        <span>This Week</span>
-                        <span>3 / 5 entries</span>
-                    </div>
-                    <div class="progress-bar-container">
-                        <div class="progress-bar" style="width: 60%"></div>
-                    </div>
-                </div>
-
-                <div class="goal-actions">
-                    <button class="btn btn-primary">
-                        <i class="fas fa-edit"></i> Update Progress
-                    </button>
-                    <button class="btn btn-secondary">
-                        <i class="fas fa-ellipsis-h"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Goal 3 -->
-            <div class="goal-card">
-                <div class="goal-header">
-                    <div class="goal-category">Relationships</div>
-                </div>
-                <h3>Reconnect with family members</h3>
-                <p>Make amends and rebuild relationships with family through honest communication.</p>
-                
-                <div class="goal-meta">
-                    <div class="meta-item">
-                        <i class="fas fa-calendar"></i>
-                        <span>Due: Jan 15, 2025</span>
-                    </div>
-                    <div class="meta-item">
-                        <i class="fas fa-star"></i>
-                        <span>150 points reward</span>
-                    </div>
-                </div>
-
-                <div class="goal-progress">
-                    <div class="progress-label">
-                        <span>Progress</span>
-                        <span>1 / 3 contacts made</span>
-                    </div>
-                    <div class="progress-bar-container">
-                        <div class="progress-bar" style="width: 33%"></div>
-                    </div>
-                </div>
-
-                <div class="goal-actions">
-                    <button class="btn btn-primary">
-                        <i class="fas fa-edit"></i> Update Progress
-                    </button>
-                    <button class="btn btn-secondary">
-                        <i class="fas fa-ellipsis-h"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Goal 4 -->
-            <div class="goal-card">
-                <div class="goal-header">
-                    <div class="goal-category">Career & Education</div>
-                </div>
-                <h3>Complete online certification course</h3>
-                <p>Invest in professional development to build career opportunities.</p>
-                
-                <div class="goal-meta">
-                    <div class="meta-item">
-                        <i class="fas fa-calendar"></i>
-                        <span>Due: Feb 28, 2025</span>
-                    </div>
-                    <div class="meta-item">
-                        <i class="fas fa-star"></i>
-                        <span>200 points reward</span>
-                    </div>
-                </div>
-
-                <div class="goal-progress">
-                    <div class="progress-label">
-                        <span>Modules Completed</span>
-                        <span>4 / 12</span>
-                    </div>
-                    <div class="progress-bar-container">
-                        <div class="progress-bar" style="width: 33%"></div>
-                    </div>
-                </div>
-
-                <div class="goal-actions">
-                    <button class="btn btn-primary">
-                        <i class="fas fa-edit"></i> Update Progress
-                    </button>
-                    <button class="btn btn-secondary">
-                        <i class="fas fa-ellipsis-h"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Goal 5 -->
-            <div class="goal-card">
-                <div class="goal-header">
-                    <div class="goal-category">Spiritual</div>
-                </div>
-                <h3>Complete Step 4 inventory work</h3>
-                <p>Work through personal inventory with sponsor to continue recovery journey.</p>
-                
-                <div class="goal-meta">
-                    <div class="meta-item">
-                        <i class="fas fa-calendar"></i>
-                        <span>Due: Dec 20, 2024</span>
-                    </div>
-                    <div class="meta-item">
-                        <i class="fas fa-star"></i>
-                        <span>125 points reward</span>
-                    </div>
-                </div>
-
-                <div class="goal-progress">
-                    <div class="progress-label">
-                        <span>Progress</span>
-                        <span>75% complete</span>
-                    </div>
-                    <div class="progress-bar-container">
-                        <div class="progress-bar" style="width: 75%"></div>
-                    </div>
-                </div>
-
-                <div class="goal-actions">
-                    <button class="btn btn-success" onclick="completeGoal(this)">
-                        <i class="fas fa-check"></i> Mark Complete
-                    </button>
-                    <button class="btn btn-secondary">
-                        <i class="fas fa-ellipsis-h"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Completed Goals Grid (hidden by default) -->
-        <div id="completed-goals" class="goals-grid" style="display: none;">
-            <div class="goal-card completed">
-                <span class="completed-badge">
+        
+        <div class="action-bar">
+            <div class="filter-tabs">
+                <button class="tab active" onclick="filterGoals('all')">
+                    <i class="fas fa-th"></i> All Goals
+                </button>
+                <button class="tab" onclick="filterGoals('active')">
+                    <i class="fas fa-play-circle"></i> Active
+                </button>
+                <button class="tab" onclick="filterGoals('completed')">
                     <i class="fas fa-check-circle"></i> Completed
-                </span>
-                <div class="goal-header">
-                    <div class="goal-category">Personal Growth</div>
-                </div>
-                <h3>Complete 90 meetings in 90 days</h3>
-                <p>Successfully attended recovery meetings for 90 consecutive days!</p>
-                
-                <div class="goal-meta">
-                    <div class="meta-item">
-                        <i class="fas fa-calendar-check"></i>
-                        <span>Completed: Nov 15, 2024</span>
-                    </div>
-                    <div class="meta-item">
-                        <i class="fas fa-star"></i>
-                        <span>100 points earned</span>
-                    </div>
-                </div>
-
-                <div class="goal-progress">
-                    <div class="progress-label">
-                        <span>Progress</span>
-                        <span>90 / 90 meetings</span>
-                    </div>
-                    <div class="progress-bar-container">
-                        <div class="progress-bar" style="width: 100%; background: #4caf50;"></div>
-                    </div>
-                </div>
+                </button>
+            </div>
+            <button class="btn btn-primary" onclick="openNewGoalModal()">
+                <i class="fas fa-plus"></i> Create New Goal
+            </button>
+        </div>
+        
+        <div id="goalsGrid" class="goals-grid">
+            <div class="empty-state">
+                <i class="fas fa-spinner fa-spin"></i>
+                <h3>Loading your goals...</h3>
             </div>
         </div>
     </div>
-
-    <!-- Add Goal Modal -->
-    <div id="goal-modal" class="modal">
+    
+    <!-- New/Edit Goal Modal -->
+    <div id="goalModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>Create New Goal</h2>
-                <button class="close-modal" onclick="closeModal()">×</button>
+                <h2><i class="fas fa-bullseye"></i> <span id="modalTitle">Create New Goal</span></h2>
+                <button class="close-modal" onclick="closeGoalModal()">×</button>
             </div>
-
-            <form id="goal-form">
+            <form id="goalForm">
+                <input type="hidden" id="goalId">
+                
                 <div class="form-group">
-                    <label>Goal Title</label>
-                    <input type="text" placeholder="What do you want to achieve?" required>
+                    <label>Goal Title *</label>
+                    <input type="text" id="goalTitle" required placeholder="e.g., Attend 3 meetings per week">
                 </div>
-
+                
                 <div class="form-group">
-                    <label>Category</label>
-                    <select required>
-                        <option value="">Select a category</option>
-                        <option value="personal">Personal Growth</option>
+                    <label>Category *</label>
+                    <select id="goalCategory" required>
+                        <option value="">Select category...</option>
+                        <option value="recovery">Recovery & Sobriety</option>
                         <option value="health">Health & Wellness</option>
-                        <option value="relationships">Relationships</option>
-                        <option value="career">Career & Education</option>
-                        <option value="spiritual">Spiritual</option>
-                        <option value="financial">Financial</option>
+                        <option value="relationships">Relationships & Family</option>
+                        <option value="personal">Personal Growth</option>
+                        <option value="spiritual">Spiritual Development</option>
                     </select>
                 </div>
-
+                
                 <div class="form-group">
                     <label>Description</label>
-                    <textarea placeholder="Describe your goal in detail..." required></textarea>
+                    <textarea id="goalDescription" placeholder="Describe your goal..."></textarea>
                 </div>
-
+                
                 <div class="form-group">
-                    <label>Target Date</label>
-                    <input type="date" required>
+                    <label>Specific - What exactly will you do? *</label>
+                    <input type="text" id="goalSpecific" required placeholder="e.g., Attend AA meetings on Mon, Wed, Fri">
+                    <div class="help-text">Be clear and specific about what you want to achieve</div>
                 </div>
-
+                
                 <div class="form-group">
-                    <label>Point Reward (earned when completed)</label>
-                    <input type="number" value="100" min="0" max="500">
+                    <label>Measurable - How will you track progress? *</label>
+                    <input type="text" id="goalMeasurable" required placeholder="e.g., Track attendance in app">
+                    <div class="help-text">Define how you'll measure success</div>
                 </div>
-
-                <div class="goal-actions">
-                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-plus"></i> Create Goal
-                    </button>
+                
+                <div class="form-group">
+                    <label>Achievable - Is this realistic? *</label>
+                    <input type="text" id="goalAchievable" required placeholder="e.g., Yes, meetings are nearby and fit my schedule">
+                    <div class="help-text">Explain why this goal is achievable for you</div>
                 </div>
+                
+                <div class="form-group">
+                    <label>Relevant - Why is this important? *</label>
+                    <input type="text" id="goalRelevant" required placeholder="e.g., Meetings provide support and accountability">
+                    <div class="help-text">Connect this goal to your recovery journey</div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Time-bound - When will you achieve this? *</label>
+                    <input type="date" id="goalDeadline" required>
+                    <div class="help-text">Set a target date for completion</div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Points Reward</label>
+                    <input type="number" id="goalPoints" value="100" min="0" step="10">
+                    <div class="help-text">Points you'll earn when you complete this goal</div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> Save Goal
+                </button>
             </form>
         </div>
     </div>
-
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/config.js"></script>
-    <script src="js/theming-engine.js"></script>
-    <script src="js/mobile-nav.js"></script>
     
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        // Initialize theming
-        if (window.themingEngine) {
-            window.themingEngine.init();
+        const SUPABASE_URL = 'https://qmrdlgopygylaakskpls.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFtcmRsZ29weWd5bGFha3NrcGxzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUyMTk3MDMsImV4cCI6MjA4MDc5NTcwM30.aYORMs31sN847fKtH103VKFd13xtRft9FFXJNlvOsZw';
+        
+        const { createClient } = supabase;
+        const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
+        
+        let currentUser = null;
+        let allGoals = [];
+        let currentFilter = 'all';
+        
+        async function init() {
+            const { data: { user } } = await supabaseClient.auth.getUser();
+            
+            if (!user) {
+                window.location.href = 'auth-login.html';
+                return;
+            }
+            
+            currentUser = user;
+            await loadGoals();
         }
-
-        // Tab switching
-        function switchTab(tab) {
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        
+        async function loadGoals() {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('goals')
+                    .select('*')
+                    .eq('user_id', currentUser.id)
+                    .order('created_at', { ascending: false });
+                
+                if (error) throw error;
+                
+                allGoals = data || [];
+                renderGoals();
+                
+            } catch (error) {
+                console.error('Error loading goals:', error);
+                document.getElementById('goalsGrid').innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <h3>Error Loading Goals</h3>
+                        <p>Please try refreshing the page.</p>
+                    </div>
+                `;
+            }
+        }
+        
+        function renderGoals() {
+            let filtered = allGoals;
+            
+            if (currentFilter === 'active') {
+                filtered = allGoals.filter(g => !g.completed);
+            } else if (currentFilter === 'completed') {
+                filtered = allGoals.filter(g => g.completed);
+            }
+            
+            const grid = document.getElementById('goalsGrid');
+            
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-bullseye"></i>
+                        <h3>No Goals Yet</h3>
+                        <p>Create your first SMART goal to start tracking your progress!</p>
+                        <button class="btn btn-primary" onclick="openNewGoalModal()">
+                            <i class="fas fa-plus"></i> Create First Goal
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+            
+            grid.innerHTML = filtered.map(goal => {
+                const deadline = new Date(goal.deadline);
+                const daysLeft = Math.ceil((deadline - new Date()) / (1000 * 60 * 60 * 24));
+                const progress = goal.progress || 0;
+                
+                return `
+                    <div class="goal-card ${goal.completed ? 'completed' : ''}">
+                        <div class="goal-header">
+                            <div>
+                                <span class="goal-category category-${goal.category}">${formatCategory(goal.category)}</span>
+                                <h3 class="goal-title">${goal.title}</h3>
+                            </div>
+                            ${goal.completed ? 
+                                `<div class="completed-badge"><i class="fas fa-trophy"></i> Completed!</div>` :
+                                `<div class="goal-actions">
+                                    <button class="btn-icon" onclick="editGoal('${goal.id}')" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn-icon" onclick="deleteGoal('${goal.id}')" title="Delete">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>`
+                            }
+                        </div>
+                        
+                        ${goal.description ? `<div class="goal-description">${goal.description}</div>` : ''}
+                        
+                        <div class="goal-smart">
+                            <div class="smart-row">
+                                <span class="smart-label">Specific:</span>
+                                <span>${goal.specific}</span>
+                            </div>
+                            <div class="smart-row">
+                                <span class="smart-label">Measurable:</span>
+                                <span>${goal.measurable}</span>
+                            </div>
+                            <div class="smart-row">
+                                <span class="smart-label">Achievable:</span>
+                                <span>${goal.achievable}</span>
+                            </div>
+                            <div class="smart-row">
+                                <span class="smart-label">Relevant:</span>
+                                <span>${goal.relevant}</span>
+                            </div>
+                            <div class="smart-row">
+                                <span class="smart-label">Time-bound:</span>
+                                <span>${deadline.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+                            </div>
+                        </div>
+                        
+                        ${!goal.completed ? `
+                            <div class="goal-progress">
+                                <div class="progress-header">
+                                    <span>Progress</span>
+                                    <span>${progress}%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: ${progress}%"></div>
+                                </div>
+                            </div>
+                        ` : ''}
+                        
+                        <div class="goal-footer">
+                            <div class="goal-meta">
+                                <span><i class="fas fa-calendar"></i> ${daysLeft > 0 ? `${daysLeft} days left` : goal.completed ? 'Completed' : 'Overdue'}</span>
+                                <span><i class="fas fa-star"></i> ${goal.points_reward || 100} points</span>
+                            </div>
+                            ${!goal.completed ? `
+                                <button class="btn-success" onclick="completeGoal('${goal.id}', ${goal.points_reward || 100})">
+                                    <i class="fas fa-check"></i> Mark Complete
+                                </button>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function formatCategory(cat) {
+            const categories = {
+                'recovery': 'Recovery & Sobriety',
+                'health': 'Health & Wellness',
+                'relationships': 'Relationships',
+                'personal': 'Personal Growth',
+                'spiritual': 'Spiritual'
+            };
+            return categories[cat] || cat;
+        }
+        
+        function filterGoals(filter) {
+            currentFilter = filter;
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
             event.target.classList.add('active');
-
-            if (tab === 'active') {
-                document.getElementById('active-goals').style.display = 'grid';
-                document.getElementById('completed-goals').style.display = 'none';
-            } else {
-                document.getElementById('active-goals').style.display = 'none';
-                document.getElementById('completed-goals').style.display = 'grid';
-            }
+            renderGoals();
         }
-
-        // Modal functions
-        function openModal() {
-            document.getElementById('goal-modal').classList.add('active');
+        
+        function openNewGoalModal() {
+            document.getElementById('modalTitle').textContent = 'Create New Goal';
+            document.getElementById('goalForm').reset();
+            document.getElementById('goalId').value = '';
+            document.getElementById('goalModal').classList.add('active');
         }
-
-        function closeModal() {
-            document.getElementById('goal-modal').classList.remove('active');
+        
+        function closeGoalModal() {
+            document.getElementById('goalModal').classList.remove('active');
         }
-
-        // Form submission
-        document.getElementById('goal-form').addEventListener('submit', function(e) {
+        
+        function editGoal(goalId) {
+            const goal = allGoals.find(g => g.id === goalId);
+            if (!goal) return;
+            
+            document.getElementById('modalTitle').textContent = 'Edit Goal';
+            document.getElementById('goalId').value = goal.id;
+            document.getElementById('goalTitle').value = goal.title;
+            document.getElementById('goalCategory').value = goal.category;
+            document.getElementById('goalDescription').value = goal.description || '';
+            document.getElementById('goalSpecific').value = goal.specific;
+            document.getElementById('goalMeasurable').value = goal.measurable;
+            document.getElementById('goalAchievable').value = goal.achievable;
+            document.getElementById('goalRelevant').value = goal.relevant;
+            document.getElementById('goalDeadline').value = goal.deadline;
+            document.getElementById('goalPoints').value = goal.points_reward || 100;
+            
+            document.getElementById('goalModal').classList.add('active');
+        }
+        
+        document.getElementById('goalForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            alert('🎯 Goal Created!\n\n+100 points when you complete it.\n\nYou\'ve got this! 💪');
-            closeModal();
-            this.reset();
+            
+            // Check if user is logged in
+            if (!currentUser || !currentUser.id) {
+                alert('You must be logged in to create goals. Redirecting to login...');
+                window.location.href = 'auth-login.html';
+                return;
+            }
+            
+            const goalId = document.getElementById('goalId').value;
+            const goalData = {
+                user_id: currentUser.id,
+                title: document.getElementById('goalTitle').value,
+                category: document.getElementById('goalCategory').value,
+                description: document.getElementById('goalDescription').value,
+                specific: document.getElementById('goalSpecific').value,
+                measurable: document.getElementById('goalMeasurable').value,
+                achievable: document.getElementById('goalAchievable').value,
+                relevant: document.getElementById('goalRelevant').value,
+                deadline: document.getElementById('goalDeadline').value,
+                points_reward: parseInt(document.getElementById('goalPoints').value),
+                completed: false,
+                progress: 0
+            };
+            
+            console.log('💾 Attempting to save goal:', goalData);
+            
+            try {
+                if (goalId) {
+                    // Update existing goal
+                    const { error } = await supabaseClient
+                        .from('goals')
+                        .update(goalData)
+                        .eq('id', goalId)
+                        .eq('user_id', currentUser.id);
+                    
+                    if (error) throw error;
+                    alert('✅ Goal updated!');
+                } else {
+                    // Create new goal
+                    const { data: newGoal, error } = await supabaseClient
+                        .from('goals')
+                        .insert([goalData])
+                        .select();
+                    
+                    if (error) throw error;
+                    
+                    // 🎯 SAVE TO ACTIVITY FEED
+                    try {
+                        const activityData = {
+                            user_id: currentUser.id,
+                            activity_type: 'goal_set',
+                            activity_title: 'Goal Set',
+                            activity_description: `Set a new goal: "${goalData.title}"`,
+                            points_earned: 20,
+                            metadata: JSON.stringify({
+                                category: goalData.category,
+                                deadline: goalData.deadline,
+                                points_reward: goalData.points_reward
+                            }),
+                            created_at: new Date().toISOString()
+                        };
+                        
+                        console.log('📊 Saving goal activity to feed:', activityData);
+                        
+                        const { data: activityResult, error: activityError } = await supabaseClient
+                            .from('activities')
+                            .insert([activityData])
+                            .select();
+                        
+                        if (activityError) {
+                            console.error('❌ Activity feed error:', activityError);
+                        } else {
+                            console.log('✅ Goal activity saved to feed:', activityResult);
+                        }
+                    } catch (activityErr) {
+                        console.error('❌ Error saving to activity feed:', activityErr);
+                    }
+                    
+                    alert('✅ Goal created!');
+                }
+                
+                closeGoalModal();
+                await loadGoals();
+                
+            } catch (error) {
+                console.error('Error saving goal:', error);
+                console.error('Error details:', error.message, error.details, error.hint);
+                alert('Error saving goal: ' + (error.message || 'Please try again.'));
+            }
         });
-
-        // Complete goal
-        function completeGoal(btn) {
-            if (confirm('🎉 Mark this goal as complete?\n\nYou\'ll earn the reward points!')) {
-                alert('🏆 Goal Completed!\n\n+125 points earned!\n\nAmazing work! Keep it up! 🌟');
-                btn.closest('.goal-card').classList.add('completed');
+        
+        async function completeGoal(goalId, points) {
+            if (!confirm('Mark this goal as completed? You\'ll earn ' + points + ' points!')) {
+                return;
+            }
+            
+            try {
+                // CHECK WEEKLY LIMIT: Only 1 goal completion per week earns points
+                const now = new Date();
+                
+                // Calculate start of current week (Monday)
+                const dayOfWeek = now.getDay();
+                const daysToMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1; // If Sunday (0), go back 6 days
+                const weekStart = new Date(now);
+                weekStart.setDate(now.getDate() - daysToMonday);
+                weekStart.setHours(0, 0, 0, 0);
+                
+                const weekStartISO = weekStart.toISOString();
+                
+                console.log(`🔍 Checking goal completions this week (since ${weekStartISO})...`);
+                
+                // Check how many goals completed this week with points
+                const { data: weekGoals, error: checkError } = await supabaseClient
+                    .from('activities')
+                    .select('id, points_earned, created_at')
+                    .eq('user_id', currentUser.id)
+                    .eq('activity_type', 'achievement_earned')
+                    .gt('points_earned', 0) // Only count goals that earned points
+                    .gte('created_at', weekStartISO);
+                
+                if (checkError) {
+                    console.error('❌ Error checking weekly goal limit:', checkError);
+                }
+                
+                const goalsThisWeek = weekGoals ? weekGoals.length : 0;
+                console.log(`📝 Goals completed this week with points: ${goalsThisWeek}`);
+                
+                // Determine points: first goal = full points, subsequent = 0
+                let pointsToAward = 0;
+                if (goalsThisWeek < 1) {
+                    pointsToAward = points;
+                    console.log(`💰 Points to award: ${pointsToAward} (first goal this week)`);
+                } else {
+                    pointsToAward = 0;
+                    console.log(`⚠️ Weekly goal limit reached (1/1). No points awarded.`);
+                    
+                    if (!confirm(
+                        'You can still complete this goal, but you\'ve already earned points for a goal this week (limit: 1 per week).\n\n' +
+                        'Complete anyway without earning points?'
+                    )) {
+                        return;
+                    }
+                }
+                
+                // Get goal details first
+                const { data: goal } = await supabaseClient
+                    .from('goals')
+                    .select('title')
+                    .eq('id', goalId)
+                    .eq('user_id', currentUser.id)
+                    .single();
+                
+                // Mark goal as completed
+                const { error: goalError } = await supabaseClient
+                    .from('goals')
+                    .update({ completed: true, progress: 100, completed_at: new Date().toISOString() })
+                    .eq('id', goalId)
+                    .eq('user_id', currentUser.id);
+                
+                if (goalError) throw goalError;
+                
+                // Award points to user only if under weekly limit
+                const { data: profile } = await supabaseClient
+                    .from('user_profiles')
+                    .select('points')
+                    .eq('id', currentUser.id)
+                    .single();
+                
+                const newPoints = (profile?.points || 0) + pointsToAward;
+                
+                const { error: pointsError } = await supabaseClient
+                    .from('user_profiles')
+                    .update({ points: newPoints })
+                    .eq('id', currentUser.id);
+                
+                if (pointsError) throw pointsError;
+                
+                // 🎯 SAVE TO ACTIVITY FEED (Achievement Earned)
+                try {
+                    const activityData = {
+                        user_id: currentUser.id,
+                        activity_type: 'achievement_earned',
+                        activity_title: 'Achievement Earned',
+                        activity_description: `Completed goal: "${goal?.title || 'Goal'}"`,
+                        points_earned: points,
+                        metadata: JSON.stringify({
+                            goal_id: goalId,
+                            goal_title: goal?.title
+                        }),
+                        created_at: new Date().toISOString()
+                    };
+                    
+                    console.log('📊 Saving achievement activity to feed:', activityData);
+                    
+                    const { data: activityResult, error: activityError } = await supabaseClient
+                        .from('activities')
+                        .insert([activityData])
+                        .select();
+                    
+                    if (activityError) {
+                        console.error('❌ Activity feed error:', activityError);
+                    } else {
+                        console.log('✅ Achievement activity saved to feed:', activityResult);
+                    }
+                } catch (activityErr) {
+                    console.error('❌ Error saving to activity feed:', activityErr);
+                }
+                
+                alert(`🎉 Congratulations! Goal completed! You earned ${points} points!`);
+                await loadGoals();
+                
+            } catch (error) {
+                console.error('Error completing goal:', error);
+                alert('Error completing goal. Please try again.');
             }
         }
-
-        console.log('📄 Goals page loaded');
+        
+        async function deleteGoal(goalId) {
+            if (!confirm('Are you sure you want to delete this goal? This cannot be undone.')) {
+                return;
+            }
+            
+            try {
+                const { error } = await supabaseClient
+                    .from('goals')
+                    .delete()
+                    .eq('id', goalId)
+                    .eq('user_id', currentUser.id);
+                
+                if (error) throw error;
+                
+                alert('✅ Goal deleted!');
+                await loadGoals();
+                
+            } catch (error) {
+                console.error('Error deleting goal:', error);
+                alert('Error deleting goal. Please try again.');
+            }
+        }
+        
+        // Close modal when clicking outside
+        document.getElementById('goalModal').addEventListener('click', (e) => {
+            if (e.target.id === 'goalModal') {
+                closeGoalModal();
+            }
+        });
+        
+        init();
     </script>
 </body>
 </html>
