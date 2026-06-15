@@ -1,0 +1,38 @@
+# robots.txt for OWN TODAY (owntodaynow.com ONLY)
+# This file controls search engine crawling for Own Today platform
+
+User-agent: *
+Allow: /
+
+# Allow public pages to be indexed
+Allow: /index.html
+Allow: /client-portal.html
+Allow: /meeting-guide.html
+Allow: /rewards.html
+Allow: /literature.html
+Allow: /progress.html
+
+# Disallow admin areas (keeps bots from wasting crawl budget on login-only pages)
+Disallow: /admin-portal.html
+Disallow: /staff-dashboard.html
+Disallow: /provider-dashboard.html
+
+# Disallow any future admin or config directories
+Disallow: /admin/
+Disallow: /config/
+
+# Sitemap location for Own Today
+Sitemap: https://owntodaynow.com/sitemap.xml
+
+# Crawl-delay for polite bots (prevents server overload)
+Crawl-delay: 1
+
+# Instructions for major search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
