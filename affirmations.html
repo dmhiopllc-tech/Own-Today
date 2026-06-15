@@ -1,247 +1,900 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8V3QF8VVMZ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-8V3QF8VVMZ');
+    </script>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily Affirmations - Own Today</title>
+    <title>Daily Affirmations - Desert Mountain Healing IOP</title>
     
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/white-label.css">
-    <link rel="stylesheet" href="css/mobile-nav.css">
     
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-            padding-bottom: 80px;
+        :root {
+            --primary: #4A9FBF; --light: #85C1D9; --accent: #3A8FAF;
+            --white: #FFF; --gray: #F5F7FA; --dark: #1F2937;
+            --success: #10B981; --warning: #F59E0B; --danger: #EF4444;
+            --purple: #8B5CF6; --pink: #EC4899; --orange: #F97316;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --gradient-4: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --gradient-5: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
         }
-        .container { max-width: 800px; margin: 0 auto; }
-        .page-header {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-        .back-button {
-            background: linear-gradient(135deg, var(--org-primary, #667eea), var(--org-secondary, #764ba2));
-            color: white;
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 20px;
-            transition: transform 0.3s ease;
-        }
-        .back-button:hover { transform: scale(1.1); }
-        .page-header-content h1 { color: var(--org-primary, #667eea); font-size: 32px; margin-bottom: 5px; }
-        .page-header-content p { color: #666; font-size: 16px; }
         
-        .affirmation-card {
-            background: white;
-            border-radius: 20px;
-            padding: 50px;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            text-align: center;
-            min-height: 350px;
-            display: flex;
-            flex-direction: column;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--gradient-1);
+            color: var(--dark);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .back-button {
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
         }
+        
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateX(-5px);
+        }
+        
+        .page-header {
+            text-align: center;
+            color: white;
+            margin-bottom: 3rem;
+        }
+        
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+        }
+        
+        .main-affirmation-card {
+            background: white;
+            border-radius: 2rem;
+            padding: 4rem 3rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .main-affirmation-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(74, 159, 191, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
         .affirmation-icon {
-            font-size: 60px;
-            margin-bottom: 30px;
+            font-size: 4rem;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+            animation: pulse 2s ease-in-out infinite;
         }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
         .affirmation-text {
-            font-size: 32px;
-            line-height: 1.5;
-            color: #333;
-            font-weight: 600;
-            margin-bottom: 30px;
-            font-style: italic;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--dark);
+            line-height: 1.4;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
         }
-        .affirmation-author {
-            color: var(--org-primary, #667eea);
-            font-size: 18px;
+        
+        .affirmation-category {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1.5rem;
+            background: var(--gradient-1);
+            color: white;
+            border-radius: 2rem;
             font-weight: 600;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
         }
+        
         .action-buttons {
             display: flex;
-            gap: 15px;
-            margin-top: 30px;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
         }
-        .btn {
-            flex: 1;
-            padding: 15px 30px;
-            border-radius: 10px;
+        
+        .action-btn {
+            padding: 1rem 2rem;
             border: none;
-            font-weight: 600;
+            border-radius: 1rem;
+            font-weight: 700;
+            font-size: 1.1rem;
             cursor: pointer;
-            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: all 0.3s;
+            color: white;
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+        
+        .btn-next {
+            background: var(--gradient-1);
+        }
+        
+        .btn-favorite {
+            background: var(--gradient-2);
+        }
+        
+        .btn-share {
+            background: var(--gradient-3);
+        }
+        
+        .streak-card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .streak-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .streak-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+        
+        .streak-count {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--gradient-5);
+            color: white;
+            border-radius: 2rem;
+            font-size: 1.3rem;
+            font-weight: 800;
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .calendar-day {
+            aspect-ratio: 1;
+            border-radius: 0.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            font-weight: 600;
+            border: 2px solid #E5E7EB;
+            transition: all 0.3s;
         }
-        .btn-primary {
-            background: linear-gradient(135deg, var(--org-primary, #667eea), var(--org-secondary, #764ba2));
-            color: white;
-        }
-        .btn-primary:hover { transform: scale(1.05); }
-        .btn-secondary {
-            background: #f0f0f0;
-            color: #666;
-        }
-        .btn-secondary:hover { background: #e0e0e0; }
         
-        .affirmations-list {
-            display: grid;
-            gap: 15px;
+        .calendar-day.header {
+            border: none;
+            color: #6B7280;
+            font-size: 0.85rem;
         }
-        .affirmation-item {
+        
+        .calendar-day.completed {
+            background: var(--success);
+            color: white;
+            border-color: var(--success);
+        }
+        
+        .calendar-day.today {
+            border-color: var(--primary);
+            border-width: 3px;
+        }
+        
+        .categories-section {
             background: white;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            cursor: pointer;
-            transition: transform 0.3s ease;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 1.5rem;
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 0.75rem;
         }
-        .affirmation-item:hover { transform: translateX(10px); }
-        .affirmation-item-icon { font-size: 30px; }
-        .affirmation-item-text {
-            flex: 1;
-            font-size: 16px;
-            color: #333;
-            font-weight: 500;
+        
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .category-card {
+            padding: 1.5rem;
+            border-radius: 1rem;
+            background: var(--gray);
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 3px solid transparent;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        
+        .category-card.active {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, rgba(74, 159, 191, 0.1), rgba(58, 143, 175, 0.2));
+        }
+        
+        .category-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .category-name {
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 0.25rem;
+        }
+        
+        .category-count {
+            font-size: 0.85rem;
+            color: #6B7280;
+        }
+        
+        .favorites-section {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .favorites-grid {
+            display: grid;
+            gap: 1rem;
+        }
+        
+        .favorite-card {
+            padding: 1.5rem;
+            background: var(--gray);
+            border-radius: 1rem;
+            border-left: 4px solid var(--primary);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .favorite-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .favorite-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        .favorite-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: #6B7280;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: #6B7280;
+        }
+        
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
         }
         
         @media (max-width: 768px) {
-            .affirmation-card { padding: 30px; }
-            .affirmation-text { font-size: 24px; }
-            .action-buttons { flex-direction: column; }
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .main-affirmation-card {
+                padding: 2rem 1.5rem;
+            }
+            
+            .affirmation-text {
+                font-size: 1.5rem;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .action-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .categories-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
     </style>
 </head>
 <body>
-    <div id="mobile-nav"></div>
     <div class="container">
+        <a href="index.html" class="back-button">
+            <i class="fas fa-arrow-left"></i>
+            Back to Dashboard
+        </a>
+        
         <div class="page-header">
-            <button class="back-button" onclick="window.location.href='client-portal.html'">
-                <i class="fas fa-arrow-left"></i>
-            </button>
-            <div class="page-header-content">
-                <h1>Daily Affirmations</h1>
-                <p>Start your day with positive energy</p>
-            </div>
+            <h1><i class="fas fa-sun"></i> Daily Affirmations</h1>
+            <p>Start each day with positivity and strength</p>
         </div>
-
-        <div class="affirmation-card" id="affirmation-display">
-            <div class="affirmation-icon">💛</div>
-            <div class="affirmation-text" id="affirmation-text">
-                "I am stronger than my struggles. Today, I choose hope."
+        
+        <!-- Main Affirmation -->
+        <div class="main-affirmation-card">
+            <div class="affirmation-icon" id="affirmationIcon">✨</div>
+            <div class="affirmation-category" id="affirmationCategory">
+                <i class="fas fa-tag"></i>
+                <span id="categoryText">Loading...</span>
             </div>
-            <div class="affirmation-author">- Daily Affirmation</div>
-            
+            <div class="affirmation-text" id="affirmationText">
+                Loading your daily affirmation...
+            </div>
             <div class="action-buttons">
-                <button class="btn btn-primary" onclick="newAffirmation()">
-                    <i class="fas fa-redo"></i> New Affirmation
+                <button class="action-btn btn-next" onclick="getNewAffirmation()">
+                    <i class="fas fa-random"></i>
+                    New Affirmation
                 </button>
-                <button class="btn btn-secondary" onclick="shareAffirmation()">
-                    <i class="fas fa-share"></i> Share
+                <button class="action-btn btn-favorite" onclick="toggleFavorite()">
+                    <i class="fas fa-heart" id="favoriteIcon"></i>
+                    <span id="favoriteText">Save</span>
+                </button>
+                <button class="action-btn btn-share" onclick="shareAffirmation()">
+                    <i class="fas fa-share-alt"></i>
+                    Share
                 </button>
             </div>
         </div>
-
-        <div class="affirmations-list" id="affirmations-list">
-            <!-- Will be populated -->
+        
+        <!-- Streak Tracker -->
+        <div class="streak-card">
+            <div class="streak-header">
+                <h2 class="streak-title">
+                    <i class="fas fa-fire"></i> Daily Streak
+                </h2>
+                <div class="streak-count">
+                    <i class="fas fa-calendar-check"></i>
+                    <span id="streakCount">0</span> Days
+                </div>
+            </div>
+            <div class="calendar-grid" id="calendarGrid">
+                <!-- Calendar will be populated here -->
+            </div>
+        </div>
+        
+        <!-- Categories -->
+        <div class="categories-section">
+            <h2 class="section-title">
+                <i class="fas fa-layer-group"></i>
+                Explore Categories
+            </h2>
+            <div class="categories-grid" id="categoriesGrid">
+                <!-- Categories will be populated here -->
+            </div>
+        </div>
+        
+        <!-- Favorites -->
+        <div class="favorites-section">
+            <h2 class="section-title">
+                <i class="fas fa-heart"></i>
+                Your Saved Affirmations
+            </h2>
+            <div class="favorites-grid" id="favoritesGrid">
+                <div class="empty-state">
+                    <i class="fas fa-heart"></i>
+                    <p>No saved affirmations yet. Tap the heart to save your favorites!</p>
+                </div>
+            </div>
         </div>
     </div>
-
+    
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/config.js"></script>
-    <script src="js/theming-engine.js"></script>
-    <script src="js/mobile-nav.js"></script>
     <script>
-        if (window.themingEngine) window.themingEngine.init();
-
-        const affirmations = [
-            { text: "I am stronger than my struggles. Today, I choose hope.", icon: "💛" },
-            { text: "Every day, I am becoming a better version of myself.", icon: "🌟" },
-            { text: "I deserve love, peace, and happiness in my life.", icon: "💝" },
-            { text: "My past does not define my future. I am in control.", icon: "🦋" },
-            { text: "I am worthy of recovery and all the good things coming my way.", icon: "🌈" },
-            { text: "One day at a time, I am making progress.", icon: "📅" },
-            { text: "I choose to replace fear with faith and courage.", icon: "💪" },
-            { text: "I am grateful for my journey and the lessons it teaches.", icon: "🙏" },
-            { text: "My recovery is a gift I give myself every single day.", icon: "🎁" },
-            { text: "I have the power to create positive change in my life.", icon: "✨" },
-            { text: "I am surrounded by love and support on my journey.", icon: "❤️" },
-            { text: "Every challenge is an opportunity for growth and strength.", icon: "🌱" },
-            { text: "I trust myself to make healthy choices today.", icon: "🎯" },
-            { text: "I am enough, just as I am right now.", icon: "🌺" },
-            { text: "My voice matters. My story matters. I matter.", icon: "📣" }
-        ];
-
-        let currentIndex = 0;
-
-        function displayAffirmation(index) {
-            const aff = affirmations[index];
-            document.getElementById('affirmation-text').textContent = `"${aff.text}"`;
-            document.querySelector('.affirmation-icon').textContent = aff.icon;
+        const SUPABASE_URL = 'https://qmrdlgopygylaakskpls.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFtcmRsZ29weWd5bGFha3NrcGxzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUyMTk3MDMsImV4cCI6MjA4MDc5NTcwM30.aYORMs31sN847fKtH103VKFd13xtRft9FFXJNlvOsZw';
+        
+        const { createClient } = supabase;
+        const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
+        
+        let currentUser = null;
+        let currentAffirmation = null;
+        let favorites = [];
+        let streak = 0;
+        let completedDays = [];
+        let selectedCategory = 'all';
+        
+        const affirmationsData = {
+            strength: {
+                icon: '💪',
+                name: 'Strength',
+                affirmations: [
+                    "I am stronger than my struggles.",
+                    "Every challenge I face makes me more resilient.",
+                    "I have the power to overcome any obstacle.",
+                    "My strength grows with each day of recovery.",
+                    "I am capable of achieving anything I set my mind to.",
+                    "I choose to be strong today and every day.",
+                    "My past does not define my future.",
+                    "I am building a stronger version of myself every day."
+                ]
+            },
+            hope: {
+                icon: '🌟',
+                name: 'Hope',
+                affirmations: [
+                    "There is always hope for a better tomorrow.",
+                    "My future is bright and full of possibilities.",
+                    "Every day brings new opportunities for growth.",
+                    "I believe in my ability to create positive change.",
+                    "Hope is the foundation of my recovery journey.",
+                    "I am worthy of a happy and fulfilling life.",
+                    "Better days are ahead of me.",
+                    "I trust in the process of healing and growth."
+                ]
+            },
+            gratitude: {
+                icon: '🙏',
+                name: 'Gratitude',
+                affirmations: [
+                    "I am grateful for this day and all its possibilities.",
+                    "Gratitude fills my heart and guides my actions.",
+                    "I appreciate the support I have on this journey.",
+                    "Every breath is a gift I am thankful for.",
+                    "I am blessed with the opportunity to grow.",
+                    "Gratitude transforms my perspective on life.",
+                    "I choose to focus on what I have, not what I lack.",
+                    "Thank you for this moment of peace and clarity."
+                ]
+            },
+            peace: {
+                icon: '☮️',
+                name: 'Peace',
+                affirmations: [
+                    "I am at peace with my past and excited for my future.",
+                    "Calmness flows through me with every breath.",
+                    "I release all tension and embrace serenity.",
+                    "Peace is my natural state of being.",
+                    "I choose peace over worry.",
+                    "My mind is calm, my heart is light.",
+                    "I am in control of my inner peace.",
+                    "Tranquility surrounds me and protects me."
+                ]
+            },
+            courage: {
+                icon: '🦁',
+                name: 'Courage',
+                affirmations: [
+                    "I have the courage to face my fears.",
+                    "Bravery is choosing recovery, one day at a time.",
+                    "I am brave enough to ask for help when I need it.",
+                    "My courage inspires others on their journey.",
+                    "I face each challenge with confidence and determination.",
+                    "Fear does not control me; I control my actions.",
+                    "I am courageous in my pursuit of wellness.",
+                    "Every day I choose courage over comfort."
+                ]
+            },
+            love: {
+                icon: '❤️',
+                name: 'Self-Love',
+                affirmations: [
+                    "I love and accept myself exactly as I am.",
+                    "I am deserving of love, kindness, and respect.",
+                    "Self-love is not selfish; it's essential.",
+                    "I treat myself with the same compassion I show others.",
+                    "My worth is not determined by my past mistakes.",
+                    "I am enough, just as I am.",
+                    "I celebrate my progress and forgive my setbacks.",
+                    "Loving myself is the first step to loving others."
+                ]
+            },
+            growth: {
+                icon: '🌱',
+                name: 'Growth',
+                affirmations: [
+                    "Every day I am growing into my best self.",
+                    "Progress, not perfection, is my goal.",
+                    "I learn and grow from every experience.",
+                    "My recovery journey is a path of continuous growth.",
+                    "I embrace change as an opportunity to evolve.",
+                    "Growth happens outside my comfort zone.",
+                    "I am proud of how far I've come.",
+                    "Each step forward is a victory worth celebrating."
+                ]
+            },
+            freedom: {
+                icon: '🕊️',
+                name: 'Freedom',
+                affirmations: [
+                    "I am free from the chains of addiction.",
+                    "Freedom is my birthright, and I claim it today.",
+                    "I choose freedom over temporary relief.",
+                    "My recovery gives me the freedom to live fully.",
+                    "I am liberated from my past patterns.",
+                    "Freedom feels like finally being myself.",
+                    "I am free to create the life I deserve.",
+                    "Today, I celebrate my freedom and independence."
+                ]
+            }
+        };
+        
+        async function init() {
+            // Check authentication
+            const { data: { user } } = await supabaseClient.auth.getUser();
+            
+            if (!user) {
+                window.location.href = 'auth-login.html';
+                return;
+            }
+            
+            currentUser = user;
+            
+            // Load user data
+            await loadUserData();
+            
+            // Display affirmation
+            getNewAffirmation();
+            
+            // Render categories
+            renderCategories();
+            
+            // Render calendar
+            renderCalendar();
+            
+            // Load favorites
+            await loadFavorites();
         }
-
-        function newAffirmation() {
-            currentIndex = Math.floor(Math.random() * affirmations.length);
-            displayAffirmation(currentIndex);
+        
+        async function loadUserData() {
+            try {
+                const today = new Date().toISOString().split('T')[0];
+                
+                // Check if user viewed affirmation today
+                const { data: streakData } = await supabaseClient
+                    .from('affirmation_streak')
+                    .select('*')
+                    .eq('user_id', currentUser.id)
+                    .eq('date', today)
+                    .single();
+                
+                if (!streakData) {
+                    // Mark today as viewed
+                    await supabaseClient
+                        .from('affirmation_streak')
+                        .insert({
+                            user_id: currentUser.id,
+                            date: today
+                        });
+                }
+                
+                // Calculate streak
+                const { data: allDays } = await supabaseClient
+                    .from('affirmation_streak')
+                    .select('date')
+                    .eq('user_id', currentUser.id)
+                    .order('date', { ascending: false });
+                
+                if (allDays) {
+                    completedDays = allDays.map(d => d.date);
+                    streak = calculateStreak(completedDays);
+                    document.getElementById('streakCount').textContent = streak;
+                }
+            } catch (error) {
+                console.error('Error loading user data:', error);
+            }
         }
-
+        
+        function calculateStreak(dates) {
+            if (dates.length === 0) return 0;
+            
+            let streak = 1;
+            const sortedDates = dates.sort((a, b) => new Date(b) - new Date(a));
+            
+            for (let i = 0; i < sortedDates.length - 1; i++) {
+                const current = new Date(sortedDates[i]);
+                const next = new Date(sortedDates[i + 1]);
+                const diffDays = Math.floor((current - next) / (1000 * 60 * 60 * 24));
+                
+                if (diffDays === 1) {
+                    streak++;
+                } else {
+                    break;
+                }
+            }
+            
+            return streak;
+        }
+        
+        function getNewAffirmation() {
+            let affirmations = [];
+            
+            if (selectedCategory === 'all') {
+                // Get all affirmations
+                Object.values(affirmationsData).forEach(cat => {
+                    affirmations.push(...cat.affirmations.map(text => ({
+                        text,
+                        category: cat.name,
+                        icon: cat.icon
+                    })));
+                });
+            } else {
+                // Get affirmations from selected category
+                const cat = affirmationsData[selectedCategory];
+                affirmations = cat.affirmations.map(text => ({
+                    text,
+                    category: cat.name,
+                    icon: cat.icon
+                }));
+            }
+            
+            // Pick random affirmation
+            currentAffirmation = affirmations[Math.floor(Math.random() * affirmations.length)];
+            
+            // Display it
+            document.getElementById('affirmationText').textContent = currentAffirmation.text;
+            document.getElementById('affirmationIcon').textContent = currentAffirmation.icon;
+            document.getElementById('categoryText').textContent = currentAffirmation.category;
+            
+            // Check if favorited
+            updateFavoriteButton();
+        }
+        
+        function renderCategories() {
+            const container = document.getElementById('categoriesGrid');
+            
+            const categories = [
+                { key: 'all', icon: '✨', name: 'All', count: Object.values(affirmationsData).reduce((sum, cat) => sum + cat.affirmations.length, 0) },
+                ...Object.entries(affirmationsData).map(([key, cat]) => ({
+                    key,
+                    icon: cat.icon,
+                    name: cat.name,
+                    count: cat.affirmations.length
+                }))
+            ];
+            
+            container.innerHTML = categories.map(cat => `
+                <div class="category-card ${selectedCategory === cat.key ? 'active' : ''}" 
+                     onclick="selectCategory('${cat.key}')">
+                    <div class="category-icon">${cat.icon}</div>
+                    <div class="category-name">${cat.name}</div>
+                    <div class="category-count">${cat.count} affirmations</div>
+                </div>
+            `).join('');
+        }
+        
+        function selectCategory(category) {
+            selectedCategory = category;
+            renderCategories();
+            getNewAffirmation();
+        }
+        
+        function renderCalendar() {
+            const container = document.getElementById('calendarGrid');
+            const today = new Date();
+            const days = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+            
+            let html = days.map(d => `<div class="calendar-day header">${d}</div>`).join('');
+            
+            // Get last 3 weeks
+            for (let i = 20; i >= 0; i--) {
+                const date = new Date(today);
+                date.setDate(date.getDate() - i);
+                const dateStr = date.toISOString().split('T')[0];
+                const isToday = i === 0;
+                const isCompleted = completedDays.includes(dateStr);
+                
+                html += `<div class="calendar-day ${isCompleted ? 'completed' : ''} ${isToday ? 'today' : ''}">
+                    ${isCompleted ? '✓' : date.getDate()}
+                </div>`;
+            }
+            
+            container.innerHTML = html;
+        }
+        
+        async function toggleFavorite() {
+            if (!currentAffirmation) return;
+            
+            const isFavorited = favorites.some(f => f.text === currentAffirmation.text);
+            
+            if (isFavorited) {
+                // Remove from favorites
+                await supabaseClient
+                    .from('favorite_affirmations')
+                    .delete()
+                    .eq('user_id', currentUser.id)
+                    .eq('text', currentAffirmation.text);
+                
+                favorites = favorites.filter(f => f.text !== currentAffirmation.text);
+            } else {
+                // Add to favorites
+                await supabaseClient
+                    .from('favorite_affirmations')
+                    .insert({
+                        user_id: currentUser.id,
+                        text: currentAffirmation.text,
+                        category: currentAffirmation.category,
+                        icon: currentAffirmation.icon
+                    });
+                
+                favorites.push(currentAffirmation);
+            }
+            
+            updateFavoriteButton();
+            await loadFavorites();
+        }
+        
+        function updateFavoriteButton() {
+            if (!currentAffirmation) return;
+            
+            const isFavorited = favorites.some(f => f.text === currentAffirmation.text);
+            const icon = document.getElementById('favoriteIcon');
+            const text = document.getElementById('favoriteText');
+            
+            if (isFavorited) {
+                icon.style.color = '#EC4899';
+                text.textContent = 'Saved';
+            } else {
+                icon.style.color = 'white';
+                text.textContent = 'Save';
+            }
+        }
+        
+        async function loadFavorites() {
+            try {
+                const { data } = await supabaseClient
+                    .from('favorite_affirmations')
+                    .select('*')
+                    .eq('user_id', currentUser.id)
+                    .order('created_at', { ascending: false });
+                
+                if (data) {
+                    favorites = data;
+                    renderFavorites();
+                }
+            } catch (error) {
+                console.error('Error loading favorites:', error);
+            }
+        }
+        
+        function renderFavorites() {
+            const container = document.getElementById('favoritesGrid');
+            
+            if (favorites.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-heart"></i>
+                        <p>No saved affirmations yet. Tap the heart to save your favorites!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = favorites.map(fav => `
+                <div class="favorite-card" onclick="showAffirmation('${fav.text.replace(/'/g, "\\'")}', '${fav.category}', '${fav.icon}')">
+                    <div class="favorite-text">${fav.text}</div>
+                    <div class="favorite-meta">
+                        <span>${fav.icon} ${fav.category}</span>
+                        <span>${new Date(fav.created_at).toLocaleDateString()}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function showAffirmation(text, category, icon) {
+            currentAffirmation = { text, category, icon };
+            document.getElementById('affirmationText').textContent = text;
+            document.getElementById('affirmationIcon').textContent = icon;
+            document.getElementById('categoryText').textContent = category;
+            updateFavoriteButton();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
         function shareAffirmation() {
-            const text = affirmations[currentIndex].text;
+            if (!currentAffirmation) return;
+            
+            const text = `✨ ${currentAffirmation.text}\n\n#DailyAffirmation #Recovery #Motivation`;
+            
             if (navigator.share) {
                 navigator.share({
                     title: 'Daily Affirmation',
                     text: text
                 });
             } else {
-                navigator.clipboard.writeText(text);
-                alert('Affirmation copied to clipboard! 📋');
+                navigator.clipboard.writeText(text).then(() => {
+                    alert('Affirmation copied to clipboard!');
+                });
             }
         }
-
-        // Load all affirmations
-        const listContainer = document.getElementById('affirmations-list');
-        affirmations.forEach((aff, index) => {
-            const item = document.createElement('div');
-            item.className = 'affirmation-item';
-            item.innerHTML = `
-                <div class="affirmation-item-icon">${aff.icon}</div>
-                <div class="affirmation-item-text">${aff.text}</div>
-            `;
-            item.onclick = () => {
-                currentIndex = index;
-                displayAffirmation(index);
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            };
-            listContainer.appendChild(item);
-        });
-
-        // Show random affirmation on load
-        newAffirmation();
+        
+        init();
     </script>
 </body>
 </html>
