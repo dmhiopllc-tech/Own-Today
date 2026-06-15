@@ -1,251 +1,778 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8V3QF8VVMZ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-8V3QF8VVMZ');
+    </script>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sobriety Calculator - Own Today</title>
+    <title>Sobriety Calculator - Desert Mountain Healing IOP</title>
     
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/white-label.css">
-    <link rel="stylesheet" href="css/mobile-nav.css">
     
     <style>
+        :root {
+            --primary: #4A9FBF; --light: #85C1D9; --accent: #3A8FAF;
+            --white: #FFF; --gray: #F5F7FA; --dark: #1F2937;
+            --success: #10B981; --warning: #F59E0B; --danger: #EF4444;
+            --purple: #8B5CF6; --pink: #EC4899; --orange: #F97316;
+        }
+        
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Inter', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--dark);
             min-height: 100vh;
-            padding: 20px;
-            padding-bottom: 80px;
+            padding: 2rem 1rem;
         }
-        .container { max-width: 800px; margin: 0 auto; }
-        .page-header {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            display: flex;
-            align-items: center;
-            gap: 20px;
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
         }
+        
         .back-button {
-            background: linear-gradient(135deg, var(--org-primary, #667eea), var(--org-secondary, #764ba2));
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+        
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateX(-5px);
+        }
+        
+        .page-header {
+            text-align: center;
+            color: white;
+            margin-bottom: 3rem;
+        }
+        
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+        }
+        
+        .calculator-card {
+            background: white;
+            border-radius: 2rem;
+            padding: 3rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            margin-bottom: 2rem;
+        }
+        
+        .date-selector {
+            max-width: 600px;
+            margin: 0 auto 3rem;
+        }
+        
+        .date-selector label {
+            display: block;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .date-input-group {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .date-input {
+            flex: 1;
+            min-width: 200px;
+            padding: 1rem 1.5rem;
+            border: 3px solid #E5E7EB;
+            border-radius: 1rem;
+            font-size: 1.1rem;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s;
+        }
+        
+        .date-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(74, 159, 191, 0.1);
+        }
+        
+        .calculate-btn {
+            width: 100%;
+            padding: 1.25rem 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
             color: white;
             border: none;
-            width: 50px;
-            height: 50px;
+            border-radius: 1rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 6px 20px rgba(74, 159, 191, 0.3);
+        }
+        
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(74, 159, 191, 0.4);
+        }
+        
+        .results-section {
+            display: none;
+        }
+        
+        .results-section.active {
+            display: block;
+            animation: fadeInUp 0.6s ease;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .big-counter {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 1.5rem;
+            color: white;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .big-counter::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 3s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.3; }
+        }
+        
+        .counter-label {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .counter-value {
+            font-size: 5rem;
+            font-weight: 900;
+            line-height: 1;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        .counter-unit {
+            font-size: 2rem;
+            opacity: 0.9;
+            margin-top: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .time-breakdown {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .time-unit {
+            background: var(--gray);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            text-align: center;
+            transition: all 0.3s;
+            border: 3px solid transparent;
+        }
+        
+        .time-unit:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        
+        .time-unit-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .time-unit-label {
+            font-size: 0.9rem;
+            color: #6B7280;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+        }
+        
+        .milestones-section {
+            margin-top: 3rem;
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .section-title i {
+            color: var(--primary);
+        }
+        
+        .milestones-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .milestone-card {
+            padding: 1.5rem;
+            border-radius: 1rem;
+            border: 3px solid #E5E7EB;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .milestone-card.achieved {
+            border-color: var(--success);
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.05) 0%, rgba(16, 185, 129, 0.1) 100%);
+        }
+        
+        .milestone-card.upcoming {
+            border-color: var(--warning);
+            background: rgba(245, 158, 11, 0.05);
+        }
+        
+        .milestone-icon {
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            font-size: 20px;
-            transition: transform 0.3s ease;
+            font-size: 2rem;
+            margin-bottom: 1rem;
         }
-        .back-button:hover { transform: scale(1.1); }
-        .page-header-content h1 { color: var(--org-primary, #667eea); font-size: 32px; margin-bottom: 5px; }
-        .page-header-content p { color: #666; font-size: 16px; }
         
-        .calculator-card {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-        .form-group {
-            margin-bottom: 25px;
-        }
-        .form-group label {
-            display: block;
-            color: #333;
-            font-weight: 600;
-            margin-bottom: 10px;
-            font-size: 16px;
-        }
-        .form-group input {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 16px;
-        }
-        .form-group input:focus {
-            outline: none;
-            border-color: var(--org-primary, #667eea);
-        }
-        .calculate-btn {
-            width: 100%;
-            background: linear-gradient(135deg, var(--org-primary, #667eea), var(--org-secondary, #764ba2));
+        .milestone-card.achieved .milestone-icon {
+            background: var(--success);
             color: white;
-            border: none;
-            padding: 18px;
-            border-radius: 10px;
-            font-weight: 600;
-            font-size: 18px;
-            cursor: pointer;
-            transition: transform 0.3s ease;
         }
-        .calculate-btn:hover { transform: scale(1.05); }
         
-        .results {
-            display: none;
-            margin-top: 30px;
-        }
-        .results.show { display: block; }
-        .result-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-        .result-box {
-            background: linear-gradient(135deg, var(--org-primary, #667eea), var(--org-secondary, #764ba2));
+        .milestone-card.upcoming .milestone-icon {
+            background: var(--warning);
             color: white;
-            padding: 20px;
-            border-radius: 15px;
-            text-align: center;
         }
-        .result-number {
-            font-size: 36px;
+        
+        .milestone-card.future .milestone-icon {
+            background: #E5E7EB;
+            color: #6B7280;
+        }
+        
+        .milestone-title {
+            font-size: 1.2rem;
             font-weight: 700;
-            margin-bottom: 5px;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
         }
-        .result-label { font-size: 14px; opacity: 0.9; }
         
-        .celebration {
-            background: linear-gradient(135deg, #4caf50, #45a049);
+        .milestone-date {
+            font-size: 0.9rem;
+            color: #6B7280;
+            margin-bottom: 0.75rem;
+        }
+        
+        .milestone-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+        
+        .status-achieved {
+            background: var(--success);
             color: white;
-            padding: 30px;
-            border-radius: 15px;
+        }
+        
+        .status-upcoming {
+            background: var(--warning);
+            color: white;
+        }
+        
+        .status-future {
+            background: #E5E7EB;
+            color: #6B7280;
+        }
+        
+        .achievement-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 2rem;
+            animation: bounce 1s ease-in-out infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .share-section {
+            background: var(--gray);
+            padding: 2rem;
+            border-radius: 1rem;
             text-align: center;
+            margin-top: 2rem;
         }
-        .celebration h2 {
-            font-size: 32px;
-            margin-bottom: 15px;
+        
+        .share-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 1rem;
         }
-        .celebration p {
-            font-size: 18px;
+        
+        .share-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .share-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+            color: white;
+        }
+        
+        .share-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+        
+        .share-btn.twitter { background: #1DA1F2; }
+        .share-btn.facebook { background: #1877F2; }
+        .share-btn.copy { background: var(--primary); }
+        
+        .motivational-quote {
+            background: linear-gradient(135deg, var(--purple), var(--pink));
+            color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            text-align: center;
+            margin-top: 2rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        
+        .quote-text {
+            font-size: 1.4rem;
+            font-weight: 600;
+            font-style: italic;
+            margin-bottom: 1rem;
             line-height: 1.6;
         }
         
+        .quote-author {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
         @media (max-width: 768px) {
-            .result-grid { grid-template-columns: repeat(2, 1fr); }
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .calculator-card {
+                padding: 1.5rem;
+            }
+            
+            .counter-value {
+                font-size: 3.5rem;
+            }
+            
+            .time-breakdown {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
     </style>
 </head>
 <body>
-    <div id="mobile-nav"></div>
     <div class="container">
+        <a href="index.html" class="back-button">
+            <i class="fas fa-arrow-left"></i>
+            Back to Dashboard
+        </a>
+        
         <div class="page-header">
-            <button class="back-button" onclick="window.location.href='client-portal.html'">
-                <i class="fas fa-arrow-left"></i>
-            </button>
-            <div class="page-header-content">
-                <h1>Sobriety Calculator</h1>
-                <p>Track your milestone journey</p>
-            </div>
+            <h1><i class="fas fa-calendar-check"></i> Sobriety Calculator</h1>
+            <p>Celebrate every moment of your journey to recovery</p>
         </div>
-
+        
         <div class="calculator-card">
-            <div class="form-group">
-                <label for="sobriety-date">
-                    <i class="fas fa-calendar"></i> Your Sobriety Date
+            <div class="date-selector">
+                <label for="sobrietyDate">
+                    <i class="fas fa-calendar-star"></i> When did your recovery journey begin?
                 </label>
-                <input type="date" id="sobriety-date" required>
+                <div class="date-input-group">
+                    <input 
+                        type="date" 
+                        id="sobrietyDate" 
+                        class="date-input"
+                        max=""
+                    >
+                </div>
+                <button class="calculate-btn" onclick="calculateSobriety()">
+                    <i class="fas fa-calculator"></i> Calculate My Progress
+                </button>
             </div>
-
-            <button class="calculate-btn" onclick="calculate()">
-                <i class="fas fa-calculator"></i> Calculate My Time
-            </button>
-
-            <div id="results" class="results">
-                <div class="result-grid">
-                    <div class="result-box">
-                        <div class="result-number" id="years">0</div>
-                        <div class="result-label">Years</div>
+            
+            <div class="results-section" id="results">
+                <!-- Big Counter -->
+                <div class="big-counter">
+                    <div class="counter-label">You've been sober for</div>
+                    <div class="counter-value" id="mainCounter">0</div>
+                    <div class="counter-unit" id="mainUnit">Days</div>
+                </div>
+                
+                <!-- Time Breakdown -->
+                <div class="time-breakdown">
+                    <div class="time-unit">
+                        <span class="time-unit-value" id="years">0</span>
+                        <span class="time-unit-label">Years</span>
                     </div>
-                    <div class="result-box">
-                        <div class="result-number" id="months">0</div>
-                        <div class="result-label">Months</div>
+                    <div class="time-unit">
+                        <span class="time-unit-value" id="months">0</span>
+                        <span class="time-unit-label">Months</span>
                     </div>
-                    <div class="result-box">
-                        <div class="result-number" id="days">0</div>
-                        <div class="result-label">Days</div>
+                    <div class="time-unit">
+                        <span class="time-unit-value" id="weeks">0</span>
+                        <span class="time-unit-label">Weeks</span>
                     </div>
-                    <div class="result-box">
-                        <div class="result-number" id="hours">0</div>
-                        <div class="result-label">Hours</div>
+                    <div class="time-unit">
+                        <span class="time-unit-value" id="days">0</span>
+                        <span class="time-unit-label">Days</span>
+                    </div>
+                    <div class="time-unit">
+                        <span class="time-unit-value" id="hours">0</span>
+                        <span class="time-unit-label">Hours</span>
+                    </div>
+                    <div class="time-unit">
+                        <span class="time-unit-value" id="minutes">0</span>
+                        <span class="time-unit-label">Minutes</span>
                     </div>
                 </div>
-
-                <div class="celebration">
-                    <h2 id="celebration-title">🎉 Keep Going Strong!</h2>
-                    <p id="celebration-message">Every moment counts on your journey to recovery.</p>
+                
+                <!-- Milestones -->
+                <div class="milestones-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-trophy"></i>
+                        Recovery Milestones
+                    </h2>
+                    <div class="milestones-grid" id="milestonesGrid">
+                        <!-- Milestones will be populated here -->
+                    </div>
+                </div>
+                
+                <!-- Share Section -->
+                <div class="share-section">
+                    <div class="share-title">
+                        <i class="fas fa-share-alt"></i> Share Your Progress
+                    </div>
+                    <div class="share-buttons">
+                        <button class="share-btn copy" onclick="copyProgress()">
+                            <i class="fas fa-copy"></i> Copy Link
+                        </button>
+                        <button class="share-btn twitter" onclick="shareTwitter()">
+                            <i class="fab fa-twitter"></i> Twitter
+                        </button>
+                        <button class="share-btn facebook" onclick="shareFacebook()">
+                            <i class="fab fa-facebook"></i> Facebook
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Motivational Quote -->
+                <div class="motivational-quote">
+                    <div class="quote-text" id="quoteText">
+                        "Recovery is not a race. You don't have to feel guilty if it takes you longer than you thought it would."
+                    </div>
+                    <div class="quote-author">— Recovery Wisdom</div>
                 </div>
             </div>
         </div>
     </div>
-
+    
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/config.js"></script>
-    <script src="js/theming-engine.js"></script>
-    <script src="js/mobile-nav.js"></script>
     <script>
-        if (window.themingEngine) window.themingEngine.init();
-
-        // Set max date to today
-        document.getElementById('sobriety-date').max = new Date().toISOString().split('T')[0];
-
-        function calculate() {
-            const sobrietyDate = new Date(document.getElementById('sobriety-date').value);
-            const now = new Date();
-
-            if (!document.getElementById('sobriety-date').value) {
+        const SUPABASE_URL = 'https://qmrdlgopygylaakskpls.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFtcmRsZ29weWd5bGFha3NrcGxzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUyMTk3MDMsImV4cCI6MjA4MDc5NTcwM30.aYORMs31sN847fKtH103VKFd13xtRft9FFXJNlvOsZw';
+        
+        const { createClient } = supabase;
+        const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
+        
+        let currentUser = null;
+        let sobrietyDate = null;
+        let updateInterval = null;
+        
+        const milestones = [
+            { days: 1, title: 'Day One', icon: '🌅', message: 'You took the first step!' },
+            { days: 3, title: '72 Hours', icon: '💪', message: 'Physical withdrawal begins to ease' },
+            { days: 7, title: 'One Week', icon: '🎯', message: 'First major milestone achieved!' },
+            { days: 14, title: 'Two Weeks', icon: '⭐', message: 'Your body is healing' },
+            { days: 30, title: 'One Month', icon: '🏆', message: 'Incredible achievement!' },
+            { days: 60, title: 'Two Months', icon: '🎖️', message: 'Building strong habits' },
+            { days: 90, title: '90 Days', icon: '🥇', message: 'Quarter year milestone!' },
+            { days: 180, title: 'Six Months', icon: '💎', message: 'Half a year of sobriety!' },
+            { days: 365, title: 'One Year', icon: '🎉', message: 'A full year of recovery!' },
+            { days: 730, title: 'Two Years', icon: '🌟', message: 'Two years strong!' },
+            { days: 1095, title: 'Three Years', icon: '👑', message: 'Three years of freedom!' },
+            { days: 1825, title: 'Five Years', icon: '🚀', message: 'Five amazing years!' }
+        ];
+        
+        const motivationalQuotes = [
+            "Recovery is not a race. You don't have to feel guilty if it takes you longer than you thought it would.",
+            "One day at a time. That's all we have to do.",
+            "Fall seven times, stand up eight.",
+            "The greatest glory in living lies not in never falling, but in rising every time we fall.",
+            "Recovery is about progression, not perfection.",
+            "You are stronger than you think, braver than you believe, and loved more than you know.",
+            "Every day you stay sober is a victory worth celebrating.",
+            "It does not matter how slowly you go, as long as you do not stop."
+        ];
+        
+        async function init() {
+            // Set max date to today
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('sobrietyDate').max = today;
+            
+            // Check authentication
+            const { data: { user } } = await supabaseClient.auth.getUser();
+            
+            if (!user) {
+                window.location.href = 'auth-login.html';
+                return;
+            }
+            
+            currentUser = user;
+            
+            // Load saved sobriety date
+            await loadSavedDate();
+        }
+        
+        async function loadSavedDate() {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('profiles')
+                    .select('sobriety_date')
+                    .eq('id', currentUser.id)
+                    .single();
+                
+                if (data && data.sobriety_date) {
+                    document.getElementById('sobrietyDate').value = data.sobriety_date;
+                    calculateSobriety();
+                }
+            } catch (error) {
+                console.log('No saved date found');
+            }
+        }
+        
+        async function saveSobrietyDate(date) {
+            try {
+                await supabaseClient
+                    .from('profiles')
+                    .upsert({
+                        id: currentUser.id,
+                        sobriety_date: date
+                    });
+            } catch (error) {
+                console.error('Error saving date:', error);
+            }
+        }
+        
+        function calculateSobriety() {
+            const dateInput = document.getElementById('sobrietyDate').value;
+            
+            if (!dateInput) {
                 alert('Please select your sobriety date');
                 return;
             }
-
-            if (sobrietyDate > now) {
-                alert('Sobriety date cannot be in the future');
-                return;
-            }
-
-            const diff = now - sobrietyDate;
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor(diff / (1000 * 60 * 60));
-            const years = Math.floor(days / 365);
-            const months = Math.floor((days % 365) / 30);
-            const remainingDays = days % 30;
-
-            document.getElementById('years').textContent = years;
-            document.getElementById('months').textContent = months;
-            document.getElementById('days').textContent = remainingDays;
-            document.getElementById('hours').textContent = hours.toLocaleString();
-
-            let title, message;
-            if (days === 0) {
-                title = '🌟 Day One Begins!';
-                message = 'Today is the first day of your new life. You\'ve got this!';
-            } else if (days < 30) {
-                title = `🔥 ${days} Days Strong!`;
-                message = 'Every day is a victory. Keep up the amazing work!';
-            } else if (days < 90) {
-                title = `💪 ${days} Days of Strength!`;
-                message = 'You\'re building incredible momentum. Stay the course!';
-            } else if (days < 365) {
-                title = `🏆 ${days} Days of Victory!`;
-                message = 'Your commitment is inspiring. You\'re unstoppable!';
-            } else {
-                title = `🌟 ${years} Year${years > 1 ? 's' : ''} of Freedom!`;
-                message = 'You\'re a true inspiration. Your journey gives hope to others!';
-            }
-
-            document.getElementById('celebration-title').textContent = title;
-            document.getElementById('celebration-message').textContent = message;
-            document.getElementById('results').classList.add('show');
+            
+            sobrietyDate = new Date(dateInput + 'T00:00:00');
+            
+            // Save to database
+            saveSobrietyDate(dateInput);
+            
+            // Show results
+            document.getElementById('results').classList.add('active');
+            
+            // Start real-time updates
+            updateCounters();
+            if (updateInterval) clearInterval(updateInterval);
+            updateInterval = setInterval(updateCounters, 1000);
+            
+            // Show random quote
+            const randomQuote = motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)];
+            document.getElementById('quoteText').textContent = randomQuote;
+            
+            // Scroll to results
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
+        
+        function updateCounters() {
+            if (!sobrietyDate) return;
+            
+            const now = new Date();
+            const diff = now - sobrietyDate;
+            
+            // Calculate time units
+            const totalMinutes = Math.floor(diff / (1000 * 60));
+            const totalHours = Math.floor(diff / (1000 * 60 * 60));
+            const totalDays = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const totalWeeks = Math.floor(totalDays / 7);
+            const totalMonths = Math.floor(totalDays / 30);
+            const totalYears = Math.floor(totalDays / 365);
+            
+            // Update main counter
+            document.getElementById('mainCounter').textContent = totalDays.toLocaleString();
+            
+            // Update breakdown
+            document.getElementById('years').textContent = totalYears.toLocaleString();
+            document.getElementById('months').textContent = totalMonths.toLocaleString();
+            document.getElementById('weeks').textContent = totalWeeks.toLocaleString();
+            document.getElementById('days').textContent = totalDays.toLocaleString();
+            document.getElementById('hours').textContent = totalHours.toLocaleString();
+            document.getElementById('minutes').textContent = totalMinutes.toLocaleString();
+            
+            // Update milestones
+            updateMilestones(totalDays);
+        }
+        
+        function updateMilestones(currentDays) {
+            const container = document.getElementById('milestonesGrid');
+            
+            container.innerHTML = milestones.map(milestone => {
+                const achieved = currentDays >= milestone.days;
+                const daysUntil = milestone.days - currentDays;
+                const upcoming = daysUntil > 0 && daysUntil <= 7;
+                const milestoneDate = new Date(sobrietyDate.getTime() + (milestone.days * 24 * 60 * 60 * 1000));
+                
+                let statusClass = 'future';
+                let statusText = `In ${daysUntil} days`;
+                let statusIcon = 'fa-lock';
+                
+                if (achieved) {
+                    statusClass = 'achieved';
+                    statusText = 'Achieved!';
+                    statusIcon = 'fa-check-circle';
+                } else if (upcoming) {
+                    statusClass = 'upcoming';
+                    statusText = `Coming Soon (${daysUntil} days)`;
+                    statusIcon = 'fa-clock';
+                }
+                
+                return `
+                    <div class="milestone-card ${statusClass}">
+                        ${achieved ? '<div class="achievement-badge">✨</div>' : ''}
+                        <div class="milestone-icon">
+                            ${milestone.icon}
+                        </div>
+                        <div class="milestone-title">${milestone.title}</div>
+                        <div class="milestone-date">${milestoneDate.toLocaleDateString()}</div>
+                        <div class="milestone-message">${milestone.message}</div>
+                        <div class="milestone-status status-${statusClass}">
+                            <i class="fas ${statusIcon}"></i>
+                            ${statusText}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function copyProgress() {
+            const days = parseInt(document.getElementById('mainCounter').textContent.replace(/,/g, ''));
+            const text = `🎉 I've been sober for ${days} days! Every day is a victory. #Recovery #Sobriety`;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Copied to clipboard!');
+            });
+        }
+        
+        function shareTwitter() {
+            const days = parseInt(document.getElementById('mainCounter').textContent.replace(/,/g, ''));
+            const text = `🎉 I've been sober for ${days} days! Every day is a victory. #Recovery #Sobriety`;
+            window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
+        }
+        
+        function shareFacebook() {
+            window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href), '_blank');
+        }
+        
+        init();
     </script>
 </body>
 </html>
