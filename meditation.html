@@ -1,252 +1,558 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8V3QF8VVMZ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-8V3QF8VVMZ');
+    </script>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meditation - Own Today</title>
+    <title>Guided Meditation - Desert Mountain Healing IOP</title>
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/white-label.css">
-    <link rel="stylesheet" href="css/mobile-nav.css">
+    <!-- PWA Meta Tags -->
+    <meta name="description" content="Guided meditation sessions for recovery and wellness">
+    <meta name="theme-color" content="#2c5f4f">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- Force no cache during development -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192x192.png">
+    
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    
+    <!-- Supabase CDN - REQUIRED for authentication -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
             min-height: 100vh;
-            padding: 20px;
-            padding-bottom: 80px;
+            color: white;
         }
-        .container { max-width: 900px; margin: 0 auto; }
+
+        .meditation-nav {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .back-btn {
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
         .page-header {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-        .back-button {
-            background: linear-gradient(135deg, var(--org-primary, #667eea), var(--org-secondary, #764ba2));
-            color: white;
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 20px;
-            transition: transform 0.3s ease;
-        }
-        .back-button:hover { transform: scale(1.1); }
-        .page-header-content h1 {
-            color: var(--org-primary, #667eea);
-            font-size: 32px;
-            margin-bottom: 5px;
-        }
-        .page-header-content p { color: #666; font-size: 16px; }
-        
-        .meditation-player {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             text-align: center;
+            margin-bottom: 50px;
         }
-        .player-icon {
-            width: 150px;
-            height: 150px;
-            margin: 0 auto 30px;
-            background: linear-gradient(135deg, var(--org-primary, #667eea), var(--org-secondary, #764ba2));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 60px;
-            color: white;
-            animation: breathe 4s infinite;
+
+        .page-header h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-        @keyframes breathe {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+
+        .page-header p {
+            font-size: 18px;
+            opacity: 0.8;
         }
-        .player-title {
-            font-size: 28px;
-            color: #333;
-            margin-bottom: 10px;
-        }
-        .player-duration {
-            color: #666;
-            margin-bottom: 30px;
-        }
-        .play-button {
-            background: linear-gradient(135deg, var(--org-primary, #667eea), var(--org-secondary, #764ba2));
-            color: white;
-            border: none;
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            font-size: 30px;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
-        }
-        .play-button:hover { transform: scale(1.1); }
-        .timer { 
-            font-size: 48px; 
-            font-weight: 700; 
-            color: var(--org-primary, #667eea);
-            margin: 20px 0;
-        }
-        
+
+        /* Session Selection */
         .sessions-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .session-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .session-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .session-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 15px;
+        }
+
+        .session-duration {
+            background: linear-gradient(135deg, #4A9FBF 0%, #2D5F7E 100%);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .session-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .session-description {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .session-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 13px;
+            opacity: 0.7;
+        }
+
+        .session-meta i {
+            margin-right: 5px;
+        }
+
+        .points-badge {
+            background: linear-gradient(135deg, #FDB515 0%, #F59E0B 100%);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+
+        /* Meditation Player */
+        .meditation-player {
+            display: none;
+            background: rgba(0, 0, 0, 0.5);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1000;
+            backdrop-filter: blur(20px);
+        }
+
+        .meditation-player.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .player-content {
+            max-width: 800px;
+            width: 90%;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .player-title {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        /* Breathing Circle */
+        .breathing-circle {
+            width: 250px;
+            height: 250px;
+            margin: 40px auto;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(168, 237, 234, 0.3) 0%, rgba(74, 159, 191, 0.1) 100%);
+            border: 3px solid rgba(168, 237, 234, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            animation: breathe 6s ease-in-out infinite;
+        }
+
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.2); opacity: 1; }
+        }
+
+        .breath-text {
+            font-size: 24px;
+            font-weight: 300;
+            opacity: 0.9;
+        }
+
+        /* Timer Display */
+        .timer-display {
+            font-size: 48px;
+            font-weight: 300;
+            margin: 30px 0;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #a8edea 0%, #fed6e3 100%);
+            border-radius: 3px;
+            transition: width 1s linear;
+            width: 0%;
+        }
+
+        /* Meditation Script */
+        .meditation-script {
+            max-width: 600px;
+            margin: 30px auto;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            max-height: 200px;
+            overflow-y: auto;
+            font-size: 18px;
+            line-height: 1.8;
+            opacity: 0.9;
+        }
+
+        .meditation-script::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .meditation-script::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+        }
+
+        .meditation-script::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+
+        /* Controls */
+        .player-controls {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .control-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        .control-btn.play-pause {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #4A9FBF 0%, #2D5F7E 100%);
+            font-size: 32px;
+        }
+
+        .control-btn.play-pause:hover {
+            box-shadow: 0 8px 25px rgba(74, 159, 191, 0.4);
+        }
+
+        /* Completion Message */
+        .completion-message {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .completion-message.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .completion-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            color: #10B981;
+        }
+
+        .completion-title {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .completion-points {
+            font-size: 48px;
+            font-weight: 700;
+            color: #FDB515;
+            margin: 20px 0;
+        }
+
+        /* Stats */
+        .meditation-stats {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 50px;
+        }
+
+        .stats-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
         }
-        .session-card {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            cursor: pointer;
-            transition: transform 0.3s ease;
+
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
         }
-        .session-card:hover { transform: translateY(-5px); }
-        .session-card h3 { color: #333; margin-bottom: 10px; }
-        .session-card p { color: #666; font-size: 14px; }
-        .session-duration {
-            color: var(--org-primary, #667eea);
-            font-weight: 600;
-            margin-top: 10px;
+
+        .stat-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: #4A9FBF;
+            margin-bottom: 5px;
         }
+
+        .stat-label {
+            font-size: 14px;
+            opacity: 0.7;
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
-            .sessions-grid { grid-template-columns: 1fr; }
+            .page-header h1 {
+                font-size: 32px;
+            }
+
+            .sessions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .breathing-circle {
+                width: 200px;
+                height: 200px;
+            }
+
+            .timer-display {
+                font-size: 36px;
+            }
+
+            .player-content {
+                padding: 20px;
+            }
+        }
+
+        .audio-toggle {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .audio-toggle label {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .audio-toggle input {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-    <div id="mobile-nav"></div>
+    <!-- Navigation -->
+    <nav class="meditation-nav">
+        <a href="index.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Back to Portal
+        </a>
+        <div style="color: white; font-weight: 600;">
+            <i class="fas fa-spa"></i> Guided Meditation
+        </div>
+        <div id="userPoints" style="background: rgba(255,255,255,0.1); padding: 8px 16px; border-radius: 20px; font-size: 14px;">
+            <i class="fas fa-star" style="color: #FDB515;"></i> <span id="pointsDisplay">0</span> pts
+        </div>
+    </nav>
+
     <div class="container">
+        <!-- Page Header -->
         <div class="page-header">
-            <button class="back-button" onclick="window.location.href='client-portal.html'">
-                <i class="fas fa-arrow-left"></i>
-            </button>
-            <div class="page-header-content">
-                <h1>Meditation</h1>
-                <p>Find your inner peace</p>
+            <h1>🧘 Guided Meditation</h1>
+            <p>Find peace, reduce stress, and strengthen your recovery through mindful meditation</p>
+        </div>
+
+        <!-- Session Selection -->
+        <div id="sessionsView">
+            <h2 style="margin-bottom: 30px; font-size: 28px;">Choose Your Session</h2>
+            <div class="sessions-grid" id="sessionsGrid">
+                <!-- Sessions will be loaded here -->
             </div>
         </div>
 
-        <div class="meditation-player">
-            <div class="player-icon" id="player-icon">
-                <i class="fas fa-spa"></i>
-            </div>
-            <h2 class="player-title" id="session-title">Select a meditation below</h2>
-            <p class="player-duration" id="session-duration"></p>
-            <div class="timer" id="timer">--:--</div>
-            <button class="play-button" id="play-button" onclick="togglePlay()" style="display: none;">
-                <i class="fas fa-play"></i>
-            </button>
-        </div>
-
-        <div class="sessions-grid">
-            <div class="session-card" onclick="loadSession('Breathing Exercise', 5, '🌬️')">
-                <h3>🌬️ Breathing Exercise</h3>
-                <p>Focus on your breath to calm the mind and reduce stress.</p>
-                <div class="session-duration">5 minutes • +30 points</div>
-            </div>
-            <div class="session-card" onclick="loadSession('Body Scan', 10, '💆')">
-                <h3>💆 Body Scan</h3>
-                <p>Progressive relaxation through body awareness.</p>
-                <div class="session-duration">10 minutes • +30 points</div>
-            </div>
-            <div class="session-card" onclick="loadSession('Mindfulness Practice', 15, '🧘')">
-                <h3>🧘 Mindfulness Practice</h3>
-                <p>Stay present and cultivate awareness of the moment.</p>
-                <div class="session-duration">15 minutes • +30 points</div>
-            </div>
-            <div class="session-card" onclick="loadSession('Gratitude Meditation', 10, '🙏')">
-                <h3>🙏 Gratitude Meditation</h3>
-                <p>Reflect on things you're grateful for in your life.</p>
-                <div class="session-duration">10 minutes • +30 points</div>
-            </div>
-            <div class="session-card" onclick="loadSession('Stress Relief', 8, '☮️')">
-                <h3>☮️ Stress Relief</h3>
-                <p>Release tension and find calm during difficult times.</p>
-                <div class="session-duration">8 minutes • +30 points</div>
-            </div>
-            <div class="session-card" onclick="loadSession('Sleep Preparation', 20, '😴')">
-                <h3>😴 Sleep Preparation</h3>
-                <p>Wind down and prepare for restful sleep.</p>
-                <div class="session-duration">20 minutes • +30 points</div>
+        <!-- Meditation Stats -->
+        <div class="meditation-stats">
+            <h3 class="stats-title">Your Meditation Journey</h3>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value" id="totalSessions">0</div>
+                    <div class="stat-label">Sessions Completed</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="totalMinutes">0</div>
+                    <div class="stat-label">Minutes Meditated</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="pointsEarned">0</div>
+                    <div class="stat-label">Points Earned</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="longestStreak">0</div>
+                    <div class="stat-label">Day Streak</div>
+                </div>
             </div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/config.js"></script>
-    <script src="js/theming-engine.js"></script>
-    <script src="js/mobile-nav.js"></script>
-    <script>
-        if (window.themingEngine) window.themingEngine.init();
-        
-        let isPlaying = false;
-        let timeLeft = 0;
-        let totalTime = 0;
-        let timer = null;
+    <!-- Meditation Player -->
+    <div class="meditation-player" id="meditationPlayer">
+        <div class="player-content">
+            <div id="playingView">
+                <h2 class="player-title" id="playerTitle">Meditation Session</h2>
+                
+                <div class="breathing-circle">
+                    <div class="breath-text" id="breathText">Breathe</div>
+                </div>
 
-        function loadSession(name, minutes, emoji) {
-            document.getElementById('session-title').textContent = name;
-            document.getElementById('session-duration').textContent = `${minutes} minute guided meditation`;
-            document.getElementById('player-icon').innerHTML = `<span style="font-size: 80px;">${emoji}</span>`;
-            timeLeft = minutes * 60;
-            totalTime = timeLeft;
-            updateTimerDisplay();
-            document.getElementById('play-button').style.display = 'block';
-            isPlaying = false;
-            document.querySelector('#play-button i').className = 'fas fa-play';
-            if (timer) clearInterval(timer);
-        }
+                <div class="timer-display" id="timerDisplay">00:00</div>
+                
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
 
-        function togglePlay() {
-            isPlaying = !isPlaying;
-            const icon = document.querySelector('#play-button i');
-            
-            if (isPlaying) {
-                icon.className = 'fas fa-pause';
-                timer = setInterval(() => {
-                    timeLeft--;
-                    updateTimerDisplay();
-                    if (timeLeft <= 0) {
-                        clearInterval(timer);
-                        completeSession();
-                    }
-                }, 1000);
-            } else {
-                icon.className = 'fas fa-play';
-                clearInterval(timer);
-            }
-        }
+                <div class="audio-toggle">
+                    <label>
+                        <input type="checkbox" id="audioEnabled" checked>
+                        <span>Enable Voice Guidance</span>
+                    </label>
+                </div>
 
-        function updateTimerDisplay() {
-            const mins = Math.floor(timeLeft / 60);
-            const secs = timeLeft % 60;
-            document.getElementById('timer').textContent = 
-                `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-        }
+                <div class="meditation-script" id="meditationScript">
+                    <!-- Script will be displayed here -->
+                </div>
 
-        function completeSession() {
-            alert('🧘 Session Complete!\n\n+30 points earned\n\nGreat job taking time for yourself! 🌟');
-            isPlaying = false;
-            document.querySelector('#play-button i').className = 'fas fa-play';
-        }
-    </script>
+                <div class="player-controls">
+                    <button class="control-btn" onclick="exitMeditation()" title="Exit">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <button class="control-btn play-pause" id="playPauseBtn" onclick="togglePlayPause()">
+                        <i class="fas fa-pause"></i>
+                    </button>
+                    <button class="control-btn" onclick="restartMeditation()" title="Restart">
+                        <i class="fas fa-redo"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="completion-message" id="completionMessage">
+                <div class="completion-icon">🎉</div>
+                <h2 class="completion-title">Meditation Complete!</h2>
+                <p style="font-size: 18px; opacity: 0.8; margin-bottom: 20px;">
+                    You've earned:
+                </p>
+                <div class="completion-points">
+                    +<span id="earnedPoints">0</span> Points
+                </div>
+                <div style="margin-top: 30px;">
+                    <button class="control-btn play-pause" onclick="exitMeditation()" style="width: auto; padding: 0 30px; border-radius: 50px;">
+                        Return to Sessions
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load auth.js first, then meditation.js -->
+    <script src="js/auth.js"></script>
+    <script src="js/meditation.js?v=7.0"></script>
+    <script src="js/pwa-install.js"></script>
 </body>
 </html>
