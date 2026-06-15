@@ -1,260 +1,359 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8V3QF8VVMZ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-8V3QF8VVMZ');
+    </script>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rewards Store - Own Today</title>
-    
-    <!-- Font Awesome -->
+    <title>Rewards Store - Desert Mountain Healing IOP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Styles -->
-    <link rel="stylesheet" href="css/white-label.css">
-    <link rel="stylesheet" href="css/mobile-nav.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #4A9FBF;
+            --primary-dark: #3A8FAF;
+            --primary-light: #6CB4D4;
+            --accent: #F59E0B;
+            --success: #10B981;
+            --danger: #EF4444;
+            --warm: #FFF7ED;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #4A9FBF 0%, #3A8FAF 100%);
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.12);
+            --shadow-lg: 0 8px 32px rgba(0,0,0,0.16);
         }
-
+        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: 'Poppins', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-            padding-bottom: 80px;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        /* Header */
-        .page-header {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .back-button {
-            background: linear-gradient(135deg, var(--org-primary, #667eea), var(--org-secondary, #764ba2));
-            color: white;
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 20px;
-            transition: transform 0.3s ease;
-        }
-
-        .back-button:hover {
-            transform: scale(1.1);
-        }
-
-        .page-header-content {
-            flex: 1;
-        }
-
-        .page-header-content h1 {
-            color: var(--org-primary, #667eea);
-            font-size: 32px;
-            margin-bottom: 5px;
-        }
-
-        .page-header-content p {
-            color: #666;
-            font-size: 16px;
-        }
-
-        /* Points Balance */
-        .points-balance {
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            color: white;
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 30px rgba(245, 158, 11, 0.3);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .balance-info h2 {
-            font-size: 48px;
-            margin-bottom: 5px;
-        }
-
-        .balance-info p {
-            opacity: 0.9;
-            font-size: 16px;
-        }
-
-        .balance-icon {
-            font-size: 80px;
-            opacity: 0.3;
-        }
-
-        /* Filter Buttons */
-        .filter-buttons {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            padding: 10px 20px;
-            border: 2px solid white;
-            background: white;
-            color: var(--org-primary, #667eea);
-            border-radius: 20px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .filter-btn:hover, .filter-btn.active {
-            background: linear-gradient(135deg, var(--org-primary, #667eea), var(--org-secondary, #764ba2));
-            color: white;
-            border-color: var(--org-primary, #667eea);
-        }
-
-        /* Rewards Grid */
-        .rewards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-
-        .reward-card {
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-            position: relative;
-        }
-
-        .reward-card:hover {
-            transform: translateY(-10px);
-        }
-
-        .reward-image {
-            width: 100%;
-            height: 200px;
-            background: linear-gradient(135deg, var(--org-primary, #667eea), var(--org-secondary, #764ba2));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 80px;
-            color: white;
-        }
-
-        .reward-content {
-            padding: 20px;
-        }
-
-        .reward-category {
-            background: linear-gradient(135deg, var(--org-primary, #667eea), var(--org-secondary, #764ba2));
-            color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            display: inline-block;
-            margin-bottom: 10px;
-        }
-
-        .reward-card h3 {
-            color: #333;
-            font-size: 20px;
-            margin-bottom: 10px;
-        }
-
-        .reward-card p {
-            color: #666;
+            background-attachment: fixed;
+            color: #1F2937;
             line-height: 1.6;
-            margin-bottom: 15px;
-            font-size: 14px;
+            min-height: 100vh;
         }
-
-        .reward-meta {
+        
+        /* Navbar */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 3px solid var(--primary);
+        }
+        
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
-            padding-top: 15px;
-            border-top: 2px solid #f0f0f0;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
-
-        .reward-points {
-            font-size: 24px;
-            font-weight: 700;
-            color: #f59e0b;
-        }
-
-        .reward-stock {
-            color: #666;
-            font-size: 13px;
-        }
-
-        .reward-stock.low {
-            color: #ef4444;
-            font-weight: 600;
-        }
-
-        .redeem-btn {
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(135deg, var(--org-primary, #667eea), var(--org-secondary, #764ba2));
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
+        
+        .nav-left {
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 8px;
+            gap: 1rem;
         }
-
-        .redeem-btn:hover {
+        
+        .nav-logo {
+            height: 70px;
+            width: auto;
+            filter: drop-shadow(0 2px 8px rgba(0,0,0,0.1));
+            transition: transform 0.3s ease;
+        }
+        
+        .nav-logo:hover {
             transform: scale(1.05);
         }
-
-        .redeem-btn:disabled {
-            background: #e0e0e0;
-            color: #999;
-            cursor: not-allowed;
-        }
-
-        .popular-badge {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: #ef4444;
-            color: white;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
+        
+        .nav-title {
+            font-size: 1.4rem;
             font-weight: 700;
+            background: var(--gradient-2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-
-        /* Success Modal */
+        
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .points-badge {
+            background: linear-gradient(135deg, #FDB515 0%, #F59E0B 100%);
+            color: white;
+            padding: 0.5rem 1.25rem;
+            border-radius: 50px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: var(--shadow-md);
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .btn-back {
+            background: var(--gradient-2);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+        
+        .btn-back:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        /* Header Section */
+        .header-section {
+            padding: 3rem 2rem;
+            text-align: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header-section h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        .header-section p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        /* Filter Tabs */
+        .filter-tabs {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+        
+        .filter-tab {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-tab:hover, .filter-tab.active {
+            background: white;
+            color: var(--primary);
+            border-color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        /* Products Grid */
+        .products-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+        
+        .product-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 300px;
+            object-fit: contain;
+            padding: 3rem;
+            border-bottom: 1px solid #E5E7EB;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Category-specific gradients */
+        .product-card[data-category="clothing"] .product-image {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+        }
+        
+        .product-card[data-category="accessories"] .product-image {
+            background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+        }
+        
+        .product-card[data-category="wellness"] .product-image {
+            background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+        }
+        
+        .product-card[data-category="gift-cards"] .product-image {
+            background: linear-gradient(135deg, #dc2626 0%, #f59e0b 100%);
+        }
+        
+        /* Logo styling with subtle shadow */
+        .product-image img {
+            filter: drop-shadow(0 10px 30px rgba(0,0,0,0.3));
+            max-width: 70%;
+            max-height: 70%;
+            transition: transform 0.3s ease;
+        }
+        
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+        
+        /* Decorative pattern overlay */
+        .product-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.05) 10px, rgba(255,255,255,0.05) 20px);
+            pointer-events: none;
+        }
+        
+        .product-info {
+            padding: 1.5rem;
+        }
+        
+        .product-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1F2937;
+            margin-bottom: 0.5rem;
+        }
+        
+        .product-description {
+            font-size: 0.95rem;
+            color: #6B7280;
+            margin-bottom: 1rem;
+        }
+        
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+        }
+        
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-redeem {
+            background: var(--gradient-2);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-redeem:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .btn-redeem:disabled {
+            background: #D1D5DB;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .badge-featured {
+            background: linear-gradient(135deg, #F59E0B 0%, #FDB515 100%);
+            color: white;
+        }
+        
+        .badge-new {
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            color: white;
+        }
+        
+        .badge-limited {
+            background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+            color: white;
+        }
+        
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -262,380 +361,856 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0,0,0,0.7);
-            z-index: 1000;
-            align-items: center;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
             justify-content: center;
-            padding: 20px;
+            align-items: center;
+            padding: 2rem;
         }
-
+        
         .modal.active {
             display: flex;
         }
-
+        
         .modal-content {
             background: white;
             border-radius: 20px;
-            padding: 40px;
-            max-width: 500px;
+            max-width: 600px;
             width: 100%;
-            text-align: center;
-            animation: modalPop 0.5s ease;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-lg);
+            animation: slideUp 0.3s ease-out;
         }
-
-        @keyframes modalPop {
-            0% { transform: scale(0); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-
-        .modal-icon {
-            font-size: 80px;
-            margin-bottom: 20px;
+        
+        .modal-header {
+            padding: 2rem;
+            border-bottom: 1px solid #E5E7EB;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-
-        .modal-content h2 {
-            color: var(--org-primary, #667eea);
-            font-size: 32px;
-            margin-bottom: 15px;
+        
+        .modal-header h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #1F2937;
         }
-
-        .modal-content p {
-            color: #666;
-            line-height: 1.6;
-            margin-bottom: 25px;
-        }
-
-        .modal-btn {
-            background: linear-gradient(135deg, var(--org-primary, #667eea), var(--org-secondary, #764ba2));
-            color: white;
+        
+        .btn-close {
+            background: none;
             border: none;
-            padding: 15px 40px;
-            border-radius: 10px;
-            font-weight: 600;
-            font-size: 16px;
+            font-size: 1.5rem;
+            color: #6B7280;
             cursor: pointer;
+            transition: color 0.3s ease;
         }
-
+        
+        .btn-close:hover {
+            color: #1F2937;
+        }
+        
+        .modal-body {
+            padding: 2rem;
+        }
+        
+        .modal-image {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .modal-price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .modal-description {
+            font-size: 1rem;
+            color: #4B5563;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+        
+        .size-selector {
+            margin-bottom: 1.5rem;
+        }
+        
+        .size-selector label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #1F2937;
+        }
+        
+        .size-options {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+        
+        .size-option {
+            padding: 0.5rem 1rem;
+            border: 2px solid #E5E7EB;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .size-option:hover, .size-option.selected {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+        }
+        
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .btn-confirm-redeem {
+            flex: 1;
+            background: var(--gradient-2);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-confirm-redeem:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .btn-cancel {
+            flex: 1;
+            background: #F3F4F6;
+            color: #4B5563;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-cancel:hover {
+            background: #E5E7EB;
+        }
+        
+        /* Success Message */
+        .success-message {
+            display: none;
+            position: fixed;
+            top: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 1.5rem 2rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            z-index: 3000;
+            animation: slideDown 0.3s ease-out;
+        }
+        
+        .success-message.active {
+            display: block;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+        
+        .success-content {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .success-icon {
+            font-size: 2rem;
+            color: var(--success);
+        }
+        
+        .success-text h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1F2937;
+            margin-bottom: 0.25rem;
+        }
+        
+        .success-text p {
+            font-size: 0.95rem;
+            color: #6B7280;
+        }
+        
+        /* Responsive */
         @media (max-width: 768px) {
-            .page-header {
-                padding: 20px;
+            .header-section h1 {
+                font-size: 2rem;
             }
-
-            .page-header-content h1 {
-                font-size: 24px;
-            }
-
-            .rewards-grid {
+            
+            .products-grid {
                 grid-template-columns: 1fr;
             }
-
-            .points-balance {
+            
+            .nav-container {
                 flex-direction: column;
                 text-align: center;
-                gap: 20px;
-            }
-
-            .balance-icon {
-                font-size: 60px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Mobile Navigation -->
-    <div id="mobile-nav"></div>
-
-    <div class="container">
-        <!-- Page Header -->
-        <div class="page-header">
-            <button class="back-button" onclick="window.location.href='client-portal.html'">
-                <i class="fas fa-arrow-left"></i>
-            </button>
-            <div class="page-header-content">
-                <h1>Rewards Store</h1>
-                <p>Redeem your hard-earned points</p>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <img src="https://i.imgur.com/zj3gqGG.png" alt="Desert Mountain Healing IOP" class="nav-logo">
+                <h1 class="nav-title">Rewards Store</h1>
+            </div>
+            <div class="nav-right">
+                <div class="points-badge">
+                    <i class="fas fa-star"></i>
+                    <span id="userPoints">0</span> Points
+                </div>
+                <a href="index.html" class="btn-back">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Portal
+                </a>
             </div>
         </div>
+    </nav>
 
-        <!-- Points Balance -->
-        <div class="points-balance">
-            <div class="balance-info">
-                <h2>1,250 Points</h2>
-                <p>Available to spend • 3,500 earned total</p>
-            </div>
-            <div class="balance-icon">
-                <i class="fas fa-coins"></i>
-            </div>
-        </div>
-
-        <!-- Filter Buttons -->
-        <div class="filter-buttons">
-            <button class="filter-btn active">All Rewards</button>
-            <button class="filter-btn">Gift Cards</button>
-            <button class="filter-btn">Privileges</button>
-            <button class="filter-btn">Wellness</button>
-            <button class="filter-btn">Activities</button>
-        </div>
-
-        <!-- Rewards Grid -->
-        <div class="rewards-grid">
-            <!-- Reward 1 -->
-            <div class="reward-card">
-                <span class="popular-badge">🔥 Popular</span>
-                <div class="reward-image">
-                    <i class="fas fa-shopping-bag"></i>
-                </div>
-                <div class="reward-content">
-                    <span class="reward-category">Gift Card</span>
-                    <h3>$10 Amazon Gift Card</h3>
-                    <p>Treat yourself to something special with this Amazon gift card. Perfect for books, essentials, or entertainment.</p>
-                    <div class="reward-meta">
-                        <div class="reward-points">
-                            <i class="fas fa-star"></i> 500 pts
-                        </div>
-                        <div class="reward-stock">25 available</div>
-                    </div>
-                    <button class="redeem-btn" onclick="redeemReward('$10 Amazon Gift Card', 500)">
-                        <i class="fas fa-gift"></i> Redeem Now
-                    </button>
-                </div>
-            </div>
-
-            <!-- Reward 2 -->
-            <div class="reward-card">
-                <div class="reward-image">
-                    <i class="fas fa-coffee"></i>
-                </div>
-                <div class="reward-content">
-                    <span class="reward-category">Gift Card</span>
-                    <h3>$5 Starbucks Card</h3>
-                    <p>Enjoy your favorite coffee or snack. A small reward for staying on track with your recovery journey.</p>
-                    <div class="reward-meta">
-                        <div class="reward-points">
-                            <i class="fas fa-star"></i> 250 pts
-                        </div>
-                        <div class="reward-stock">40 available</div>
-                    </div>
-                    <button class="redeem-btn" onclick="redeemReward('$5 Starbucks Card', 250)">
-                        <i class="fas fa-gift"></i> Redeem Now
-                    </button>
-                </div>
-            </div>
-
-            <!-- Reward 3 -->
-            <div class="reward-card">
-                <span class="popular-badge">🔥 Popular</span>
-                <div class="reward-image">
-                    <i class="fas fa-phone"></i>
-                </div>
-                <div class="reward-content">
-                    <span class="reward-category">Privilege</span>
-                    <h3>30 Min Phone Call Home</h3>
-                    <p>Extra phone time to connect with loved ones. Stay connected with the people who matter most.</p>
-                    <div class="reward-meta">
-                        <div class="reward-points">
-                            <i class="fas fa-star"></i> 150 pts
-                        </div>
-                        <div class="reward-stock">Unlimited</div>
-                    </div>
-                    <button class="redeem-btn" onclick="redeemReward('30 Min Phone Call Home', 150)">
-                        <i class="fas fa-gift"></i> Redeem Now
-                    </button>
-                </div>
-            </div>
-
-            <!-- Reward 4 -->
-            <div class="reward-card">
-                <div class="reward-image">
-                    <i class="fas fa-clock"></i>
-                </div>
-                <div class="reward-content">
-                    <span class="reward-category">Privilege</span>
-                    <h3>Extended Curfew (1 Hour)</h3>
-                    <p>Stay out an extra hour on your next outing. Perfect for special events or spending time with family.</p>
-                    <div class="reward-meta">
-                        <div class="reward-points">
-                            <i class="fas fa-star"></i> 300 pts
-                        </div>
-                        <div class="reward-stock">10 per month</div>
-                    </div>
-                    <button class="redeem-btn" onclick="redeemReward('Extended Curfew', 300)">
-                        <i class="fas fa-gift"></i> Redeem Now
-                    </button>
-                </div>
-            </div>
-
-            <!-- Reward 5 -->
-            <div class="reward-card">
-                <div class="reward-image">
-                    <i class="fas fa-spa"></i>
-                </div>
-                <div class="reward-content">
-                    <span class="reward-category">Wellness</span>
-                    <h3>Massage Therapy Session</h3>
-                    <p>60-minute professional massage to help with stress relief and relaxation. Self-care is important!</p>
-                    <div class="reward-meta">
-                        <div class="reward-points">
-                            <i class="fas fa-star"></i> 800 pts
-                        </div>
-                        <div class="reward-stock low">Only 3 left!</div>
-                    </div>
-                    <button class="redeem-btn" onclick="redeemReward('Massage Therapy Session', 800)">
-                        <i class="fas fa-gift"></i> Redeem Now
-                    </button>
-                </div>
-            </div>
-
-            <!-- Reward 6 -->
-            <div class="reward-card">
-                <div class="reward-image">
-                    <i class="fas fa-film"></i>
-                </div>
-                <div class="reward-content">
-                    <span class="reward-category">Activity</span>
-                    <h3>Movie Theater Tickets (2)</h3>
-                    <p>Enjoy a movie night out with a friend or family member. Great for celebrating milestones!</p>
-                    <div class="reward-meta">
-                        <div class="reward-points">
-                            <i class="fas fa-star"></i> 400 pts
-                        </div>
-                        <div class="reward-stock">15 available</div>
-                    </div>
-                    <button class="redeem-btn" onclick="redeemReward('Movie Theater Tickets', 400)">
-                        <i class="fas fa-gift"></i> Redeem Now
-                    </button>
-                </div>
-            </div>
-
-            <!-- Reward 7 -->
-            <div class="reward-card">
-                <div class="reward-image">
-                    <i class="fas fa-utensils"></i>
-                </div>
-                <div class="reward-content">
-                    <span class="reward-category">Gift Card</span>
-                    <h3>$20 Restaurant Gift Card</h3>
-                    <p>Enjoy a meal at your favorite local restaurant. Choose from participating locations.</p>
-                    <div class="reward-meta">
-                        <div class="reward-points">
-                            <i class="fas fa-star"></i> 600 pts
-                        </div>
-                        <div class="reward-stock">20 available</div>
-                    </div>
-                    <button class="redeem-btn" onclick="redeemReward('$20 Restaurant Gift Card', 600)">
-                        <i class="fas fa-gift"></i> Redeem Now
-                    </button>
-                </div>
-            </div>
-
-            <!-- Reward 8 -->
-            <div class="reward-card">
-                <div class="reward-image">
-                    <i class="fas fa-dumbbell"></i>
-                </div>
-                <div class="reward-content">
-                    <span class="reward-category">Wellness</span>
-                    <h3>Gym Membership (1 Month)</h3>
-                    <p>One month access to local fitness center. Stay healthy and active in your recovery!</p>
-                    <div class="reward-meta">
-                        <div class="reward-points">
-                            <i class="fas fa-star"></i> 1000 pts
-                        </div>
-                        <div class="reward-stock">8 available</div>
-                    </div>
-                    <button class="redeem-btn" onclick="redeemReward('Gym Membership', 1000)">
-                        <i class="fas fa-gift"></i> Redeem Now
-                    </button>
-                </div>
-            </div>
-
-            <!-- Reward 9 - Not enough points -->
-            <div class="reward-card">
-                <div class="reward-image">
-                    <i class="fas fa-laptop"></i>
-                </div>
-                <div class="reward-content">
-                    <span class="reward-category">Activity</span>
-                    <h3>Online Course Voucher</h3>
-                    <p>$50 voucher for Udemy or Coursera. Invest in your education and career development.</p>
-                    <div class="reward-meta">
-                        <div class="reward-points">
-                            <i class="fas fa-star"></i> 1500 pts
-                        </div>
-                        <div class="reward-stock">12 available</div>
-                    </div>
-                    <button class="redeem-btn" disabled title="Not enough points">
-                        <i class="fas fa-lock"></i> Need 250 more points
-                    </button>
-                </div>
-            </div>
+    <!-- Header Section -->
+    <div class="header-section">
+        <h1>🎁 Rewards Store</h1>
+        <p>Redeem your hard-earned points for exclusive Desert Mountain Healing branded merchandise and gift cards!</p>
+        
+        <!-- Filter Tabs -->
+        <div class="filter-tabs">
+            <button class="filter-tab active" data-category="all">All Items</button>
+            <button class="filter-tab" data-category="clothing">Clothing</button>
+            <button class="filter-tab" data-category="accessories">Accessories</button>
+            <button class="filter-tab" data-category="wellness">Wellness</button>
+            <button class="filter-tab" data-category="gift-cards">🎁 Gift Cards</button>
         </div>
     </div>
 
-    <!-- Success Modal -->
-    <div id="success-modal" class="modal">
+    <!-- Products Grid -->
+    <div class="products-container">
+        <div class="products-grid" id="productsGrid"></div>
+    </div>
+
+    <!-- Redemption Modal -->
+    <div class="modal" id="redemptionModal">
         <div class="modal-content">
-            <div class="modal-icon">🎉</div>
-            <h2>Reward Redeemed!</h2>
-            <p id="modal-message">Your reward will be available shortly. Check with staff for details.</p>
-            <button class="modal-btn" onclick="closeModal()">Awesome!</button>
+            <div class="modal-header">
+                <h2 id="modalTitle"></h2>
+                <button class="btn-close" onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img id="modalImage" class="modal-image" src="" alt="">
+                <div class="modal-price">
+                    <i class="fas fa-star"></i>
+                    <span id="modalPrice"></span> Points
+                </div>
+                <p class="modal-description" id="modalDescription"></p>
+                
+                <div class="size-selector" id="sizeSelector" style="display: none;">
+                    <label>Select Size:</label>
+                    <div class="size-options" id="sizeOptions"></div>
+                </div>
+                
+                <div class="modal-actions">
+                    <button class="btn-confirm-redeem" onclick="confirmRedemption()">
+                        <i class="fas fa-check"></i> Confirm Redemption
+                    </button>
+                    <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/config.js"></script>
-    <script src="js/theming-engine.js"></script>
-    <script src="js/mobile-nav.js"></script>
-    
+    <!-- Success Message -->
+    <div class="success-message" id="successMessage">
+        <div class="success-content">
+            <i class="fas fa-check-circle success-icon"></i>
+            <div class="success-text">
+                <h3>Redemption Successful!</h3>
+                <p>Your item will be shipped to your address on file.</p>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // Initialize theming
-        if (window.themingEngine) {
-            window.themingEngine.init();
+        // ============================================
+        // SUPABASE INITIALIZATION (Single Declaration)
+        // ============================================
+        const SUPABASE_URL = 'https://qmrdlgopygylaakskpls.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFtcmRsZ29weWd5bGFha3NrcGxzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUyMTk3MDMsImV4cCI6MjA4MDc5NTcwM30.aYORMs31sN847fKtH103VKFd13xtRft9FFXJNlvOsZw';
+        
+        // Single Supabase client instance (avoid duplicate declarations)
+        const rewardsStoreSupabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        let currentUser = null;
+        let userPoints = 0;
+        let selectedProduct = null;
+        let selectedSize = null;
+
+        // Products Database - DMH Branded Merchandise with AI-Generated Images
+        const products = [
+            {
+                id: 1,
+                name: "DMH Logo Keychain",
+                category: "accessories",
+                price: 150,
+                description: "Premium metal keychain with circular Desert Mountain Healing logo in blue and purple gradient. Durable and stylish, perfect for keys or bags.",
+                image: "logo.png",
+                badge: "new",
+                sizes: null
+            },
+            {
+                id: 2,
+                name: "DMH Mouse Pad",
+                category: "accessories",
+                price: 240,
+                description: "High-quality desk mouse pad featuring the DMH circular mountain logo. Smooth surface for precision, non-slip rubber base. Perfect for your workspace.",
+                image: "logo.png",
+                badge: null,
+                sizes: null
+            },
+            {
+                id: 3,
+                name: "DMH Water Bottle",
+                category: "wellness",
+                price: 500,
+                description: "Insulated stainless steel water bottle with blue gradient finish and DMH logo. Keeps drinks cold for 24 hours, hot for 12 hours. Stay hydrated on your recovery journey.",
+                image: "logo.png",
+                badge: "featured",
+                sizes: null
+            },
+            {
+                id: 4,
+                name: "DMH Yoga Mat",
+                category: "wellness",
+                price: 700,
+                description: "Premium purple yoga mat with centered DMH mountain logo. Non-slip, eco-friendly material. Perfect for meditation, yoga, and mindfulness practice.",
+                image: "logo.png",
+                badge: "featured",
+                sizes: null
+            },
+            {
+                id: 5,
+                name: "DMH Navy Hoodie",
+                category: "clothing",
+                price: 1000,
+                description: "Premium navy blue hoodie with embroidered DMH circular mountain logo on chest. Soft, comfortable fabric perfect for recovery meetings and daily wear.",
+                image: "logo.png",
+                badge: "featured",
+                sizes: ["S", "M", "L", "XL", "XXL"]
+            },
+            {
+                id: 6,
+                name: "DMH Polo Shirt",
+                category: "clothing",
+                price: 640,
+                description: "Professional light blue polo shirt with embroidered DMH logo on left chest. Perfect for work, meetings, or casual outings. Breathable cotton blend.",
+                image: "logo.png",
+                badge: "new",
+                sizes: ["S", "M", "L", "XL", "XXL"]
+            },
+            {
+                id: 7,
+                name: "DMH Coffee Mug",
+                category: "accessories",
+                price: 300,
+                description: "Ceramic coffee mug with DMH circular mountain logo in blue and purple gradient. Start your mornings with inspiration. Dishwasher and microwave safe.",
+                image: "logo.png",
+                badge: null,
+                sizes: null
+            },
+            {
+                id: 8,
+                name: "DMH Baseball Cap",
+                category: "accessories",
+                price: 360,
+                description: "Navy blue baseball cap with embroidered DMH circular mountain logo on front. Adjustable strap for perfect fit. Protect yourself from sun in style.",
+                image: "logo.png",
+                badge: null,
+                sizes: ["One Size"]
+            },
+            {
+                id: 9,
+                name: "DMH Backpack",
+                category: "accessories",
+                price: 800,
+                description: "Durable navy blue backpack with DMH logo patch. Multiple compartments for organization. Perfect for meetings, gym, work, or daily use.",
+                image: "logo.png",
+                badge: "featured",
+                sizes: null
+            },
+            {
+                id: 10,
+                name: "DMH Recovery Journal",
+                category: "wellness",
+                price: 440,
+                description: "Beautiful hardcover recovery journal with purple gradient cover and DMH logo. 200 lined pages for your thoughts, goals, and recovery reflections.",
+                image: "logo.png",
+                badge: "featured",
+                sizes: null
+            },
+            {
+                id: 11,
+                name: "DMH Tote Bag",
+                category: "accessories",
+                price: 400,
+                description: "Natural canvas tote bag with DMH circular mountain logo in blue and purple gradient. Eco-friendly, spacious, and perfect for shopping or beach trips.",
+                image: "logo.png",
+                badge: null,
+                sizes: null
+            },
+            {
+                id: 12,
+                name: "DMH Fitness Watch",
+                category: "wellness",
+                price: 1600,
+                description: "Modern fitness smartwatch with custom DMH logo watch face. Track your steps, heart rate, sleep, and recovery progress. Navy blue band included.",
+                image: "logo.png",
+                badge: "limited",
+                sizes: null
+            },
+            {
+                id: 13,
+                name: "DMH Phone Case",
+                category: "accessories",
+                price: 260,
+                description: "Protective phone case with blue to purple gradient background and DMH circular mountain logo. Compatible with most iPhone and Samsung models. Drop-tested protection.",
+                image: "logo.png",
+                badge: "new",
+                sizes: ["iPhone", "Samsung"]
+            },
+            {
+                id: 14,
+                name: "DMH Sticker Pack",
+                category: "accessories",
+                price: 120,
+                description: "Set of 4 premium vinyl stickers featuring DMH circular mountain logo in various sizes. Waterproof, UV-resistant. Perfect for laptops, water bottles, journals, and more.",
+                image: "logo.png",
+                badge: null,
+                sizes: null
+            },
+            {
+                id: 15,
+                name: "Amazon $20 Gift Card",
+                category: "gift-cards",
+                price: 800,
+                description: "Amazon.com $20 digital gift card. Shop millions of products - books, electronics, household items, and more. Delivered via email within 24 hours of redemption.",
+                image: "logo.png",
+                badge: "popular",
+                sizes: null
+            },
+            {
+                id: 16,
+                name: "Amazon $40 Gift Card",
+                category: "gift-cards",
+                price: 1500,
+                description: "Amazon.com $40 digital gift card. Perfect for larger purchases or stocking up on essentials. Delivered via email within 24 hours of redemption.",
+                image: "logo.png",
+                badge: "popular",
+                sizes: null
+            },
+            {
+                id: 17,
+                name: "Amazon $60 Gift Card",
+                category: "gift-cards",
+                price: 2200,
+                description: "Amazon.com $60 digital gift card. Great value for significant purchases. Delivered via email within 24 hours of redemption.",
+                image: "logo.png",
+                badge: "featured",
+                sizes: null
+            },
+            {
+                id: 18,
+                name: "Amazon $80 Gift Card",
+                category: "gift-cards",
+                price: 2800,
+                description: "Amazon.com $80 digital gift card. Excellent for major purchases or multiple items. Delivered via email within 24 hours of redemption.",
+                image: "logo.png",
+                badge: "featured",
+                sizes: null
+            },
+            {
+                id: 19,
+                name: "Amazon $100 Gift Card",
+                category: "gift-cards",
+                price: 3500,
+                description: "Amazon.com $100 digital gift card. Our highest value reward! Perfect for big-ticket items or stocking up on everything you need. Delivered via email within 24 hours of redemption.",
+                image: "logo.png",
+                badge: "premium",
+                sizes: null
+            },
+            {
+                id: 20,
+                name: "Starbucks $20 Gift Card",
+                category: "gift-cards",
+                price: 800,
+                description: "Starbucks $20 digital gift card. Enjoy your favorite coffee, tea, food, and treats at any Starbucks location. Delivered via email within 24 hours of redemption.",
+                image: "logo.png",
+                badge: "popular",
+                sizes: null
+            },
+            {
+                id: 21,
+                name: "Starbucks $40 Gift Card",
+                category: "gift-cards",
+                price: 1500,
+                description: "Starbucks $40 digital gift card. Treat yourself to multiple visits or share with a friend. Delivered via email within 24 hours of redemption.",
+                image: "logo.png",
+                badge: "popular",
+                sizes: null
+            },
+            {
+                id: 22,
+                name: "Starbucks $60 Gift Card",
+                category: "gift-cards",
+                price: 2200,
+                description: "Starbucks $60 digital gift card. Perfect for regular coffee lovers. Delivered via email within 24 hours of redemption.",
+                image: "logo.png",
+                badge: "featured",
+                sizes: null
+            },
+            {
+                id: 23,
+                name: "Starbucks $80 Gift Card",
+                category: "gift-cards",
+                price: 2800,
+                description: "Starbucks $80 digital gift card. Enjoy weeks of your favorite beverages and snacks. Delivered via email within 24 hours of redemption.",
+                image: "logo.png",
+                badge: "featured",
+                sizes: null
+            },
+            {
+                id: 24,
+                name: "Starbucks $100 Gift Card",
+                category: "gift-cards",
+                price: 3500,
+                description: "Starbucks $100 digital gift card. Our highest value reward! Perfect for the dedicated coffee enthusiast. Delivered via email within 24 hours of redemption.",
+                image: "logo.png",
+                badge: "premium",
+                sizes: null
+            }
+        ];
+
+        // Check authentication
+        async function checkAuth() {
+            try {
+                const { data: { session }, error } = await rewardsStoreSupabase.auth.getSession();
+                
+                if (error) {
+                    console.error('Auth error:', error);
+                }
+                
+                if (!session) {
+                    console.log('No session found, but continuing in demo mode');
+                }
+                
+                currentUser = session ? session.user : null;
+                await loadUserPoints();
+                renderProducts('all');
+                
+            } catch (error) {
+                console.error('❌ Auth check error:', error);
+                // Continue anyway in demo mode
+                await loadUserPoints();
+                renderProducts('all');
+            }
         }
 
-        // Current points balance
-        let availablePoints = 1250;
+        // Load user points
+        async function loadUserPoints() {
+            try {
+                // Check if user is logged in
+                if (!currentUser || !currentUser.id) {
+                    // No user logged in - use demo points
+                    console.log('No user logged in - using demo mode with 1850 points');
+                    userPoints = 1850;
+                    document.getElementById('userPoints').textContent = userPoints;
+                    return;
+                }
+                
+                // Try to get points from user_profiles table for logged-in user
+                const { data, error } = await rewardsStoreSupabase
+                    .from('user_profiles')
+                    .select('available_points, total_earned')
+                    .eq('user_id', currentUser.id)
+                    .single();
+                
+                if (data && !error) {
+                    // Use points or available_points (they should be synced)
+                    userPoints = data.points || data.available_points || 0;
+                    console.log(`✅ Loaded ${userPoints} points for user`);
+                } else {
+                    console.log('⚠️ No user profile found, using demo points:', error);
+                    // Fallback to demo points if data not found
+                    userPoints = 1850; // Demo points
+                }
+                
+                document.getElementById('userPoints').textContent = userPoints;
+                
+            } catch (error) {
+                console.error('❌ Error loading points:', error);
+                // Use demo points on error
+                userPoints = 1850;
+                document.getElementById('userPoints').textContent = userPoints;
+            }
+        }
 
-        // Filter buttons
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                console.log('Filter:', this.textContent);
+        // Render products
+        function renderProducts(category) {
+            const grid = document.getElementById('productsGrid');
+            const filteredProducts = category === 'all' 
+                ? products 
+                : products.filter(p => p.category === category);
+            
+            grid.innerHTML = filteredProducts.map(product => `
+                <div class="product-card" data-category="${product.category}" onclick="openRedemptionModal(${product.id})">
+                    ${product.badge ? `<span class="badge badge-${product.badge}">${product.badge.toUpperCase()}</span>` : ''}
+                    <div class="product-image">
+                        <img src="${product.image}" 
+                             alt="${product.name}" 
+                             loading="lazy">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">${product.name}</h3>
+                        <p class="product-description">${product.description}</p>
+                        <div class="product-footer">
+                            <div class="product-price">
+                                <i class="fas fa-star"></i>
+                                ${product.price}
+                            </div>
+                            <button class="btn-redeem" ${userPoints < product.price ? 'disabled' : ''}>
+                                ${userPoints >= product.price ? 'Redeem' : 'Not Enough Points'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Filter products
+        document.addEventListener('DOMContentLoaded', () => {
+            const filterTabs = document.querySelectorAll('.filter-tab');
+            filterTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    filterTabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    renderProducts(tab.dataset.category);
+                });
             });
         });
 
-        // Redeem reward
-        function redeemReward(rewardName, cost) {
-            if (availablePoints < cost) {
-                alert(`❌ Not enough points!\n\nYou need ${cost - availablePoints} more points to redeem this reward.\n\nKeep earning points by:\n• Checking into meetings (+50)\n• Writing journal entries (+25)\n• Completing goals (+100)`);
+        // Open redemption modal
+        function openRedemptionModal(productId) {
+            selectedProduct = products.find(p => p.id === productId);
+            
+            if (!selectedProduct || userPoints < selectedProduct.price) {
                 return;
             }
-
-            if (confirm(`🎁 Redeem ${rewardName}?\n\nCost: ${cost} points\nRemaining: ${availablePoints - cost} points`)) {
-                // Deduct points
-                availablePoints -= cost;
-                
-                // Update balance display
-                document.querySelector('.balance-info h2').textContent = `${availablePoints} Points`;
-                
-                // Show success modal
-                document.getElementById('modal-message').textContent = 
-                    `You've successfully redeemed ${rewardName}! Staff will be notified and your reward will be processed shortly.`;
-                document.getElementById('success-modal').classList.add('active');
-
-                console.log('Reward redeemed:', rewardName, 'Cost:', cost, 'Remaining:', availablePoints);
+            
+            document.getElementById('modalTitle').textContent = selectedProduct.name;
+            document.getElementById('modalImage').src = selectedProduct.image;
+            document.getElementById('modalPrice').textContent = selectedProduct.price;
+            document.getElementById('modalDescription').textContent = selectedProduct.description;
+            
+            // Handle size selection
+            const sizeSelector = document.getElementById('sizeSelector');
+            const sizeOptions = document.getElementById('sizeOptions');
+            
+            if (selectedProduct.sizes) {
+                sizeSelector.style.display = 'block';
+                sizeOptions.innerHTML = selectedProduct.sizes.map(size => 
+                    `<div class="size-option" onclick="selectSize('${size}')">${size}</div>`
+                ).join('');
+                selectedSize = null; // Reset selection
+            } else {
+                sizeSelector.style.display = 'none';
+                selectedSize = null;
             }
+            
+            document.getElementById('redemptionModal').classList.add('active');
+        }
+
+        // Select size
+        function selectSize(size) {
+            selectedSize = size;
+            document.querySelectorAll('.size-option').forEach(opt => {
+                opt.classList.remove('selected');
+                if (opt.textContent === size) {
+                    opt.classList.add('selected');
+                }
+            });
         }
 
         // Close modal
         function closeModal() {
-            document.getElementById('success-modal').classList.remove('active');
+            document.getElementById('redemptionModal').classList.remove('active');
+            selectedProduct = null;
+            selectedSize = null;
         }
 
-        console.log('📄 Rewards page loaded');
+        // Confirm redemption
+        async function confirmRedemption() {
+            if (!selectedProduct) return;
+            
+            // Check if size is required but not selected
+            if (selectedProduct.sizes && !selectedSize) {
+                alert('Please select a size before redeeming.');
+                return;
+            }
+            
+            // Check points again
+            if (userPoints < selectedProduct.price) {
+                alert('Not enough points for this item.');
+                return;
+            }
+            
+            try {
+                // Deduct points
+                const newPoints = userPoints - selectedProduct.price;
+                
+                // Update in database (if user is logged in)
+                if (currentUser && currentUser.id) {
+                    try {
+                        // Update points in user_profiles table
+                        const { error: pointsError } = await rewardsStoreSupabase
+                            .from('user_profiles')
+                            .update({ 
+                                available_points: newPoints,
+                                points: newPoints,
+                                points_spent: (userPoints - newPoints)
+                            })
+                            .eq('user_id', currentUser.id);
+                        
+                        if (pointsError) {
+                            console.error('Points update error:', pointsError);
+                            throw pointsError;
+                        }
+                        
+                        // Log redemption with correct column names
+                        console.log('🔄 Attempting to insert redemption:', {
+                            user_id: currentUser.id,
+                            item_name: selectedProduct.name,
+                            item_category: selectedProduct.category,
+                            points_cost: selectedProduct.price,
+                            size_selected: selectedSize || null,
+                            status: 'pending'
+                        });
+                        
+                        const { data: redemptionData, error: redemptionError } = await rewardsStoreSupabase
+                            .from('redemptions')
+                            .insert({
+                                user_id: currentUser.id,
+                                item_name: selectedProduct.name,
+                                item_category: selectedProduct.category,
+                                item_image: selectedProduct.image,
+                                points_cost: selectedProduct.price,
+                                size_selected: selectedSize || null,
+                                status: 'pending',
+                                redeemed_date: new Date().toISOString().split('T')[0]
+                            })
+                            .select();
+                        
+                        if (redemptionError) {
+                            console.error('❌ Redemption insert error:', redemptionError);
+                            console.error('Error details:', JSON.stringify(redemptionError, null, 2));
+                            throw redemptionError;
+                        }
+                        
+                        console.log('✅ Redemption saved to database:', redemptionData);
+                    } catch (dbError) {
+                        console.error('⚠️ Database operation failed:', dbError);
+                        alert('Error saving redemption: ' + dbError.message + '\n\nPlease contact support.');
+                        return; // Don't update UI if DB failed
+                    }
+                } else {
+                    console.log('ℹ️ Demo mode - redemption not saved to database');
+                }
+                
+                // Update UI
+                userPoints = newPoints;
+                document.getElementById('userPoints').textContent = userPoints;
+                
+                // Close modal
+                closeModal();
+                
+                // Show success message
+                const successMsg = document.getElementById('successMessage');
+                successMsg.classList.add('active');
+                setTimeout(() => {
+                    successMsg.classList.remove('active');
+                }, 4000);
+                
+                // Re-render products to update buttons
+                const activeTab = document.querySelector('.filter-tab.active');
+                renderProducts(activeTab.dataset.category);
+                
+            } catch (error) {
+                console.error('❌ Redemption error:', error);
+                alert('Failed to complete redemption. Please try again.');
+            }
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuth();
+        });
     </script>
+
+    <!-- Footer -->
+    <footer style="background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); padding: 3rem 2rem; margin-top: 4rem; border-top: 3px solid var(--primary); box-shadow: 0 -4px 20px rgba(0,0,0,0.08);">
+        <div style="max-width: 1400px; margin: 0 auto; text-align: center;">
+            <img src="https://i.imgur.com/zj3gqGG.png" alt="Desert Mountain Healing IOP" style="height: 80px; width: auto; margin-bottom: 1rem; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.1));">
+            <p style="color: #4B5563; margin-bottom: 1rem;"><i class="fas fa-map-marker-alt"></i> 3301 Southern Blvd. SE, Suite 105, Rio Rancho, NM 87124</p>
+            <p style="color: #4B5563; margin-bottom: 1.5rem;"><i class="fas fa-phone"></i> <a href="tel:5052700840" style="color: #4B5563; text-decoration: none;">(505) 270-0840</a> | <i class="fas fa-envelope"></i> <a href="mailto:sean_roberts@dmhiop.com" style="color: #4B5563; text-decoration: none;">sean_roberts@dmhiop.com</a></p>
+            <p style="color: #6B7280; font-size: 0.9rem; margin-bottom: 0.5rem;"><a href="privacy-policy.html" style="color: #4B5563; text-decoration: none;">Privacy Policy</a> | <a href="hipaa-notice.html" style="color: #4B5563; text-decoration: none;">HIPAA Notice</a> | <a href="terms-of-service.html" style="color: #4B5563; text-decoration: none;">Terms of Service</a> | <a href="security-disclaimer.html" style="color: #4B5563; text-decoration: none;">Security</a></p>
+            <p style="color: #9CA3AF; font-size: 0.85rem;">© 2026 Desert Mountain Healing IOP. All rights reserved. | <strong style="color: var(--primary);">HIPAA Compliant & Secure</strong></p>
+        </div>
+    </footer>
 </body>
 </html>
