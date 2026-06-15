@@ -1,343 +1,704 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8V3QF8VVMZ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-8V3QF8VVMZ');
+    </script>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Community - Own Today</title>
+    <title>Community Feed - Desert Mountain Healing IOP</title>
     
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/white-label.css">
-    <link rel="stylesheet" href="css/mobile-nav.css">
+    <link rel="stylesheet" href="css/style.css">
     
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-            padding-bottom: 80px;
+        :root {
+            --primary: #4A9FBF; --light: #85C1D9; --accent: #3A8FAF;
+            --white: #FFF; --gray: #F5F7FA; --dark: #1F2937;
+            --success: #10B981; --warning: #F59E0B; --danger: #EF4444;
         }
-        .container { max-width: 1200px; margin: 0 auto; }
-        .page-header {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-        .back-button {
-            background: linear-gradient(135deg, var(--org-primary, #667eea), var(--org-secondary, #764ba2));
-            color: white;
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 20px;
-            transition: transform 0.3s ease;
-        }
-        .back-button:hover { transform: scale(1.1); }
-        .page-header-content h1 { color: var(--org-primary, #667eea); font-size: 32px; margin-bottom: 5px; }
-        .page-header-content p { color: #666; font-size: 16px; }
         
-        .posts-container {
-            display: grid;
-            gap: 20px;
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--gray), var(--white));
+            color: var(--dark);
         }
-        .post-card {
+        
+        .main-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
             background: white;
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            color: var(--primary);
+            text-decoration: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            transition: all 0.3s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
-        .post-header {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 15px;
+        
+        .back-button:hover {
+            transform: translateX(-5px);
         }
-        .post-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--org-primary, #667eea), var(--org-secondary, #764ba2));
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        
+        .page-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
             color: white;
-            font-size: 24px;
-            font-weight: 700;
+            padding: 3rem 2rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
-        .post-author-info {
-            flex: 1;
+        
+        .page-header h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 2.5rem;
         }
-        .post-author {
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 3px;
-        }
-        .post-time {
-            color: #999;
-            font-size: 14px;
-        }
-        .post-content {
-            color: #333;
-            line-height: 1.6;
-            margin-bottom: 15px;
-        }
-        .post-actions {
-            display: flex;
-            gap: 20px;
-            padding-top: 15px;
-            border-top: 2px solid #f0f0f0;
-        }
-        .action-btn {
-            background: none;
-            border: none;
-            color: #666;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 600;
-            transition: color 0.3s ease;
-        }
-        .action-btn:hover { color: var(--org-primary, #667eea); }
-        .action-btn.active { color: var(--org-primary, #667eea); }
         
         .new-post-card {
             background: white;
-            border-radius: 20px;
-            padding: 25px;
-            margin-bottom: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
         }
-        .new-post-textarea {
+        
+        .post-textarea {
             width: 100%;
-            padding: 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 16px;
-            font-family: inherit;
+            padding: 1rem;
+            border: 2px solid #E5E7EB;
+            border-radius: 0.5rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            min-height: 120px;
             resize: vertical;
-            min-height: 100px;
-            margin-bottom: 15px;
+            margin-bottom: 1rem;
         }
-        .new-post-textarea:focus {
-            outline: none;
-            border-color: var(--org-primary, #667eea);
+        
+        .post-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
         }
-        .post-btn {
-            background: linear-gradient(135deg, var(--org-primary, #667eea), var(--org-secondary, #764ba2));
+        
+        .post-type-select {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .type-badge {
+            padding: 0.5rem 1rem;
+            border: 2px solid #E5E7EB;
+            background: white;
+            border-radius: 1rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .type-badge:hover {
+            border-color: var(--primary);
+        }
+        
+        .type-badge.selected {
+            border-color: var(--primary);
+            background: var(--primary);
             color: white;
+        }
+        
+        .filter-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .tab {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid #E5E7EB;
+            background: white;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .tab:hover {
+            border-color: var(--primary);
+            background: var(--light);
+        }
+        
+        .tab.active {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+        }
+        
+        .post-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+            transition: all 0.3s;
+        }
+        
+        .post-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        
+        .post-author {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .author-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+        }
+        
+        .author-info {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .author-name {
+            font-weight: 700;
+            color: var(--dark);
+        }
+        
+        .post-time {
+            font-size: 0.85rem;
+            color: #6B7280;
+        }
+        
+        .post-type-label {
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        
+        .type-story { background: #DBEAFE; color: #1E3A8A; }
+        .type-milestone { background: #FEF3C7; color: #92400E; }
+        .type-encouragement { background: #FCE7F3; color: #831843; }
+        .type-question { background: #E0E7FF; color: #3730A3; }
+        
+        .post-content {
+            color: var(--dark);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+        
+        .post-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid #E5E7EB;
+        }
+        
+        .post-stats {
+            display: flex;
+            gap: 1.5rem;
+            font-size: 0.9rem;
+            color: #6B7280;
+        }
+        
+        .post-actions-bar {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .action-btn {
+            padding: 0.5rem 1rem;
             border: none;
-            padding: 12px 30px;
-            border-radius: 10px;
+            background: transparent;
+            color: #6B7280;
+            cursor: pointer;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .action-btn:hover {
+            background: var(--gray);
+            color: var(--primary);
+        }
+        
+        .action-btn.liked {
+            color: var(--danger);
+        }
+        
+        .comments-section {
+            background: var(--gray);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            display: none;
+        }
+        
+        .comments-section.active {
+            display: block;
+        }
+        
+        .comment {
+            background: white;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        
+        .comment-author {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .comment-time {
+            font-size: 0.8rem;
+            color: #6B7280;
+        }
+        
+        .comment-text {
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        
+        .comment-input {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+        
+        .comment-input input {
+            flex: 1;
+            padding: 0.75rem;
+            border: 2px solid #E5E7EB;
+            border-radius: 0.5rem;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
             font-weight: 600;
             cursor: pointer;
-            transition: transform 0.3s ease;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
         }
-        .post-btn:hover { transform: scale(1.05); }
         
-        .support-badge {
-            display: inline-block;
-            background: #4caf50;
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
             color: white;
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
-            margin-left: 10px;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(74,159,191,0.3);
+        }
+        
+        .btn-secondary {
+            background: white;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--light);
+        }
+        
+        .milestone-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, var(--warning), #F97316);
+            color: white;
+            border-radius: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .empty-state i {
+            font-size: 4rem;
+            color: #D1D5DB;
+            margin-bottom: 1rem;
         }
         
         @media (max-width: 768px) {
-            .page-header { padding: 20px; }
+            .post-type-select {
+                flex-wrap: wrap;
+            }
+            
+            .post-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
         }
     </style>
 </head>
 <body>
-    <div id="mobile-nav"></div>
-    <div class="container">
+    <div class="main-content">
+        <a href="index.html" class="back-button">
+            <i class="fas fa-arrow-left"></i>
+            Back to Dashboard
+        </a>
+        
         <div class="page-header">
-            <button class="back-button" onclick="window.location.href='client-portal.html'">
-                <i class="fas fa-arrow-left"></i>
-            </button>
-            <div class="page-header-content">
-                <h1>Community</h1>
-                <p>Connect and support each other</p>
-            </div>
+            <h1><i class="fas fa-users"></i> Community Feed</h1>
+            <p>Share your journey and support others in recovery</p>
         </div>
-
+        
         <div class="new-post-card">
-            <textarea class="new-post-textarea" placeholder="Share your thoughts, experiences, or encouragement..."></textarea>
-            <button class="post-btn" onclick="alert('Post shared! 📣')">
-                <i class="fas fa-paper-plane"></i> Share Post
-            </button>
+            <textarea class="post-textarea" id="newPostContent" placeholder="Share your story, celebrate a milestone, or encourage others..."></textarea>
+            <div class="post-actions">
+                <div class="post-type-select">
+                    <div class="type-badge selected" data-type="story">
+                        <i class="fas fa-book"></i> Story
+                    </div>
+                    <div class="type-badge" data-type="milestone">
+                        <i class="fas fa-trophy"></i> Milestone
+                    </div>
+                    <div class="type-badge" data-type="encouragement">
+                        <i class="fas fa-heart"></i> Encouragement
+                    </div>
+                    <div class="type-badge" data-type="question">
+                        <i class="fas fa-question-circle"></i> Question
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="createPost()">
+                    <i class="fas fa-paper-plane"></i> Post
+                </button>
+            </div>
         </div>
-
-        <div class="posts-container">
-            <div class="post-card">
-                <div class="post-header">
-                    <div class="post-avatar">J</div>
-                    <div class="post-author-info">
-                        <div class="post-author">
-                            John M.
-                            <span class="support-badge">14 Days</span>
-                        </div>
-                        <div class="post-time">2 hours ago</div>
-                    </div>
-                </div>
-                <div class="post-content">
-                    Just hit my 2-week milestone! Feeling grateful for this community and everyone's support. One day at a time really works. 💪
-                </div>
-                <div class="post-actions">
-                    <button class="action-btn">
-                        <i class="fas fa-heart"></i> <span>12 Supports</span>
-                    </button>
-                    <button class="action-btn">
-                        <i class="fas fa-comment"></i> <span>5 Comments</span>
-                    </button>
-                    <button class="action-btn">
-                        <i class="fas fa-share"></i> <span>Share</span>
-                    </button>
-                </div>
+        
+        <div class="filter-tabs">
+            <div class="tab active" onclick="filterPosts('all')">
+                <i class="fas fa-th"></i> All Posts
             </div>
-
-            <div class="post-card">
-                <div class="post-header">
-                    <div class="post-avatar">S</div>
-                    <div class="post-author-info">
-                        <div class="post-author">
-                            Sarah K.
-                            <span class="support-badge">42 Days</span>
-                        </div>
-                        <div class="post-time">5 hours ago</div>
-                    </div>
-                </div>
-                <div class="post-content">
-                    Today was tough, but I made it through without giving up. Reached out to my sponsor and went to a meeting. So grateful for the tools I've learned here. Remember: progress, not perfection. 🌈
-                </div>
-                <div class="post-actions">
-                    <button class="action-btn active">
-                        <i class="fas fa-heart"></i> <span>24 Supports</span>
-                    </button>
-                    <button class="action-btn">
-                        <i class="fas fa-comment"></i> <span>8 Comments</span>
-                    </button>
-                    <button class="action-btn">
-                        <i class="fas fa-share"></i> <span>Share</span>
-                    </button>
-                </div>
+            <div class="tab" onclick="filterPosts('story')">
+                <i class="fas fa-book"></i> Stories
             </div>
-
-            <div class="post-card">
-                <div class="post-header">
-                    <div class="post-avatar">M</div>
-                    <div class="post-author-info">
-                        <div class="post-author">
-                            Mike R.
-                            <span class="support-badge">90 Days</span>
-                        </div>
-                        <div class="post-time">1 day ago</div>
-                    </div>
-                </div>
-                <div class="post-content">
-                    90 days clean today! 🎉 Never thought I'd make it here, but with this community's support and taking it one day at a time, anything is possible. To anyone struggling today: you've got this. Keep going!
-                </div>
-                <div class="post-actions">
-                    <button class="action-btn active">
-                        <i class="fas fa-heart"></i> <span>47 Supports</span>
-                    </button>
-                    <button class="action-btn">
-                        <i class="fas fa-comment"></i> <span>15 Comments</span>
-                    </button>
-                    <button class="action-btn">
-                        <i class="fas fa-share"></i> <span>Share</span>
-                    </button>
-                </div>
+            <div class="tab" onclick="filterPosts('milestone')">
+                <i class="fas fa-trophy"></i> Milestones
             </div>
-
-            <div class="post-card">
-                <div class="post-header">
-                    <div class="post-avatar">A</div>
-                    <div class="post-author-info">
-                        <div class="post-author">
-                            Anna L.
-                            <span class="support-badge">120 Days</span>
-                        </div>
-                        <div class="post-time">2 days ago</div>
-                    </div>
-                </div>
-                <div class="post-content">
-                    Reminder: It's okay to have bad days. It's okay to ask for help. It's okay to not be perfect. What matters is that you keep showing up. We're all in this together. ❤️
-                </div>
-                <div class="post-actions">
-                    <button class="action-btn active">
-                        <i class="fas fa-heart"></i> <span>35 Supports</span>
-                    </button>
-                    <button class="action-btn">
-                        <i class="fas fa-comment"></i> <span>12 Comments</span>
-                    </button>
-                    <button class="action-btn">
-                        <i class="fas fa-share"></i> <span>Share</span>
-                    </button>
-                </div>
+            <div class="tab" onclick="filterPosts('encouragement')">
+                <i class="fas fa-heart"></i> Encouragement
             </div>
-
-            <div class="post-card">
-                <div class="post-header">
-                    <div class="post-avatar">D</div>
-                    <div class="post-author-info">
-                        <div class="post-author">
-                            David P.
-                            <span class="support-badge">7 Days</span>
-                        </div>
-                        <div class="post-time">3 days ago</div>
-                    </div>
-                </div>
-                <div class="post-content">
-                    Week one complete! Thanks to everyone who reached out and shared their experiences. Reading your stories gives me hope. Looking forward to my second week! 🌟
-                </div>
-                <div class="post-actions">
-                    <button class="action-btn active">
-                        <i class="fas fa-heart"></i> <span>28 Supports</span>
-                    </button>
-                    <button class="action-btn">
-                        <i class="fas fa-comment"></i> <span>9 Comments</span>
-                    </button>
-                    <button class="action-btn">
-                        <i class="fas fa-share"></i> <span>Share</span>
-                    </button>
-                </div>
+            <div class="tab" onclick="filterPosts('question')">
+                <i class="fas fa-question-circle"></i> Questions
             </div>
+        </div>
+        
+        <div id="feedContainer">
+            <!-- Posts will be populated here -->
         </div>
     </div>
-
+    
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/config.js"></script>
-    <script src="js/theming-engine.js"></script>
-    <script src="js/mobile-nav.js"></script>
     <script>
-        if (window.themingEngine) window.themingEngine.init();
-
-        // Support button toggle
-        document.querySelectorAll('.action-btn').forEach(btn => {
-            if (btn.querySelector('.fa-heart')) {
-                btn.addEventListener('click', function() {
-                    this.classList.toggle('active');
-                    const count = this.querySelector('span');
-                    const num = parseInt(count.textContent.split(' ')[0]);
-                    count.textContent = this.classList.contains('active') ? 
-                        `${num + 1} Supports` : `${num} Supports`;
-                });
+        const SUPABASE_URL = 'https://qmrdlgopygylaakskpls.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFtcmRsZ29weWd5bGFha3NrcGxzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUyMTk3MDMsImV4cCI6MjA4MDc5NTcwM30.aYORMs31sN847fKtH103VKFd13xtRft9FFXJNlvOsZw';
+        
+        const { createClient } = supabase;
+        const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
+        
+        let currentUser = null;
+        let selectedPostType = 'story';
+        let currentFilter = 'all';
+        
+        // Sample community posts
+        let communityPosts = [
+            {
+                id: '1',
+                author: 'Anonymous Warrior',
+                avatar: 'AW',
+                type: 'milestone',
+                content: '🎉 Today marks 30 days clean! It hasn\'t been easy, but thanks to this community and my counselor, I\'m staying strong. One day at a time!',
+                milestone: '30 Days Clean',
+                likes: 24,
+                comments: 8,
+                timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000),
+                liked: false
+            },
+            {
+                id: '2',
+                author: 'Recovery Journey',
+                avatar: 'RJ',
+                type: 'encouragement',
+                content: 'To anyone struggling today: You are stronger than you think. Your past doesn\'t define your future. Keep moving forward, even if it\'s just one small step. We believe in you! 💪',
+                likes: 18,
+                comments: 5,
+                timestamp: new Date(Date.now() - 5 * 60 * 60 * 1000),
+                liked: false
+            },
+            {
+                id: '3',
+                author: 'Hope Seeker',
+                avatar: 'HS',
+                type: 'question',
+                content: 'How do you all handle cravings when they hit unexpectedly? I\'m doing well overall but sometimes they catch me off guard. Any tips would be appreciated!',
+                likes: 12,
+                comments: 15,
+                timestamp: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
+                liked: false
+            },
+            {
+                id: '4',
+                author: 'New Beginning',
+                avatar: 'NB',
+                type: 'story',
+                content: 'I never thought I\'d see this day. After years of addiction, I\'m finally rebuilding my life. My family is talking to me again, I got a new job, and I\'m learning to love myself. Recovery is possible. Don\'t give up.',
+                likes: 42,
+                comments: 12,
+                timestamp: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
+                liked: false
             }
-        });
+        ];
+        
+        async function init() {
+            const { data: { user } } = await supabaseClient.auth.getUser();
+            
+            if (!user) {
+                window.location.href = 'auth-login.html';
+                return;
+            }
+            
+            currentUser = user;
+            
+            // Setup post type selection
+            document.querySelectorAll('.type-badge').forEach(badge => {
+                badge.addEventListener('click', () => {
+                    document.querySelectorAll('.type-badge').forEach(b => b.classList.remove('selected'));
+                    badge.classList.add('selected');
+                    selectedPostType = badge.dataset.type;
+                });
+            });
+            
+            renderFeed();
+        }
+        
+        function renderFeed() {
+            const container = document.getElementById('feedContainer');
+            
+            let filtered = communityPosts;
+            if (currentFilter !== 'all') {
+                filtered = communityPosts.filter(p => p.type === currentFilter);
+            }
+            
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-comments"></i>
+                        <h3>No Posts Yet</h3>
+                        <p>Be the first to share something with the community!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = filtered.map(post => {
+                const timeAgo = getTimeAgo(post.timestamp);
+                
+                return `
+                    <div class="post-card">
+                        <div class="post-header">
+                            <div class="post-author">
+                                <div class="author-avatar">${post.avatar}</div>
+                                <div class="author-info">
+                                    <div class="author-name">${post.author}</div>
+                                    <div class="post-time">${timeAgo}</div>
+                                </div>
+                            </div>
+                            <div class="post-type-label type-${post.type}">
+                                ${post.type}
+                            </div>
+                        </div>
+                        
+                        ${post.milestone ? `
+                            <div class="milestone-badge">
+                                <i class="fas fa-trophy"></i>
+                                ${post.milestone}
+                            </div>
+                        ` : ''}
+                        
+                        <div class="post-content">${post.content}</div>
+                        
+                        <div class="post-footer">
+                            <div class="post-stats">
+                                <span><i class="fas fa-heart"></i> ${post.likes} ${post.likes === 1 ? 'like' : 'likes'}</span>
+                                <span><i class="fas fa-comment"></i> ${post.comments} ${post.comments === 1 ? 'comment' : 'comments'}</span>
+                            </div>
+                            <div class="post-actions-bar">
+                                <button class="action-btn ${post.liked ? 'liked' : ''}" onclick="toggleLike('${post.id}')">
+                                    <i class="fas fa-heart"></i> ${post.liked ? 'Liked' : 'Like'}
+                                </button>
+                                <button class="action-btn" onclick="toggleComments('${post.id}')">
+                                    <i class="fas fa-comment"></i> Comment
+                                </button>
+                                <button class="action-btn" onclick="sharePost('${post.id}')">
+                                    <i class="fas fa-share"></i> Share
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="comments-section" id="comments-${post.id}">
+                            <div class="comment">
+                                <div class="comment-header">
+                                    <span class="comment-author">Grateful Heart</span>
+                                    <span class="comment-time">2h ago</span>
+                                </div>
+                                <div class="comment-text">This is so inspiring! Keep up the amazing work! 💪</div>
+                            </div>
+                            <div class="comment-input">
+                                <input type="text" placeholder="Write a supportive comment..." id="comment-input-${post.id}">
+                                <button class="btn btn-secondary" onclick="addComment('${post.id}')">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function getTimeAgo(timestamp) {
+            const now = new Date();
+            const diff = now - timestamp;
+            const minutes = Math.floor(diff / 60000);
+            const hours = Math.floor(diff / 3600000);
+            const days = Math.floor(diff / 86400000);
+            
+            if (days > 0) return `${days}d ago`;
+            if (hours > 0) return `${hours}h ago`;
+            if (minutes > 0) return `${minutes}m ago`;
+            return 'Just now';
+        }
+        
+        function createPost() {
+            const content = document.getElementById('newPostContent').value.trim();
+            
+            if (!content) {
+                alert('Please write something before posting!');
+                return;
+            }
+            
+            const newPost = {
+                id: Date.now().toString(),
+                author: 'You (Anonymous)',
+                avatar: 'YO',
+                type: selectedPostType,
+                content: content,
+                likes: 0,
+                comments: 0,
+                timestamp: new Date(),
+                liked: false
+            };
+            
+            communityPosts.unshift(newPost);
+            document.getElementById('newPostContent').value = '';
+            
+            alert('✅ Post shared with the community!');
+            renderFeed();
+        }
+        
+        function filterPosts(filter) {
+            currentFilter = filter;
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            renderFeed();
+        }
+        
+        function toggleLike(postId) {
+            const post = communityPosts.find(p => p.id === postId);
+            if (post) {
+                post.liked = !post.liked;
+                post.likes += post.liked ? 1 : -1;
+                renderFeed();
+            }
+        }
+        
+        function toggleComments(postId) {
+            const commentsSection = document.getElementById(`comments-${postId}`);
+            commentsSection.classList.toggle('active');
+        }
+        
+        function addComment(postId) {
+            const input = document.getElementById(`comment-input-${postId}`);
+            const text = input.value.trim();
+            
+            if (!text) return;
+            
+            const post = communityPosts.find(p => p.id === postId);
+            if (post) {
+                post.comments += 1;
+                input.value = '';
+                alert('✅ Comment added!');
+                renderFeed();
+            }
+        }
+        
+        function sharePost(postId) {
+            alert('📤 Share feature coming soon! You\'ll be able to share posts with your counselor or support network.');
+        }
+        
+        init();
     </script>
 </body>
 </html>
