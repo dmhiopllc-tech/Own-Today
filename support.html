@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8V3QF8VVMZ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-8V3QF8VVMZ');
+    </script>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Own Today Support - Get help with your white-label platform">
+    <title>Support | Own Today</title>
+    
+    <link rel="icon" type="image/png" href="images/own-today-logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/white-label.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f5f5f5;
+            color: #2C2C2C;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #0D7C9E 0%, #0A5F7A 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: white;
+            text-decoration: none;
+            margin-bottom: 2rem;
+            font-weight: 500;
+            transition: opacity 0.3s ease;
+        }
+        
+        .back-link:hover {
+            opacity: 0.8;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: -50px auto 0;
+            padding: 0 2rem 4rem;
+        }
+        
+        .support-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .support-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .support-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+        }
+        
+        .support-icon {
+            font-size: 3rem;
+            color: #F89A2E;
+            margin-bottom: 1.5rem;
+        }
+        
+        .support-card h3 {
+            font-size: 1.5rem;
+            color: #0D7C9E;
+            margin-bottom: 1rem;
+        }
+        
+        .support-card p {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .support-card a {
+            display: inline-block;
+            padding: 0.75rem 2rem;
+            background: #0D7C9E;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .support-card a:hover {
+            background: #0A5F7A;
+            transform: translateY(-2px);
+        }
+        
+        .faq-section {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .faq-section h2 {
+            font-size: 2rem;
+            color: #0D7C9E;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .faq-item {
+            border-bottom: 1px solid #eee;
+            padding: 1.5rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+        
+        .faq-item:hover {
+            background: #f9f9f9;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            border-radius: 10px;
+        }
+        
+        .faq-question {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2C2C2C;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .faq-answer {
+            color: #666;
+            line-height: 1.8;
+            margin-top: 1rem;
+            display: none;
+        }
+        
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+        
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+        
+        .faq-icon {
+            color: #F89A2E;
+            transition: transform 0.3s ease;
+        }
+        
+        .contact-info {
+            background: linear-gradient(135deg, #F89A2E 0%, #E87A0F 100%);
+            color: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-top: 3rem;
+            text-align: center;
+        }
+        
+        .contact-info h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .contact-info p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .contact-methods {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+        
+        .contact-method {
+            text-align: center;
+        }
+        
+        .contact-method i {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .contact-method strong {
+            display: block;
+            font-size: 1.2rem;
+            margin-bottom: 0.25rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .contact-methods {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <a href="index.html" class="back-link">
+                <i class="fas fa-arrow-left"></i> Back to Home
+            </a>
+            <h1>Support Center</h1>
+            <p>We're here to help you succeed</p>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="support-grid">
+            <div class="support-card">
+                <div class="support-icon">
+                    <i class="fas fa-book"></i>
+                </div>
+                <h3>Documentation</h3>
+                <p>Comprehensive guides and tutorials for getting the most out of Own Today</p>
+                <a href="#" onclick="alert('Documentation portal coming soon!'); return false;">View Docs</a>
+            </div>
+            
+            <div class="support-card">
+                <div class="support-icon">
+                    <i class="fas fa-video"></i>
+                </div>
+                <h3>Video Tutorials</h3>
+                <p>Step-by-step video guides for setup, customization, and daily operations</p>
+                <a href="#" onclick="alert('Video library coming soon!'); return false;">Watch Videos</a>
+            </div>
+            
+            <div class="support-card">
+                <div class="support-icon">
+                    <i class="fas fa-comments"></i>
+                </div>
+                <h3>Live Chat</h3>
+                <p>Chat with our support team Monday-Friday, 9am-6pm EST</p>
+                <a href="#" onclick="alert('Chat will open during business hours!'); return false;">Start Chat</a>
+            </div>
+        </div>
+        
+        <!-- FAQ Section -->
+        <div class="faq-section">
+            <h2>Frequently Asked Questions</h2>
+            
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                    How do I customize my platform's branding?
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    After signing up, you'll receive access to your admin portal. Navigate to Settings > Branding where you can upload your logo, choose your primary and secondary colors, and customize the tagline. Changes are reflected instantly across your entire platform.
+                </div>
+            </div>
+            
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                    How do clients access the platform?
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    Clients can access the platform via web browser on any device. We provide you with a custom URL (e.g., yourname.owntoday.app) that you can share with clients. They'll create their account using the invitation code you provide.
+                </div>
+            </div>
+            
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                    Can I import existing client data?
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    Yes! Enterprise plans include data migration assistance. For Professional plans, we provide a CSV template you can use to bulk import client information. Our support team can guide you through the process.
+                </div>
+            </div>
+            
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                    What happens if we exceed our client limit?
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    We'll notify you when you're approaching your plan limit. You can easily upgrade to the next tier from your admin portal. We never automatically charge you or disable accounts - you stay in control.
+                </div>
+            </div>
+            
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                    Is client data secure and HIPAA compliant?
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    Absolutely. All data is encrypted in transit and at rest. We maintain HIPAA compliance, conduct regular security audits, and sign BAAs (Business Associate Agreements) with all customers. Your clients' privacy and data security is our top priority.
+                </div>
+            </div>
+            
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                    Can we customize the rewards that clients can earn?
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    Yes! You have complete control over your rewards catalog. Create custom rewards like gift cards, privilege passes, extended curfew, special outings, or anything else that motivates your clients. Set point values for each reward.
+                </div>
+            </div>
+            
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                    What kind of training do you provide?
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    All plans include onboarding training for administrators. Professional and Enterprise plans include provider training sessions. We also offer ongoing webinars, video tutorials, and documentation. Enterprise customers receive a dedicated account manager for personalized support.
+                </div>
+            </div>
+            
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                    Can clients use this on their phones?
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    Yes! The platform is fully responsive and works great on phones, tablets, and computers. Clients can "install" it to their phone's home screen for app-like functionality. We're also developing native iOS and Android apps (coming Q3 2026).
+                </div>
+            </div>
+        </div>
+        
+        <!-- Contact Info -->
+        <div class="contact-info">
+            <h2>Still Need Help?</h2>
+            <p>Our support team is standing by to assist you</p>
+            
+            <div class="contact-methods">
+                <div class="contact-method">
+                    <i class="fas fa-envelope"></i>
+                    <strong>Email</strong>
+                    <span>support@owntoday.app</span>
+                </div>
+                
+                <div class="contact-method">
+                    <i class="fas fa-phone"></i>
+                    <strong>Phone</strong>
+                    <span>(855) OWN-TODAY</span>
+                </div>
+                
+                <div class="contact-method">
+                    <i class="fas fa-clock"></i>
+                    <strong>Hours</strong>
+                    <span>Mon-Fri 9am-6pm EST</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function toggleFaq(element) {
+            // Close all other FAQ items
+            document.querySelectorAll('.faq-item').forEach(item => {
+                if (item !== element) {
+                    item.classList.remove('active');
+                }
+            });
+            
+            // Toggle clicked item
+            element.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
