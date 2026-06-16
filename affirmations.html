@@ -622,16 +622,6 @@
         async function loadUserData() {
             // Demo mode - not needed
             // Streak and completed days set in init()
-                const { data: allDays } = await supabaseClient
-                    .from('affirmation_streak')
-                    .select('date')
-                    .eq('user_id', currentUser.id)
-                    .order('date', { ascending: false });
-                
-                if (allDays) {
-                    completedDays = allDays.map(d => d.date);
-                    streak = calculateStreak(completedDays);
-                    document.getElementById('streakCount').textContent = streak;
                 }
             } catch (error) {
                 console.error('Error loading user data:', error);
