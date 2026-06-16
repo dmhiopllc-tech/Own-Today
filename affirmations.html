@@ -476,15 +476,9 @@
         </div>
     </div>
     
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        const SUPABASE_URL = 'https://qmrdlgopygylaakskpls.supabase.co';
-        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFtcmRsZ29weWd5bGFha3NrcGxzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUyMTk3MDMsImV4cCI6MjA4MDc5NTcwM30.aYORMs31sN847fKtH103VKFd13xtRft9FFXJNlvOsZw';
-        
-        const { createClient } = supabase;
-        const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
-        
-        let currentUser = null;
+        // Demo mode - no database
+        let currentUser = { id: 'demo-user' };
         let currentAffirmation = null;
         let favorites = [];
         let streak = 0;
@@ -607,18 +601,13 @@
         };
         
         async function init() {
-            // Check authentication
-            const { data: { user } } = await supabaseClient.auth.getUser();
-            
-            if (!user) {
-                window.location.href = 'auth-login.html';
-                return;
-            }
-            
-            currentUser = user;
-            
-            // Load user data
-            await loadUserData();
+            // Demo mode
+            streak = 12; // Demo: 12 day streak
+            completedDays = Array(12).fill().map((_, i) => {
+                const d = new Date();
+                d.setDate(d.getDate() - i);
+                return d.toISOString().split('T')[0];
+            });
             
             // Display affirmation
             getNewAffirmation();
@@ -628,34 +617,11 @@
             
             // Render calendar
             renderCalendar();
-            
-            // Load favorites
-            await loadFavorites();
         }
         
         async function loadUserData() {
-            try {
-                const today = new Date().toISOString().split('T')[0];
-                
-                // Check if user viewed affirmation today
-                const { data: streakData } = await supabaseClient
-                    .from('affirmation_streak')
-                    .select('*')
-                    .eq('user_id', currentUser.id)
-                    .eq('date', today)
-                    .single();
-                
-                if (!streakData) {
-                    // Mark today as viewed
-                    await supabaseClient
-                        .from('affirmation_streak')
-                        .insert({
-                            user_id: currentUser.id,
-                            date: today
-                        });
-                }
-                
-                // Calculate streak
+            // Demo mode - not needed
+            // Streak and completed days set in init()
                 const { data: allDays } = await supabaseClient
                     .from('affirmation_streak')
                     .select('date')
