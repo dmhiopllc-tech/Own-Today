@@ -7,13 +7,12 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-8V3QF8VVMZ');
     </script>
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Saved Literature - Desert Mountain Healing IOP</title>
+    <title>My Literature - Own Today</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -33,7 +32,7 @@
         }
         
         .main-content {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 2rem;
         }
@@ -72,544 +71,125 @@
             font-size: 2.5rem;
         }
         
-        .stats-bar {
+        .lit-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-        
-        .stat-card {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 1rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-        
-        .stat-card i {
-            font-size: 2rem;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-        }
-        
-        .stat-card .stat-value {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--dark);
-        }
-        
-        .stat-card .stat-label {
-            color: #6B7280;
-            font-size: 0.9rem;
-        }
-        
-        .literature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 1.5rem;
         }
         
         .lit-card {
             background: white;
-            border: 2px solid #E5E7EB;
             border-radius: 1rem;
             padding: 1.5rem;
-            transition: all 0.3s;
-            position: relative;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
         }
         
         .lit-card:hover {
-            border-color: var(--primary);
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
         }
         
-        .lit-program {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            border-radius: 0.5rem;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 0.75rem;
-        }
-        
-        .lit-program.aa { background: #FEE2E2; color: #991B1B; }
-        .lit-program.na { background: #DBEAFE; color: #1E3A8A; }
-        .lit-program.smart { background: #D1FAE5; color: #065F46; }
-        .lit-program.lifering { background: #E0E7FF; color: #3730A3; }
-        .lit-program.celebrate { background: #FCE7F3; color: #831843; }
-        
-        .lit-card h3 {
-            margin: 0 0 0.5rem 0;
-            color: var(--dark);
-            font-size: 1.2rem;
-        }
-        
-        .lit-category {
-            color: var(--primary);
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 0.75rem;
-        }
-        
-        .lit-description {
-            color: #6B7280;
-            font-size: 0.9rem;
-            line-height: 1.6;
+        .lit-icon {
+            font-size: 2.5rem;
             margin-bottom: 1rem;
-        }
-        
-        .progress-section {
-            background: var(--gray);
-            padding: 1rem;
-            border-radius: 0.5rem;
-            margin-bottom: 1rem;
-        }
-        
-        .progress-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.5rem;
-        }
-        
-        .progress-label {
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-        
-        .progress-value {
             color: var(--primary);
+        }
+        
+        .lit-title {
+            font-size: 1.3rem;
             font-weight: 700;
-        }
-        
-        .progress-bar {
-            height: 8px;
-            background: #E5E7EB;
-            border-radius: 10px;
-            overflow: hidden;
-            margin-bottom: 0.75rem;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            transition: width 0.3s;
-        }
-        
-        .progress-slider {
-            width: 100%;
+            color: var(--dark);
             margin-bottom: 0.5rem;
         }
         
-        .notes-section {
-            margin-bottom: 1rem;
-        }
-        
-        .notes-label {
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            display: block;
-        }
-        
-        .notes-display {
-            background: var(--gray);
-            padding: 0.75rem;
-            border-radius: 0.5rem;
-            font-size: 0.9rem;
+        .lit-desc {
             color: #6B7280;
-            font-style: italic;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
         }
         
-        .notes-textarea {
-            width: 100%;
-            padding: 0.75rem;
-            border: 2px solid #E5E7EB;
-            border-radius: 0.5rem;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.9rem;
-            min-height: 80px;
-            resize: vertical;
-        }
-        
-        .lit-actions {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
-        
-        .btn {
-            flex: 1;
-            padding: 0.75rem 1rem;
-            border: none;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
+        .lit-link {
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
             gap: 0.5rem;
-            text-decoration: none;
-            font-size: 0.9rem;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(74,159,191,0.3);
-        }
-        
-        .btn-secondary {
-            background: white;
-            border: 2px solid var(--primary);
             color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
         }
         
-        .btn-secondary:hover {
-            background: var(--light);
-        }
-        
-        .btn-danger {
-            background: white;
-            border: 2px solid var(--danger);
-            color: var(--danger);
-        }
-        
-        .btn-danger:hover {
-            background: #FEE2E2;
-        }
-        
-        .btn-success {
-            background: var(--success);
-            color: white;
-        }
-        
-        .btn-success:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-        }
-        
-        .last-accessed {
-            font-size: 0.85rem;
-            color: #6B7280;
-            margin-top: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .empty-state {
-            text-align: center;
-            padding: 4rem 2rem;
-            background: white;
-            border-radius: 1rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        
-        .empty-state i {
-            font-size: 4rem;
-            color: #D1D5DB;
-            margin-bottom: 1rem;
-        }
-        
-        .edit-mode {
-            border: 2px solid var(--warning);
-            background: linear-gradient(135deg, rgba(245, 158, 11, 0.05), rgba(255, 255, 255, 1));
-        }
-        
-        @media (max-width: 768px) {
-            .literature-grid {
-                grid-template-columns: 1fr;
-            }
+        .lit-link:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
     <div class="main-content">
-        <a href="literature-library.html" class="back-button">
+        <a href="client-portal.html" class="back-button">
             <i class="fas fa-arrow-left"></i>
-            Back to Library
+            Back to Dashboard
         </a>
         
         <div class="page-header">
-            <h1><i class="fas fa-bookmark"></i> My Saved Literature</h1>
-            <p>Your personal collection of recovery resources</p>
+            <h1><i class="fas fa-book-open"></i> My Literature</h1>
+            <p>Your saved recovery literature and resources</p>
         </div>
         
-        <div class="stats-bar">
-            <div class="stat-card">
-                <i class="fas fa-bookmark"></i>
-                <div class="stat-value" id="totalSaved">0</div>
-                <div class="stat-label">Saved Resources</div>
+        <div class="lit-grid">
+            <div class="lit-card">
+                <div class="lit-icon">📖</div>
+                <div class="lit-title">The Big Book (AA)</div>
+                <div class="lit-desc">Alcoholics Anonymous - The foundational text for AA recovery</div>
+                <a href="#" class="lit-link" onclick="alert('Demo Mode: This would open the literature'); return false;">
+                    <i class="fas fa-book-reader"></i> Read Now
+                </a>
             </div>
-            <div class="stat-card">
-                <i class="fas fa-book-reader"></i>
-                <div class="stat-value" id="totalCompleted">0</div>
-                <div class="stat-label">Completed</div>
+            
+            <div class="lit-card">
+                <div class="lit-icon">📘</div>
+                <div class="lit-title">Basic Text (NA)</div>
+                <div class="lit-desc">Narcotics Anonymous - Core text for NA program</div>
+                <a href="#" class="lit-link" onclick="alert('Demo Mode: This would open the literature'); return false;">
+                    <i class="fas fa-book-reader"></i> Read Now
+                </a>
             </div>
-            <div class="stat-card">
-                <i class="fas fa-clock"></i>
-                <div class="stat-value" id="inProgress">0</div>
-                <div class="stat-label">In Progress</div>
+            
+            <div class="lit-card">
+                <div class="lit-icon">📗</div>
+                <div class="lit-title">Living Sober</div>
+                <div class="lit-desc">Practical suggestions for staying sober</div>
+                <a href="#" class="lit-link" onclick="alert('Demo Mode: This would open the literature'); return false;">
+                    <i class="fas fa-book-reader"></i> Read Now
+                </a>
             </div>
-            <div class="stat-card">
-                <i class="fas fa-sticky-note"></i>
-                <div class="stat-value" id="withNotes">0</div>
-                <div class="stat-label">With Notes</div>
+            
+            <div class="lit-card">
+                <div class="lit-icon">📙</div>
+                <div class="lit-title">Daily Reflections</div>
+                <div class="lit-desc">A book of reflections for daily meditation</div>
+                <a href="#" class="lit-link" onclick="alert('Demo Mode: This would open the literature'); return false;">
+                    <i class="fas fa-book-reader"></i> Read Now
+                </a>
             </div>
-        </div>
-        
-        <div id="literatureGrid" class="literature-grid">
-            <div class="empty-state">
-                <i class="fas fa-spinner fa-spin"></i>
-                <h3>Loading your saved literature...</h3>
+            
+            <div class="lit-card">
+                <div class="lit-icon">📕</div>
+                <div class="lit-title">Twelve Steps and Twelve Traditions</div>
+                <div class="lit-desc">Detailed exploration of the 12 Steps and 12 Traditions</div>
+                <a href="#" class="lit-link" onclick="alert('Demo Mode: This would open the literature'); return false;">
+                    <i class="fas fa-book-reader"></i> Read Now
+                </a>
+            </div>
+            
+            <div class="lit-card">
+                <div class="lit-icon">📓</div>
+                <div class="lit-title">Just for Today</div>
+                <div class="lit-desc">Daily meditation book for NA members</div>
+                <a href="#" class="lit-link" onclick="alert('Demo Mode: This would open the literature'); return false;">
+                    <i class="fas fa-book-reader"></i> Read Now
+                </a>
             </div>
         </div>
     </div>
-    
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script>
-        const SUPABASE_URL = 'https://qmrdlgopygylaakskpls.supabase.co';
-        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFtcmRsZ29weWd5bGFha3NrcGxzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUyMTk3MDMsImV4cCI6MjA4MDc5NTcwM30.aYORMs31sN847fKtH103VKFd13xtRft9FFXJNlvOsZw';
-        
-        const { createClient } = supabase;
-        const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
-        
-        let currentUser = null;
-        let savedLiterature = [];
-        let editingId = null;
-        
-        async function init() {
-            const { data: { user } } = await supabaseClient.auth.getUser();
-            
-            if (!user) {
-                window.location.href = 'auth-login.html';
-                return;
-            }
-            
-            currentUser = user;
-            await loadSavedLiterature();
-        }
-        
-        async function loadSavedLiterature() {
-            try {
-                const { data, error } = await supabaseClient
-                    .from('user_saved_literature')
-                    .select(`
-                        *,
-                        literature (*)
-                    `)
-                    .eq('user_id', currentUser.id)
-                    .order('created_at', { ascending: false });
-                
-                if (error) throw error;
-                
-                savedLiterature = data || [];
-                updateStats();
-                renderLiterature();
-                
-            } catch (error) {
-                console.error('Error loading saved literature:', error);
-                document.getElementById('literatureGrid').innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-exclamation-circle"></i>
-                        <h3>Error Loading Literature</h3>
-                        <p>Please try refreshing the page.</p>
-                    </div>
-                `;
-            }
-        }
-        
-        function updateStats() {
-            document.getElementById('totalSaved').textContent = savedLiterature.length;
-            document.getElementById('totalCompleted').textContent = 
-                savedLiterature.filter(s => s.progress_percentage === 100).length;
-            document.getElementById('inProgress').textContent = 
-                savedLiterature.filter(s => s.progress_percentage > 0 && s.progress_percentage < 100).length;
-            document.getElementById('withNotes').textContent = 
-                savedLiterature.filter(s => s.notes && s.notes.trim()).length;
-        }
-        
-        function renderLiterature() {
-            const grid = document.getElementById('literatureGrid');
-            
-            if (savedLiterature.length === 0) {
-                grid.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-bookmark"></i>
-                        <h3>No Saved Literature Yet</h3>
-                        <p>Browse the literature library and save resources to your collection!</p>
-                        <a href="literature-library.html" class="btn btn-primary">
-                            <i class="fas fa-book-open"></i> Browse Library
-                        </a>
-                    </div>
-                `;
-                return;
-            }
-            
-            grid.innerHTML = savedLiterature.map(saved => {
-                const lit = saved.literature;
-                if (!lit) return '';
-                
-                const programClass = lit.program.toLowerCase().replace(/\s+/g, '-');
-                const isEditing = editingId === saved.id;
-                const lastAccessed = saved.last_accessed ? 
-                    new Date(saved.last_accessed).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 
-                    'Never';
-                
-                return `
-                    <div class="lit-card ${isEditing ? 'edit-mode' : ''}" id="card-${saved.id}">
-                        <div class="lit-program ${programClass}">${lit.program}</div>
-                        <h3>${lit.title}</h3>
-                        <div class="lit-category"><i class="fas fa-folder"></i> ${lit.category}</div>
-                        <div class="lit-description">${lit.description}</div>
-                        
-                        <div class="progress-section">
-                            <div class="progress-header">
-                                <span class="progress-label">Reading Progress</span>
-                                <span class="progress-value">${saved.progress_percentage || 0}%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: ${saved.progress_percentage || 0}%"></div>
-                            </div>
-                            ${isEditing ? `
-                                <input type="range" class="progress-slider" 
-                                    value="${saved.progress_percentage || 0}" 
-                                    min="0" max="100" 
-                                    oninput="updateProgressPreview('${saved.id}', this.value)"
-                                    id="slider-${saved.id}">
-                            ` : ''}
-                        </div>
-                        
-                        <div class="notes-section">
-                            <span class="notes-label"><i class="fas fa-sticky-note"></i> Personal Notes</span>
-                            ${isEditing ? `
-                                <textarea class="notes-textarea" id="notes-${saved.id}" placeholder="Add your thoughts, reflections, or key takeaways...">${saved.notes || ''}</textarea>
-                            ` : saved.notes ? `
-                                <div class="notes-display">${saved.notes}</div>
-                            ` : `
-                                <div class="notes-display">No notes yet. Click Edit to add notes.</div>
-                            `}
-                        </div>
-                        
-                        <div class="last-accessed">
-                            <i class="fas fa-clock"></i>
-                            Last accessed: ${lastAccessed}
-                        </div>
-                        
-                        <div class="lit-actions">
-                            <a href="${lit.file_url || '#'}" target="_blank" class="btn btn-primary" onclick="markAsAccessed('${saved.id}')">
-                                <i class="fas fa-download"></i> Open
-                            </a>
-                            ${isEditing ? `
-                                <button class="btn btn-success" onclick="saveChanges('${saved.id}')">
-                                    <i class="fas fa-save"></i> Save
-                                </button>
-                                <button class="btn btn-secondary" onclick="cancelEdit()">
-                                    <i class="fas fa-times"></i> Cancel
-                                </button>
-                            ` : `
-                                <button class="btn btn-secondary" onclick="startEdit('${saved.id}')">
-                                    <i class="fas fa-edit"></i> Edit
-                                </button>
-                                <button class="btn btn-danger" onclick="removeSaved('${saved.id}')">
-                                    <i class="fas fa-trash"></i> Remove
-                                </button>
-                            `}
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-        
-        function updateProgressPreview(savedId, value) {
-            const card = document.getElementById(`card-${savedId}`);
-            const progressFill = card.querySelector('.progress-fill');
-            const progressValue = card.querySelector('.progress-value');
-            
-            progressFill.style.width = value + '%';
-            progressValue.textContent = value + '%';
-        }
-        
-        function startEdit(savedId) {
-            editingId = savedId;
-            renderLiterature();
-        }
-        
-        function cancelEdit() {
-            editingId = null;
-            renderLiterature();
-        }
-        
-        async function saveChanges(savedId) {
-            const progress = parseInt(document.getElementById(`slider-${savedId}`).value);
-            const notes = document.getElementById(`notes-${savedId}`).value;
-            
-            try {
-                const { error } = await supabaseClient
-                    .from('user_saved_literature')
-                    .update({ 
-                        progress_percentage: progress,
-                        notes: notes
-                    })
-                    .eq('id', savedId)
-                    .eq('user_id', currentUser.id);
-                
-                if (error) throw error;
-                
-                alert('✅ Changes saved!');
-                editingId = null;
-                await loadSavedLiterature();
-                
-            } catch (error) {
-                console.error('Error saving changes:', error);
-                alert('Error saving changes. Please try again.');
-            }
-        }
-        
-        async function markAsAccessed(savedId) {
-            try {
-                await supabaseClient
-                    .from('user_saved_literature')
-                    .update({ last_accessed: new Date().toISOString() })
-                    .eq('id', savedId)
-                    .eq('user_id', currentUser.id);
-            } catch (error) {
-                console.error('Error updating last accessed:', error);
-            }
-        }
-        
-        async function removeSaved(savedId) {
-            if (!confirm('Remove this literature from your saved collection?')) {
-                return;
-            }
-            
-            try {
-                const { error } = await supabaseClient
-                    .from('user_saved_literature')
-                    .delete()
-                    .eq('id', savedId)
-                    .eq('user_id', currentUser.id);
-                
-                if (error) throw error;
-                
-                alert('✅ Removed from saved literature!');
-                await loadSavedLiterature();
-                
-            } catch (error) {
-                console.error('Error removing literature:', error);
-                alert('Error removing literature. Please try again.');
-            }
-        }
-        
-        init();
-    </script>
 </body>
 </html>
