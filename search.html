@@ -399,10 +399,7 @@
         async function init() {
             const { data: { user } } = await supabaseClient.auth.getUser();
             
-            if (!user) {
-                window.location.href = 'auth-login.html';
-                return;
-            }
+            // Demo mode - no auth required
             
             currentUser = user;
             
