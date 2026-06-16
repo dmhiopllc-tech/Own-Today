@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8V3QF8VVMZ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-8V3QF8VVMZ');
+    </script>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Own Today Pricing - Transparent pricing for white-label client engagement platform">
+    <title>Pricing | Own Today</title>
+    
+    <link rel="icon" type="image/png" href="images/own-today-logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/white-label.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f5f5f5;
+            color: #2C2C2C;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #0D7C9E 0%, #0A5F7A 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: white;
+            text-decoration: none;
+            margin-bottom: 2rem;
+            font-weight: 500;
+            transition: opacity 0.3s ease;
+        }
+        
+        .back-link:hover {
+            opacity: 0.8;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: -50px auto 0;
+            padding: 0 2rem 4rem;
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .pricing-card {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+        }
+        
+        .pricing-card.featured {
+            border: 3px solid #F89A2E;
+            transform: scale(1.05);
+        }
+        
+        .popular-badge {
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            background: #F89A2E;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+        
+        .plan-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #0D7C9E;
+            margin-bottom: 1rem;
+        }
+        
+        .plan-price {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #2C2C2C;
+            margin-bottom: 0.5rem;
+        }
+        
+        .plan-price span {
+            font-size: 1.2rem;
+            color: #666;
+            font-weight: 400;
+        }
+        
+        .plan-description {
+            color: #666;
+            margin-bottom: 2rem;
+            font-size: 1rem;
+        }
+        
+        .plan-features {
+            list-style: none;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+        
+        .plan-features li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+        
+        .plan-features li:last-child {
+            border-bottom: none;
+        }
+        
+        .plan-features i {
+            color: #0D7C9E;
+            margin-top: 0.25rem;
+        }
+        
+        .btn-select {
+            display: block;
+            width: 100%;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background: #F89A2E;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #E88915;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: #0D7C9E;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #0A5F7A;
+            transform: translateY(-2px);
+        }
+        
+        .faq-section {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-top: 3rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .faq-section h2 {
+            font-size: 2rem;
+            color: #0D7C9E;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .faq-item {
+            margin-bottom: 2rem;
+        }
+        
+        .faq-question {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2C2C2C;
+            margin-bottom: 0.5rem;
+        }
+        
+        .faq-answer {
+            color: #666;
+            line-height: 1.8;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+            
+            .plan-price {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <a href="index.html" class="back-link">
+                <i class="fas fa-arrow-left"></i> Back to Home
+            </a>
+            <h1>Simple, Transparent Pricing</h1>
+            <p>All features included. No upgrade games. Choose your client count.</p>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="pricing-grid">
+            <!-- Starter Plan -->
+            <div class="pricing-card">
+                <div class="plan-name">Starter</div>
+                <div class="plan-price">$1,995<span>/month</span></div>
+                <div class="plan-description">Up to 50 active clients + $2,995 setup</div>
+                
+                <ul class="plan-features">
+                    <li><i class="fas fa-check"></i> <span><strong>ALL FEATURES INCLUDED:</strong></span></li>
+                    <li><i class="fas fa-check"></i> <span>Full white-label branding</span></li>
+                    <li><i class="fas fa-check"></i> <span>Meeting finder + geolocation check-ins</span></li>
+                    <li><i class="fas fa-check"></i> <span>Rewards system</span></li>
+                    <li><i class="fas fa-check"></i> <span>Progress tracking & analytics</span></li>
+                    <li><i class="fas fa-check"></i> <span>Provider dashboards</span></li>
+                    <li><i class="fas fa-check"></i> <span>Admin portal</span></li>
+                    <li><i class="fas fa-check"></i> <span>AI-powered risk alerts</span></li>
+                    <li><i class="fas fa-check"></i> <span>Outcomes tracking</span></li>
+                    <li><i class="fas fa-check"></i> <span>Mobile responsive</span></li>
+                    <li><i class="fas fa-check"></i> <span>Email & phone support (business hours)</span></li>
+                </ul>
+                
+                <a href="request-demo.html" class="btn-select btn-secondary">Get Started</a>
+            </div>
+            
+            <!-- Professional Plan -->
+            <div class="pricing-card featured">
+                <div class="popular-badge">Most Popular</div>
+                <div class="plan-name">Professional</div>
+                <div class="plan-price">$3,995<span>/month</span></div>
+                <div class="plan-description">Up to 150 active clients + $4,995 setup</div>
+                
+                <ul class="plan-features">
+                    <li><i class="fas fa-check"></i> <span><strong>ALL FEATURES INCLUDED</strong> (same as Starter)</span></li>
+                    <li style="margin-top: 1rem; padding-top: 1rem; border-top: 2px solid #F89A2E;"><i class="fas fa-star" style="color: #F89A2E;"></i> <span><strong>Plus:</strong></span></li>
+                    <li><i class="fas fa-check"></i> <span>Priority support response times</span></li>
+                    <li><i class="fas fa-check"></i> <span>Monthly strategy calls</span></li>
+                    <li><i class="fas fa-check"></i> <span>Advanced reporting exports</span></li>
+                </ul>
+                
+                <a href="request-demo.html" class="btn-select btn-primary">Get Started</a>
+            </div>
+            
+            <!-- Enterprise Plan -->
+            <div class="pricing-card">
+                <div class="plan-name">Enterprise</div>
+                <div class="plan-price">Custom</div>
+                <div class="plan-description">Unlimited clients • Contact sales</div>
+                
+                <ul class="plan-features">
+                    <li><i class="fas fa-check"></i> <span><strong>ALL FEATURES INCLUDED</strong> (same as Starter)</span></li>
+                    <li style="margin-top: 1rem; padding-top: 1rem; border-top: 2px solid #0D7C9E;"><i class="fas fa-star" style="color: #0D7C9E;"></i> <span><strong>Plus:</strong></span></li>
+                    <li><i class="fas fa-check"></i> <span>White-glove onboarding & training</span></li>
+                    <li><i class="fas fa-check"></i> <span>Custom feature development</span></li>
+                    <li><i class="fas fa-check"></i> <span>Priority feature requests</span></li>
+                    <li><i class="fas fa-check"></i> <span>Dedicated implementation support</span></li>
+                    <li><i class="fas fa-check"></i> <span>Setup fee included in custom quote</span></li>
+                </ul>
+                
+                <a href="request-demo.html" class="btn-select btn-secondary">Contact Sales</a>
+            </div>
+        </div>
+        
+        <!-- FAQ Section -->
+        <div class="faq-section">
+            <h2>Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question"><i class="fas fa-question-circle" style="color: #F89A2E; margin-right: 0.5rem;"></i>How quickly can we launch?</div>
+                <div class="faq-answer">Most treatment centers are fully branded and live within 2-3 business days. We handle the technical setup while you provide your logo and color preferences.</div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question"><i class="fas fa-question-circle" style="color: #F89A2E; margin-right: 0.5rem;"></i>Can we upgrade or downgrade plans?</div>
+                <div class="faq-answer">Absolutely! You can change your plan at any time. Upgrades are immediate, and downgrades take effect at the start of your next billing cycle.</div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question"><i class="fas fa-question-circle" style="color: #F89A2E; margin-right: 0.5rem;"></i>Is there a setup fee?</div>
+                <div class="faq-answer">Yes. Starter includes a $2,995 one-time setup fee, and Professional includes a $4,995 setup fee. This covers white-label branding, onboarding, training, and getting you live within days. Enterprise setup fees are included in your custom quote.</div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question"><i class="fas fa-question-circle" style="color: #F89A2E; margin-right: 0.5rem;"></i>What counts as an "active client"?</div>
+                <div class="faq-answer">An active client is someone who has logged into the platform within the last 90 days. Alumni or discharged clients don't count toward your limit.</div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question"><i class="fas fa-question-circle" style="color: #F89A2E; margin-right: 0.5rem;"></i>Do all plans really include all features?</div>
+                <div class="faq-answer">Yes! We believe every treatment center deserves access to the full platform regardless of size. Starter, Professional, and Enterprise all include the same core features (rewards, analytics, risk alerts, outcomes tracking, etc.). The difference is client capacity and level of support/implementation assistance.</div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question"><i class="fas fa-question-circle" style="color: #F89A2E; margin-right: 0.5rem;"></i>Do you offer annual billing?</div>
+                <div class="faq-answer">Yes! Save 15% with annual billing. Contact us for details.</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
