@@ -514,53 +514,96 @@
         </div>
     </div>
     
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        const SUPABASE_URL = 'https://qmrdlgopygylaakskpls.supabase.co';
-        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFtcmRsZ29weWd5bGFha3NrcGxzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUyMTk3MDMsImV4cCI6MjA4MDc5NTcwM30.aYORMs31sN847fKtH103VKFd13xtRft9FFXJNlvOsZw';
-        
-        const { createClient } = supabase;
-        const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
-        
-        let currentUser = null;
+        // Demo mode - no database connection needed
+        let currentUser = { id: 'demo-user' };
         let allGoals = [];
         let currentFilter = 'all';
         
         async function init() {
-            const { data: { user } } = await supabaseClient.auth.getUser();
-            
-            if (!user) {
-                window.location.href = 'auth-login.html';
-                return;
-            }
-            
-            currentUser = user;
+            // Demo mode - no authentication required
+            currentUser = { id: 'demo-user' };
             await loadGoals();
         }
         
         async function loadGoals() {
-            try {
-                const { data, error } = await supabaseClient
-                    .from('goals')
-                    .select('*')
-                    .eq('user_id', currentUser.id)
-                    .order('created_at', { ascending: false });
-                
-                if (error) throw error;
-                
-                allGoals = data || [];
-                renderGoals();
-                
-            } catch (error) {
-                console.error('Error loading goals:', error);
-                document.getElementById('goalsGrid').innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-exclamation-circle"></i>
-                        <h3>Error Loading Goals</h3>
-                        <p>Please try refreshing the page.</p>
-                    </div>
-                `;
-            }
+            // Demo data - no database needed
+            const today = new Date();
+            allGoals = [
+                {
+                    id: 1,
+                    title: 'Attend 3 meetings per week',
+                    description: 'Consistently attend recovery meetings to build community support',
+                    category: 'Meetings',
+                    target_date: new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000).toISOString(),
+                    completed: false,
+                    created_at: new Date(today.getTime() - 14 * 24 * 60 * 60 * 1000).toISOString()
+                },
+                {
+                    id: 2,
+                    title: 'Complete 30-day sobriety milestone',
+                    description: 'Stay committed to recovery for 30 consecutive days',
+                    category: 'Sobriety',
+                    target_date: new Date(today.getTime() + 10 * 24 * 60 * 60 * 1000).toISOString(),
+                    completed: false,
+                    created_at: new Date(today.getTime() - 20 * 24 * 60 * 60 * 1000).toISOString()
+                },
+                {
+                    id: 3,
+                    title: 'Journal daily for 2 weeks',
+                    description: 'Write reflections and gratitude entries every day',
+                    category: 'Self-Care',
+                    target_date: new Date(today.getTime() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+                    completed: true,
+                    created_at: new Date(today.getTime() - 16 * 24 * 60 * 60 * 1000).toISOString()
+                },
+                {
+                    id: 4,
+                    title: 'Connect with sponsor weekly',
+                    description: 'Regular check-ins with my recovery sponsor',
+                    category: 'Support',
+                    target_date: new Date(today.getTime() + 3 * 24 * 60 * 60 * 1000).toISOString(),
+                    completed: false,
+                    created_at: new Date(today.getTime() - 10 * 24 * 60 * 60 * 1000).toISOString()
+                },
+                {
+                    id: 5,
+                    title: 'Read recovery literature daily',
+                    description: 'Spend 15 minutes each day reading AA/NA literature',
+                    category: 'Personal Growth',
+                    target_date: new Date(today.getTime() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+                    completed: true,
+                    created_at: new Date(today.getTime() - 21 * 24 * 60 * 60 * 1000).toISOString()
+                },
+                {
+                    id: 6,
+                    title: 'Exercise 3 times per week',
+                    description: 'Maintain physical health through regular exercise',
+                    category: 'Health',
+                    target_date: new Date(today.getTime() + 14 * 24 * 60 * 60 * 1000).toISOString(),
+                    completed: false,
+                    created_at: new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000).toISOString()
+                },
+                {
+                    id: 7,
+                    title: 'Attend family therapy session',
+                    description: 'Work on rebuilding family relationships',
+                    category: 'Relationships',
+                    target_date: new Date(today.getTime() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+                    completed: true,
+                    created_at: new Date(today.getTime() - 15 * 24 * 60 * 60 * 1000).toISOString()
+                },
+                {
+                    id: 8,
+                    title: 'Practice meditation daily',
+                    description: '10 minutes of mindfulness meditation each morning',
+                    category: 'Wellness',
+                    target_date: new Date(today.getTime() + 21 * 24 * 60 * 60 * 1000).toISOString(),
+                    completed: false,
+                    created_at: new Date(today.getTime() - 5 * 24 * 60 * 60 * 1000).toISOString()
+                }
+            ];
+            renderGoals();
         }
         
         function renderGoals() {
@@ -717,12 +760,10 @@
         document.getElementById('goalForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            // Check if user is logged in
-            if (!currentUser || !currentUser.id) {
-                alert('You must be logged in to create goals. Redirecting to login...');
-                window.location.href = 'auth-login.html';
-                return;
-            }
+            // Demo mode - show alert
+            alert('✅ This is a demo. In production, this would save to your database.');
+            closeGoalModal();
+            return;
             
             const goalId = document.getElementById('goalId').value;
             const goalData = {
@@ -808,152 +849,13 @@
         });
         
         async function completeGoal(goalId, points) {
-            if (!confirm('Mark this goal as completed? You\'ll earn ' + points + ' points!')) {
-                return;
-            }
-            
-            try {
-                // CHECK WEEKLY LIMIT: Only 1 goal completion per week earns points
-                const now = new Date();
-                
-                // Calculate start of current week (Monday)
-                const dayOfWeek = now.getDay();
-                const daysToMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1; // If Sunday (0), go back 6 days
-                const weekStart = new Date(now);
-                weekStart.setDate(now.getDate() - daysToMonday);
-                weekStart.setHours(0, 0, 0, 0);
-                
-                const weekStartISO = weekStart.toISOString();
-                
-                console.log(`🔍 Checking goal completions this week (since ${weekStartISO})...`);
-                
-                // Check how many goals completed this week with points
-                const { data: weekGoals, error: checkError } = await supabaseClient
-                    .from('activities')
-                    .select('id, points_earned, created_at')
-                    .eq('user_id', currentUser.id)
-                    .eq('activity_type', 'achievement_earned')
-                    .gt('points_earned', 0) // Only count goals that earned points
-                    .gte('created_at', weekStartISO);
-                
-                if (checkError) {
-                    console.error('❌ Error checking weekly goal limit:', checkError);
-                }
-                
-                const goalsThisWeek = weekGoals ? weekGoals.length : 0;
-                console.log(`📝 Goals completed this week with points: ${goalsThisWeek}`);
-                
-                // Determine points: first goal = full points, subsequent = 0
-                let pointsToAward = 0;
-                if (goalsThisWeek < 1) {
-                    pointsToAward = points;
-                    console.log(`💰 Points to award: ${pointsToAward} (first goal this week)`);
-                } else {
-                    pointsToAward = 0;
-                    console.log(`⚠️ Weekly goal limit reached (1/1). No points awarded.`);
-                    
-                    if (!confirm(
-                        'You can still complete this goal, but you\'ve already earned points for a goal this week (limit: 1 per week).\n\n' +
-                        'Complete anyway without earning points?'
-                    )) {
-                        return;
-                    }
-                }
-                
-                // Get goal details first
-                const { data: goal } = await supabaseClient
-                    .from('goals')
-                    .select('title')
-                    .eq('id', goalId)
-                    .eq('user_id', currentUser.id)
-                    .single();
-                
-                // Mark goal as completed
-                const { error: goalError } = await supabaseClient
-                    .from('goals')
-                    .update({ completed: true, progress: 100, completed_at: new Date().toISOString() })
-                    .eq('id', goalId)
-                    .eq('user_id', currentUser.id);
-                
-                if (goalError) throw goalError;
-                
-                // Award points to user only if under weekly limit
-                const { data: profile } = await supabaseClient
-                    .from('user_profiles')
-                    .select('points')
-                    .eq('id', currentUser.id)
-                    .single();
-                
-                const newPoints = (profile?.points || 0) + pointsToAward;
-                
-                const { error: pointsError } = await supabaseClient
-                    .from('user_profiles')
-                    .update({ points: newPoints })
-                    .eq('id', currentUser.id);
-                
-                if (pointsError) throw pointsError;
-                
-                // 🎯 SAVE TO ACTIVITY FEED (Achievement Earned)
-                try {
-                    const activityData = {
-                        user_id: currentUser.id,
-                        activity_type: 'achievement_earned',
-                        activity_title: 'Achievement Earned',
-                        activity_description: `Completed goal: "${goal?.title || 'Goal'}"`,
-                        points_earned: points,
-                        metadata: JSON.stringify({
-                            goal_id: goalId,
-                            goal_title: goal?.title
-                        }),
-                        created_at: new Date().toISOString()
-                    };
-                    
-                    console.log('📊 Saving achievement activity to feed:', activityData);
-                    
-                    const { data: activityResult, error: activityError } = await supabaseClient
-                        .from('activities')
-                        .insert([activityData])
-                        .select();
-                    
-                    if (activityError) {
-                        console.error('❌ Activity feed error:', activityError);
-                    } else {
-                        console.log('✅ Achievement activity saved to feed:', activityResult);
-                    }
-                } catch (activityErr) {
-                    console.error('❌ Error saving to activity feed:', activityErr);
-                }
-                
-                alert(`🎉 Congratulations! Goal completed! You earned ${points} points!`);
-                await loadGoals();
-                
-            } catch (error) {
-                console.error('Error completing goal:', error);
-                alert('Error completing goal. Please try again.');
-            }
+            // Demo mode
+            alert(`🎉 Demo Mode: This would mark the goal as complete and award ${points} points!`);
         }
         
         async function deleteGoal(goalId) {
-            if (!confirm('Are you sure you want to delete this goal? This cannot be undone.')) {
-                return;
-            }
-            
-            try {
-                const { error } = await supabaseClient
-                    .from('goals')
-                    .delete()
-                    .eq('id', goalId)
-                    .eq('user_id', currentUser.id);
-                
-                if (error) throw error;
-                
-                alert('✅ Goal deleted!');
-                await loadGoals();
-                
-            } catch (error) {
-                console.error('Error deleting goal:', error);
-                alert('Error deleting goal. Please try again.');
-            }
+            // Demo mode
+            alert('🗑️ Demo Mode: This would delete the goal from your database.');
         }
         
         // Close modal when clicking outside
