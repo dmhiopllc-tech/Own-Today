@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8V3QF8VVMZ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-8V3QF8VVMZ');
+    </script>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Request a personalized demo of Own Today platform">
+    <title>Request Demo | Own Today</title>
+    
+    <link rel="icon" type="image/png" href="images/own-today-logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/white-label.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0D7C9E 0%, #0A5F7A 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .demo-container {
+            max-width: 800px;
+            width: 100%;
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .demo-header {
+            background: linear-gradient(135deg, #F89A2E 0%, #E87A0F 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        
+        .demo-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+        
+        .demo-header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: white;
+            text-decoration: none;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+            transition: opacity 0.3s ease;
+        }
+        
+        .back-link:hover {
+            opacity: 0.8;
+        }
+        
+        .demo-body {
+            padding: 3rem;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #2C2C2C;
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #0D7C9E;
+            box-shadow: 0 0 0 3px rgba(13, 124, 158, 0.1);
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        
+        .btn-submit {
+            width: 100%;
+            padding: 1.25rem 2rem;
+            background: #F89A2E;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-submit:hover {
+            background: #E88915;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(248, 154, 46, 0.3);
+        }
+        
+        .info-box {
+            background: #f0f9fc;
+            border-left: 4px solid #0D7C9E;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+        
+        .info-box h3 {
+            color: #0D7C9E;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .info-box ul {
+            margin-left: 1.5rem;
+            color: #666;
+        }
+        
+        .info-box li {
+            margin: 0.5rem 0;
+        }
+        
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 3rem;
+        }
+        
+        .success-message i {
+            font-size: 5rem;
+            color: #0D7C9E;
+            margin-bottom: 1rem;
+        }
+        
+        .success-message h2 {
+            color: #0D7C9E;
+            margin-bottom: 1rem;
+        }
+        
+        .success-message p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .demo-header h1 {
+                font-size: 2rem;
+            }
+            
+            .demo-body {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <div class="demo-header">
+            <a href="index.html" class="back-link">
+                <i class="fas fa-arrow-left"></i> Back to Home
+            </a>
+            <h1>Request a Demo</h1>
+            <p>See Own Today in action with a personalized walkthrough</p>
+        </div>
+        
+        <div class="demo-body">
+            <form id="demoForm" onsubmit="handleSubmit(event)">
+                <div class="info-box">
+                    <h3><i class="fas fa-calendar-check"></i> What to Expect</h3>
+                    <ul>
+                        <li>30-minute personalized demo tailored to your needs</li>
+                        <li>See the platform with your branding applied</li>
+                        <li>Q&A session with our team</li>
+                        <li>Custom pricing quote</li>
+                    </ul>
+                </div>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="firstName">First Name *</label>
+                        <input type="text" id="firstName" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="lastName">Last Name *</label>
+                        <input type="text" id="lastName" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Phone Number *</label>
+                        <input type="tel" id="phone" required>
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label for="organization">Treatment Center/Organization *</label>
+                        <input type="text" id="organization" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="role">Your Role *</label>
+                        <select id="role" required>
+                            <option value="">Select your role</option>
+                            <option value="director">Executive Director</option>
+                            <option value="clinical">Clinical Director</option>
+                            <option value="admin">Administrator</option>
+                            <option value="counselor">Counselor/Therapist</option>
+                            <option value="it">IT/Technology</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="clientCount">Number of Active Clients *</label>
+                        <select id="clientCount" required>
+                            <option value="">Select range</option>
+                            <option value="1-25">1-25</option>
+                            <option value="26-50">26-50</option>
+                            <option value="51-100">51-100</option>
+                            <option value="101-250">101-250</option>
+                            <option value="250+">250+</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label for="message">What are you most interested in? (Optional)</label>
+                        <textarea id="message" placeholder="Tell us about your goals, challenges, or specific features you'd like to see..."></textarea>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn-submit">
+                    <i class="fas fa-calendar-check"></i> Schedule My Demo
+                </button>
+            </form>
+            
+            <div id="successMessage" class="success-message">
+                <i class="fas fa-check-circle"></i>
+                <h2>Thank You!</h2>
+                <p>We've received your demo request. Our team will contact you within 24 hours to schedule your personalized walkthrough.</p>
+                <p style="margin-top: 1.5rem;">
+                    <a href="index.html" style="color: #0D7C9E; text-decoration: none; font-weight: 600;">
+                        <i class="fas fa-arrow-left"></i> Return to Home
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function handleSubmit(event) {
+            event.preventDefault();
+            
+            // Hide form, show success message
+            document.getElementById('demoForm').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'block';
+            
+            // In a real application, you would send this data to your backend
+            console.log('Demo request submitted:', {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                organization: document.getElementById('organization').value,
+                role: document.getElementById('role').value,
+                clientCount: document.getElementById('clientCount').value,
+                message: document.getElementById('message').value
+            });
+        }
+    </script>
+</body>
+</html>
