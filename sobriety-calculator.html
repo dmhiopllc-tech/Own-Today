@@ -567,15 +567,9 @@
         </div>
     </div>
     
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        const SUPABASE_URL = 'https://qmrdlgopygylaakskpls.supabase.co';
-        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFtcmRsZ29weWd5bGFha3NrcGxzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUyMTk3MDMsImV4cCI6MjA4MDc5NTcwM30.aYORMs31sN847fKtH103VKFd13xtRft9FFXJNlvOsZw';
-        
-        const { createClient } = supabase;
-        const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
-        
-        let currentUser = null;
+        // Demo mode - no database
+        let currentUser = { id: 'demo-user' };
         let sobrietyDate = null;
         let updateInterval = null;
         
@@ -610,48 +604,20 @@
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('sobrietyDate').max = today;
             
-            // Check authentication
-            const { data: { user } } = await supabaseClient.auth.getUser();
-            
-            if (!user) {
-                window.location.href = 'auth-login.html';
-                return;
-            }
-            
-            currentUser = user;
-            
-            // Load saved sobriety date
-            await loadSavedDate();
+            // Demo mode - set example date (45 days ago)
+            const demoDate = new Date();
+            demoDate.setDate(demoDate.getDate() - 45);
+            document.getElementById('sobrietyDate').value = demoDate.toISOString().split('T')[0];
+            calculateSobriety();
         }
         
         async function loadSavedDate() {
-            try {
-                const { data, error } = await supabaseClient
-                    .from('profiles')
-                    .select('sobriety_date')
-                    .eq('id', currentUser.id)
-                    .single();
-                
-                if (data && data.sobriety_date) {
-                    document.getElementById('sobrietyDate').value = data.sobriety_date;
-                    calculateSobriety();
-                }
-            } catch (error) {
-                console.log('No saved date found');
-            }
+            // Demo mode - not needed
         }
         
         async function saveSobrietyDate(date) {
-            try {
-                await supabaseClient
-                    .from('profiles')
-                    .upsert({
-                        id: currentUser.id,
-                        sobriety_date: date
-                    });
-            } catch (error) {
-                console.error('Error saving date:', error);
-            }
+            // Demo mode - would save to database
+            console.log('Demo: Would save sobriety date:', date);
         }
         
         function calculateSobriety() {
