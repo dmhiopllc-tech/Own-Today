@@ -7,41 +7,18 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-8V3QF8VVMZ');
     </script>
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guided Meditation - Desert Mountain Healing IOP</title>
+    <title>Guided Meditation - Own Today</title>
     
-    <!-- PWA Meta Tags -->
-    <meta name="description" content="Guided meditation sessions for recovery and wellness">
-    <meta name="theme-color" content="#2c5f4f">
-    <meta name="mobile-web-app-capable" content="yes">
-    
-    <!-- Force no cache during development -->
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    
-    <link rel="manifest" href="/manifest.json">
-    <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192x192.png">
-    
-    <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
-    
-    <!-- Supabase CDN - REQUIRED for authentication -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/white-label.css">
     
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
             font-family: 'Inter', sans-serif;
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
@@ -66,7 +43,6 @@
             text-decoration: none;
             border-radius: 8px;
             transition: all 0.3s ease;
-            font-size: 14px;
         }
 
         .back-btn:hover {
@@ -98,7 +74,6 @@
             opacity: 0.8;
         }
 
-        /* Session Selection */
         .sessions-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -157,8 +132,9 @@
             opacity: 0.7;
         }
 
-        .session-meta i {
-            margin-right: 5px;
+        .session-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
         }
 
         .points-badge {
@@ -170,208 +146,23 @@
             color: #1a1a2e;
         }
 
-        /* Meditation Player */
-        .meditation-player {
-            display: none;
-            background: rgba(0, 0, 0, 0.5);
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: 1000;
-            backdrop-filter: blur(20px);
-        }
-
-        .meditation-player.active {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .player-content {
-            max-width: 800px;
-            width: 90%;
-            text-align: center;
-            padding: 40px;
-        }
-
-        .player-title {
-            font-size: 32px;
-            margin-bottom: 20px;
-        }
-
-        /* Breathing Circle */
-        .breathing-circle {
-            width: 250px;
-            height: 250px;
-            margin: 40px auto;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(168, 237, 234, 0.3) 0%, rgba(74, 159, 191, 0.1) 100%);
-            border: 3px solid rgba(168, 237, 234, 0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            animation: breathe 6s ease-in-out infinite;
-        }
-
-        @keyframes breathe {
-            0%, 100% { transform: scale(1); opacity: 0.7; }
-            50% { transform: scale(1.2); opacity: 1; }
-        }
-
-        .breath-text {
-            font-size: 24px;
-            font-weight: 300;
-            opacity: 0.9;
-        }
-
-        /* Timer Display */
-        .timer-display {
-            font-size: 48px;
-            font-weight: 300;
-            margin: 30px 0;
-            font-variant-numeric: tabular-nums;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 3px;
-            overflow: hidden;
-            margin: 20px 0;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #a8edea 0%, #fed6e3 100%);
-            border-radius: 3px;
-            transition: width 1s linear;
-            width: 0%;
-        }
-
-        /* Meditation Script */
-        .meditation-script {
-            max-width: 600px;
-            margin: 30px auto;
-            padding: 30px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            max-height: 200px;
-            overflow-y: auto;
-            font-size: 18px;
-            line-height: 1.8;
-            opacity: 0.9;
-        }
-
-        .meditation-script::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .meditation-script::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 4px;
-        }
-
-        .meditation-script::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 4px;
-        }
-
-        /* Controls */
-        .player-controls {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            margin-top: 40px;
-        }
-
-        .control-btn {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            border: none;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .control-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: scale(1.1);
-        }
-
-        .control-btn.play-pause {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #4A9FBF 0%, #2D5F7E 100%);
-            font-size: 32px;
-        }
-
-        .control-btn.play-pause:hover {
-            box-shadow: 0 8px 25px rgba(74, 159, 191, 0.4);
-        }
-
-        /* Completion Message */
-        .completion-message {
-            display: none;
-            text-align: center;
-            padding: 40px;
-        }
-
-        .completion-message.show {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .completion-icon {
-            font-size: 80px;
-            margin-bottom: 20px;
-            color: #10B981;
-        }
-
-        .completion-title {
-            font-size: 36px;
-            margin-bottom: 15px;
-        }
-
-        .completion-points {
-            font-size: 48px;
-            font-weight: 700;
-            color: #FDB515;
-            margin: 20px 0;
-        }
-
-        /* Stats */
         .meditation-stats {
             background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
             padding: 30px;
-            margin-top: 50px;
+            backdrop-filter: blur(10px);
         }
 
         .stats-title {
             font-size: 24px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             text-align: center;
         }
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 20px;
         }
 
@@ -379,92 +170,194 @@
             text-align: center;
             padding: 20px;
             background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
+            border-radius: 12px;
         }
 
         .stat-value {
             font-size: 36px;
             font-weight: 700;
-            color: #4A9FBF;
-            margin-bottom: 5px;
+            background: linear-gradient(135deg, #4A9FBF 0%, #a8edea 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
         }
 
         .stat-label {
             font-size: 14px;
             opacity: 0.7;
         }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .page-header h1 {
-                font-size: 32px;
-            }
-
-            .sessions-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .breathing-circle {
-                width: 200px;
-                height: 200px;
-            }
-
-            .timer-display {
-                font-size: 36px;
-            }
-
-            .player-content {
-                padding: 20px;
-            }
-        }
-
-        .audio-toggle {
-            margin: 20px 0;
-            text-align: center;
-        }
-
-        .audio-toggle label {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-            font-size: 14px;
-            opacity: 0.8;
-        }
-
-        .audio-toggle input {
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-        }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
     <nav class="meditation-nav">
-        <a href="index.html" class="back-btn">
-            <i class="fas fa-arrow-left"></i> Back to Portal
+        <a href="client-portal.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
         </a>
-        <div style="color: white; font-weight: 600;">
-            <i class="fas fa-spa"></i> Guided Meditation
-        </div>
-        <div id="userPoints" style="background: rgba(255,255,255,0.1); padding: 8px 16px; border-radius: 20px; font-size: 14px;">
-            <i class="fas fa-star" style="color: #FDB515;"></i> <span id="pointsDisplay">0</span> pts
-        </div>
+        <h3>Guided Meditation</h3>
     </nav>
 
     <div class="container">
-        <!-- Page Header -->
         <div class="page-header">
             <h1>🧘 Guided Meditation</h1>
-            <p>Find peace, reduce stress, and strengthen your recovery through mindful meditation</p>
+            <p>Choose a session to begin your mindfulness journey</p>
         </div>
 
-        <!-- Session Selection -->
-        <div id="sessionsView">
+        <div>
             <h2 style="margin-bottom: 30px; font-size: 28px;">Choose Your Session</h2>
-            <div class="sessions-grid" id="sessionsGrid">
-                <!-- Sessions will be loaded here -->
+            <div class="sessions-grid">
+                <!-- 5-Minute Morning Meditation -->
+                <div class="session-card" onclick="startSession('Morning Meditation', 5)">
+                    <div class="session-icon">🌅</div>
+                    <div class="session-header">
+                        <div></div>
+                        <div class="session-duration">5 min</div>
+                    </div>
+                    <div class="session-title">Morning Meditation</div>
+                    <div class="session-description">
+                        Start your day with intention and clarity. Perfect for beginners.
+                    </div>
+                    <div class="session-meta">
+                        <span><i class="fas fa-heart"></i> Beginner</span>
+                        <span class="points-badge">+15 Points</span>
+                    </div>
+                </div>
+
+                <!-- 10-Minute Stress Relief -->
+                <div class="session-card" onclick="startSession('Stress Relief', 10)">
+                    <div class="session-icon">😌</div>
+                    <div class="session-header">
+                        <div></div>
+                        <div class="session-duration">10 min</div>
+                    </div>
+                    <div class="session-title">Stress Relief</div>
+                    <div class="session-description">
+                        Release tension and find calm through guided breathing and visualization.
+                    </div>
+                    <div class="session-meta">
+                        <span><i class="fas fa-heart"></i> All Levels</span>
+                        <span class="points-badge">+20 Points</span>
+                    </div>
+                </div>
+
+                <!-- 15-Minute Body Scan -->
+                <div class="session-card" onclick="startSession('Body Scan Meditation', 15)">
+                    <div class="session-icon">🧘‍♀️</div>
+                    <div class="session-header">
+                        <div></div>
+                        <div class="session-duration">15 min</div>
+                    </div>
+                    <div class="session-title">Body Scan Meditation</div>
+                    <div class="session-description">
+                        Systematic relaxation through full body awareness and mindfulness.
+                    </div>
+                    <div class="session-meta">
+                        <span><i class="fas fa-heart"></i> Intermediate</span>
+                        <span class="points-badge">+25 Points</span>
+                    </div>
+                </div>
+
+                <!-- 20-Minute Deep Relaxation -->
+                <div class="session-card" onclick="startSession('Deep Relaxation', 20)">
+                    <div class="session-icon">🌊</div>
+                    <div class="session-header">
+                        <div></div>
+                        <div class="session-duration">20 min</div>
+                    </div>
+                    <div class="session-title">Deep Relaxation</div>
+                    <div class="session-description">
+                        Profound rest and restoration through extended guided meditation.
+                    </div>
+                    <div class="session-meta">
+                        <span><i class="fas fa-heart"></i> All Levels</span>
+                        <span class="points-badge">+30 Points</span>
+                    </div>
+                </div>
+
+                <!-- 10-Minute Anxiety Relief -->
+                <div class="session-card" onclick="startSession('Anxiety Relief', 10)">
+                    <div class="session-icon">🌸</div>
+                    <div class="session-header">
+                        <div></div>
+                        <div class="session-duration">10 min</div>
+                    </div>
+                    <div class="session-title">Anxiety Relief</div>
+                    <div class="session-description">
+                        Calm your mind and ease anxious thoughts with grounding techniques.
+                    </div>
+                    <div class="session-meta">
+                        <span><i class="fas fa-heart"></i> All Levels</span>
+                        <span class="points-badge">+20 Points</span>
+                    </div>
+                </div>
+
+                <!-- 15-Minute Sleep Meditation -->
+                <div class="session-card" onclick="startSession('Sleep Meditation', 15)">
+                    <div class="session-icon">🌙</div>
+                    <div class="session-header">
+                        <div></div>
+                        <div class="session-duration">15 min</div>
+                    </div>
+                    <div class="session-title">Sleep Meditation</div>
+                    <div class="session-description">
+                        Prepare your mind and body for restful, peaceful sleep.
+                    </div>
+                    <div class="session-meta">
+                        <span><i class="fas fa-heart"></i> Beginner</span>
+                        <span class="points-badge">+25 Points</span>
+                    </div>
+                </div>
+
+                <!-- 10-Minute Gratitude Meditation -->
+                <div class="session-card" onclick="startSession('Gratitude Practice', 10)">
+                    <div class="session-icon">🙏</div>
+                    <div class="session-header">
+                        <div></div>
+                        <div class="session-duration">10 min</div>
+                    </div>
+                    <div class="session-title">Gratitude Practice</div>
+                    <div class="session-description">
+                        Cultivate appreciation and positive emotions through gratitude meditation.
+                    </div>
+                    <div class="session-meta">
+                        <span><i class="fas fa-heart"></i> All Levels</span>
+                        <span class="points-badge">+20 Points</span>
+                    </div>
+                </div>
+
+                <!-- 15-Minute Loving-Kindness -->
+                <div class="session-card" onclick="startSession('Loving-Kindness Meditation', 15)">
+                    <div class="session-icon">❤️</div>
+                    <div class="session-header">
+                        <div></div>
+                        <div class="session-duration">15 min</div>
+                    </div>
+                    <div class="session-title">Loving-Kindness Meditation</div>
+                    <div class="session-description">
+                        Develop compassion for yourself and others through metta practice.
+                    </div>
+                    <div class="session-meta">
+                        <span><i class="fas fa-heart"></i> Intermediate</span>
+                        <span class="points-badge">+25 Points</span>
+                    </div>
+                </div>
+
+                <!-- 5-Minute Breathing Exercise -->
+                <div class="session-card" onclick="startSession('Mindful Breathing', 5)">
+                    <div class="session-icon">💨</div>
+                    <div class="session-header">
+                        <div></div>
+                        <div class="session-duration">5 min</div>
+                    </div>
+                    <div class="session-title">Mindful Breathing</div>
+                    <div class="session-description">
+                        Quick breathing exercises to center yourself anytime, anywhere.
+                    </div>
+                    <div class="session-meta">
+                        <span><i class="fas fa-heart"></i> Beginner</span>
+                        <span class="points-badge">+15 Points</span>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -473,86 +366,29 @@
             <h3 class="stats-title">Your Meditation Journey</h3>
             <div class="stats-grid">
                 <div class="stat-item">
-                    <div class="stat-value" id="totalSessions">0</div>
+                    <div class="stat-value">24</div>
                     <div class="stat-label">Sessions Completed</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-value" id="totalMinutes">0</div>
+                    <div class="stat-value">285</div>
                     <div class="stat-label">Minutes Meditated</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-value" id="pointsEarned">0</div>
+                    <div class="stat-value">480</div>
                     <div class="stat-label">Points Earned</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-value" id="longestStreak">0</div>
+                    <div class="stat-value">7</div>
                     <div class="stat-label">Day Streak</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Meditation Player -->
-    <div class="meditation-player" id="meditationPlayer">
-        <div class="player-content">
-            <div id="playingView">
-                <h2 class="player-title" id="playerTitle">Meditation Session</h2>
-                
-                <div class="breathing-circle">
-                    <div class="breath-text" id="breathText">Breathe</div>
-                </div>
-
-                <div class="timer-display" id="timerDisplay">00:00</div>
-                
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progressFill"></div>
-                </div>
-
-                <div class="audio-toggle">
-                    <label>
-                        <input type="checkbox" id="audioEnabled" checked>
-                        <span>Enable Voice Guidance</span>
-                    </label>
-                </div>
-
-                <div class="meditation-script" id="meditationScript">
-                    <!-- Script will be displayed here -->
-                </div>
-
-                <div class="player-controls">
-                    <button class="control-btn" onclick="exitMeditation()" title="Exit">
-                        <i class="fas fa-times"></i>
-                    </button>
-                    <button class="control-btn play-pause" id="playPauseBtn" onclick="togglePlayPause()">
-                        <i class="fas fa-pause"></i>
-                    </button>
-                    <button class="control-btn" onclick="restartMeditation()" title="Restart">
-                        <i class="fas fa-redo"></i>
-                    </button>
-                </div>
-            </div>
-
-            <div class="completion-message" id="completionMessage">
-                <div class="completion-icon">🎉</div>
-                <h2 class="completion-title">Meditation Complete!</h2>
-                <p style="font-size: 18px; opacity: 0.8; margin-bottom: 20px;">
-                    You've earned:
-                </p>
-                <div class="completion-points">
-                    +<span id="earnedPoints">0</span> Points
-                </div>
-                <div style="margin-top: 30px;">
-                    <button class="control-btn play-pause" onclick="exitMeditation()" style="width: auto; padding: 0 30px; border-radius: 50px;">
-                        Return to Sessions
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Load auth.js first, then meditation.js -->
-    <script src="js/auth.js"></script>
-    <script src="js/meditation.js?v=7.0"></script>
-    <script src="js/pwa-install.js"></script>
+    <script>
+        function startSession(title, duration) {
+            alert(`🧘 Demo Mode: This would start "${title}" (${duration} minutes)\n\nIn production, this will:\n- Play guided audio\n- Show breathing animations\n- Track your progress\n- Award ${duration === 5 ? 15 : duration === 10 ? 20 : duration === 15 ? 25 : 30} points upon completion`);
+        }
+    </script>
 </body>
 </html>
