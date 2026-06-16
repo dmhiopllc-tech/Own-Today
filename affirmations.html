@@ -741,30 +741,14 @@
             const isFavorited = favorites.some(f => f.text === currentAffirmation.text);
             
             if (isFavorited) {
-                // Remove from favorites
-                await supabaseClient
-                    .from('favorite_affirmations')
-                    .delete()
-                    .eq('user_id', currentUser.id)
-                    .eq('text', currentAffirmation.text);
-                
                 favorites = favorites.filter(f => f.text !== currentAffirmation.text);
+                alert('Removed from favorites!');
             } else {
-                // Add to favorites
-                await supabaseClient
-                    .from('favorite_affirmations')
-                    .insert({
-                        user_id: currentUser.id,
-                        text: currentAffirmation.text,
-                        category: currentAffirmation.category,
-                        icon: currentAffirmation.icon
-                    });
-                
                 favorites.push(currentAffirmation);
+                alert('Added to favorites!');
             }
             
             updateFavoriteButton();
-            await loadFavorites();
         }
         
         function updateFavoriteButton() {
@@ -784,19 +768,8 @@
         }
         
         async function loadFavorites() {
-            try {
-                const { data } = await supabaseClient
-                    .from('favorite_affirmations')
-                    .select('*')
-                    .eq('user_id', currentUser.id)
-                    .order('created_at', { ascending: false });
-                
-                if (data) {
-                    favorites = data;
-                    renderFavorites();
-                }
-            } catch (error) {
-                console.error('Error loading favorites:', error);
+            // Demo mode - no favorites loaded
+            favorites = [];
             }
         }
         
