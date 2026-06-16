@@ -7,16 +7,16 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-8V3QF8VVMZ');
     </script>
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Relapse Prevention Plan - Desert Mountain Healing IOP</title>
+    <title>Relapse Prevention Plan - Own Today</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/white-label.css">
     
     <style>
         :root {
@@ -25,19 +25,16 @@
             --success: #10B981; --warning: #F59E0B; --danger: #EF4444;
         }
         
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #DC2626 0%, #EF4444 100%);
+            background: linear-gradient(135deg, var(--gray), var(--white));
             color: var(--dark);
-            min-height: 100vh;
-            padding: 2rem 1rem;
         }
         
         .container {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
+            padding: 2rem;
         }
         
         .back-button {
@@ -45,686 +42,527 @@
             align-items: center;
             gap: 0.5rem;
             padding: 0.75rem 1.5rem;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
+            background: white;
+            color: var(--primary);
             text-decoration: none;
             border-radius: 0.5rem;
             font-weight: 600;
             margin-bottom: 2rem;
-            transition: all 0.3s;
-            backdrop-filter: blur(10px);
-        }
-        
-        .back-button:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateX(-5px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
         
         .page-header {
-            text-align: center;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
             color: white;
-            margin-bottom: 3rem;
+            padding: 3rem 2rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
         
         .page-header h1 {
-            font-size: 3rem;
-            font-weight: 900;
-            margin-bottom: 0.5rem;
-            text-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            margin: 0 0 0.5rem 0;
+            font-size: 2.5rem;
         }
         
-        .page-header p {
-            font-size: 1.2rem;
-            opacity: 0.95;
-        }
-        
-        /* Emergency Banner */
         .emergency-banner {
-            background: linear-gradient(135deg, #991B1B, #DC2626);
+            background: linear-gradient(135deg, var(--danger), #dc2626);
             color: white;
             padding: 2rem;
-            border-radius: 1.5rem;
+            border-radius: 1rem;
             margin-bottom: 2rem;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-            border: 3px solid rgba(255,255,255,0.3);
-        }
-        
-        .emergency-title {
-            font-size: 1.8rem;
-            font-weight: 900;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
         }
         
         .emergency-buttons {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1rem;
-            margin-top: 1.5rem;
+            margin-top: 1rem;
         }
         
         .emergency-btn {
-            padding: 1.25rem 2rem;
-            border: none;
-            border-radius: 1rem;
-            font-weight: 700;
-            font-size: 1.1rem;
-            cursor: pointer;
+            padding: 1rem;
+            background: white;
+            color: var(--danger);
+            text-decoration: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            text-align: center;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.75rem;
+            gap: 0.5rem;
             transition: all 0.3s;
-            text-decoration: none;
-            color: white;
         }
         
         .emergency-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
         
-        .btn-crisis {
-            background: #1F2937;
-        }
-        
-        .btn-sponsor {
-            background: #7C3AED;
-        }
-        
-        .btn-counselor {
-            background: #2563EB;
-        }
-        
-        .main-content {
+        .form-section {
             background: white;
-            border-radius: 2rem;
-            padding: 2.5rem;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            border-radius: 1rem;
+            padding: 2rem;
             margin-bottom: 2rem;
-        }
-        
-        .section {
-            margin-bottom: 3rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
         
         .section-title {
-            font-size: 1.8rem;
-            font-weight: 800;
+            font-size: 1.5rem;
+            font-weight: 700;
             color: var(--dark);
             margin-bottom: 1.5rem;
             display: flex;
             align-items: center;
-            gap: 0.75rem;
-            padding-bottom: 1rem;
-            border-bottom: 3px solid var(--gray);
+            gap: 0.5rem;
         }
         
-        .section-title i {
-            color: var(--danger);
+        .form-group {
+            margin-bottom: 1.5rem;
         }
         
-        /* Trigger Identification */
-        .triggers-grid {
-            display: grid;
-            gap: 1rem;
-        }
-        
-        .trigger-card {
-            background: var(--gray);
-            padding: 1.5rem;
-            border-radius: 1rem;
-            border-left: 4px solid var(--danger);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .trigger-card:hover {
-            transform: translateX(5px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        
-        .trigger-info {
-            flex: 1;
-        }
-        
-        .trigger-name {
-            font-size: 1.2rem;
-            font-weight: 700;
+        .form-label {
+            display: block;
+            font-weight: 600;
             color: var(--dark);
             margin-bottom: 0.5rem;
         }
         
-        .trigger-description {
-            color: #6B7280;
-            font-size: 0.9rem;
+        .form-input,
+        .form-textarea,
+        .form-select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid #E5E7EB;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.3s;
         }
         
-        .trigger-risk {
-            padding: 0.5rem 1rem;
-            border-radius: 1rem;
-            font-weight: 700;
+        .form-input:focus,
+        .form-textarea:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .form-hint {
             font-size: 0.85rem;
-            text-transform: uppercase;
+            color: #6B7280;
+            margin-top: 0.25rem;
+        }
+        
+        .add-item-btn {
+            padding: 0.75rem 1.5rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .add-item-btn:hover {
+            background: var(--accent);
+            transform: translateY(-2px);
+        }
+        
+        .item-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .item-card {
+            background: var(--gray);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            gap: 1rem;
+        }
+        
+        .item-content {
+            flex: 1;
+        }
+        
+        .item-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .item-desc {
+            font-size: 0.9rem;
+            color: #6B7280;
+        }
+        
+        .risk-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.85rem;
+            font-weight: 600;
         }
         
         .risk-high {
             background: #FEE2E2;
-            color: #991B1B;
+            color: var(--danger);
         }
         
         .risk-medium {
             background: #FEF3C7;
-            color: #92400E;
+            color: var(--warning);
         }
         
         .risk-low {
             background: #D1FAE5;
-            color: #065F46;
+            color: var(--success);
         }
         
-        /* Add Trigger Button */
-        .add-trigger-btn {
+        .save-plan-btn {
             width: 100%;
-            padding: 1rem;
-            border: 3px dashed #D1D5DB;
-            background: white;
-            border-radius: 1rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: 600;
-            color: #6B7280;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-        
-        .add-trigger-btn:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-            background: var(--gray);
-        }
-        
-        /* Coping Strategies */
-        .strategies-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-        }
-        
-        .strategy-card {
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            color: white;
-            padding: 2rem;
-            border-radius: 1.5rem;
-            box-shadow: 0 4px 12px rgba(74, 159, 191, 0.3);
-            transition: all 0.3s;
-        }
-        
-        .strategy-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(74, 159, 191, 0.4);
-        }
-        
-        .strategy-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-        
-        .strategy-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 0.75rem;
-        }
-        
-        .strategy-description {
-            opacity: 0.95;
-            line-height: 1.6;
-        }
-        
-        /* Support Network */
-        .contacts-grid {
-            display: grid;
-            gap: 1rem;
-        }
-        
-        .contact-card {
-            background: var(--gray);
-            padding: 1.5rem;
-            border-radius: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .contact-info {
-            flex: 1;
-        }
-        
-        .contact-name {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--dark);
-            margin-bottom: 0.25rem;
-        }
-        
-        .contact-role {
-            color: #6B7280;
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .contact-phone {
-            color: var(--primary);
-            font-weight: 600;
-            text-decoration: none;
-        }
-        
-        .call-btn {
-            padding: 0.75rem 1.5rem;
-            background: var(--success);
+            padding: 1.25rem;
+            background: linear-gradient(135deg, var(--success), #059669);
             color: white;
             border: none;
             border-radius: 0.75rem;
+            font-size: 1.1rem;
             font-weight: 700;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            text-decoration: none;
             transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
         }
         
-        .call-btn:hover {
-            background: #059669;
-            transform: scale(1.05);
+        .save-plan-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
         }
         
-        /* Warning Signs */
-        .warning-signs {
-            background: #FEF3C7;
-            padding: 2rem;
-            border-radius: 1.5rem;
-            border: 3px solid #FCD34D;
-        }
-        
-        .warning-title {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: #92400E;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .warning-list {
-            list-style: none;
-            display: grid;
-            gap: 0.75rem;
-        }
-        
-        .warning-list li {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            color: #78350F;
-            font-weight: 600;
-        }
-        
-        .warning-list i {
-            color: var(--warning);
-            font-size: 1.2rem;
-        }
-        
-        /* Action Plan */
-        .action-steps {
-            counter-reset: step-counter;
-            list-style: none;
-        }
-        
-        .action-steps li {
-            counter-increment: step-counter;
-            background: var(--gray);
+        .provider-review {
+            background: linear-gradient(135deg, #EFF6FF, #DBEAFE);
+            border: 2px solid #3B82F6;
             padding: 1.5rem;
-            padding-left: 4rem;
-            border-radius: 1rem;
-            margin-bottom: 1rem;
-            position: relative;
-            font-weight: 600;
-            color: var(--dark);
+            border-radius: 0.75rem;
+            margin-top: 2rem;
         }
         
-        .action-steps li::before {
-            content: counter(step-counter);
-            position: absolute;
-            left: 1.5rem;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 40px;
-            height: 40px;
-            background: var(--primary);
-            color: white;
+        .provider-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .provider-avatar {
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
+            background: var(--primary);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 900;
-            font-size: 1.2rem;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
         }
         
-        @media (max-width: 768px) {
-            .page-header h1 {
-                font-size: 2rem;
-            }
-            
-            .main-content {
-                padding: 1.5rem;
-            }
-            
-            .strategies-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .emergency-buttons {
-                grid-template-columns: 1fr;
-            }
+        .provider-details {
+            flex: 1;
+        }
+        
+        .provider-name {
+            font-weight: 700;
+            color: var(--dark);
+            font-size: 1.1rem;
+        }
+        
+        .provider-role {
+            color: #6B7280;
+            font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <a href="index.html" class="back-button">
+        <a href="client-portal.html" class="back-button">
             <i class="fas fa-arrow-left"></i>
             Back to Dashboard
         </a>
         
         <div class="page-header">
-            <h1><i class="fas fa-shield-alt"></i> Relapse Prevention Plan</h1>
-            <p>Your personalized safety plan for challenging moments</p>
+            <h1><i class="fas fa-shield-alt"></i> My Relapse Prevention Plan</h1>
+            <p>Create your personalized safety plan with your provider</p>
         </div>
         
         <!-- Emergency Banner -->
         <div class="emergency-banner">
-            <div class="emergency-title">
-                <i class="fas fa-exclamation-triangle"></i>
-                In Crisis? Get Help Now!
+            <div style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem;">
+                <i class="fas fa-exclamation-triangle"></i> In Crisis? Get Help Now!
             </div>
-            <p style="margin-bottom: 1rem;">If you're experiencing a crisis or having thoughts of using, reach out immediately:</p>
+            <p>If you're experiencing a crisis or having thoughts of using, reach out immediately:</p>
             <div class="emergency-buttons">
-                <a href="tel:988" class="emergency-btn btn-crisis">
+                <a href="tel:988" class="emergency-btn">
                     <i class="fas fa-phone-volume"></i>
-                    Call 988 Crisis Line
+                    988 Crisis Line
                 </a>
-                <a href="tel:18006624357" class="emergency-btn btn-sponsor">
+                <a href="tel:18006624357" class="emergency-btn">
                     <i class="fas fa-user-friends"></i>
-                    Call Sponsor/Support
+                    Call Sponsor
                 </a>
-                <a href="appointments.html" class="emergency-btn btn-counselor">
+                <a href="appointments.html" class="emergency-btn">
                     <i class="fas fa-user-md"></i>
                     Emergency Session
                 </a>
             </div>
         </div>
         
-        <div class="main-content">
-            <!-- Personal Triggers -->
-            <div class="section">
-                <h2 class="section-title">
-                    <i class="fas fa-exclamation-circle"></i>
-                    My Personal Triggers
-                </h2>
-                <div class="triggers-grid" id="triggersGrid">
-                    <div class="trigger-card" data-risk="high">
-                        <div class="trigger-info">
-                            <div class="trigger-name">Stressful Work Situations</div>
-                            <div class="trigger-description">High-pressure deadlines and conflicts with coworkers</div>
-                        </div>
-                        <div class="trigger-risk risk-high">High Risk</div>
-                    </div>
-                    <div class="trigger-card" data-risk="high">
-                        <div class="trigger-info">
-                            <div class="trigger-name">Old Using Friends</div>
-                            <div class="trigger-description">Contact or seeing people from past substance use</div>
-                        </div>
-                        <div class="trigger-risk risk-high">High Risk</div>
-                    </div>
-                    <div class="trigger-card" data-risk="medium">
-                        <div class="trigger-info">
-                            <div class="trigger-name">Family Gatherings</div>
-                            <div class="trigger-description">Social pressure and uncomfortable conversations</div>
-                        </div>
-                        <div class="trigger-risk risk-medium">Medium Risk</div>
-                    </div>
-                    <div class="trigger-card" data-risk="medium">
-                        <div class="trigger-info">
-                            <div class="trigger-name">Financial Stress</div>
-                            <div class="trigger-description">Bills, debt, and money worries</div>
-                        </div>
-                        <div class="trigger-risk risk-medium">Medium Risk</div>
-                    </div>
-                </div>
-                <button class="add-trigger-btn" onclick="addTrigger()">
-                    <i class="fas fa-plus-circle"></i>
-                    Add New Trigger
-                </button>
+        <!-- Personal Information -->
+        <div class="form-section">
+            <h2 class="section-title">
+                <i class="fas fa-user"></i>
+                Personal Information
+            </h2>
+            <div class="form-group">
+                <label class="form-label">Full Name</label>
+                <input type="text" class="form-input" placeholder="Your full name" value="John Doe">
             </div>
+            <div class="form-group">
+                <label class="form-label">Emergency Contact Name</label>
+                <input type="text" class="form-input" placeholder="Name of primary support person" value="Jane Smith">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Emergency Contact Phone</label>
+                <input type="tel" class="form-input" placeholder="(555) 123-4567" value="(555) 123-4567">
+            </div>
+        </div>
+        
+        <!-- Personal Triggers -->
+        <div class="form-section">
+            <h2 class="section-title">
+                <i class="fas fa-exclamation-circle"></i>
+                My Personal Triggers
+            </h2>
+            <div class="form-group">
+                <label class="form-label">Trigger Description</label>
+                <input type="text" class="form-input" id="triggerName" placeholder="What triggers cravings or stress?">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Why is this triggering?</label>
+                <textarea class="form-textarea" id="triggerDesc" placeholder="Describe why this is challenging for you..."></textarea>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Risk Level</label>
+                <select class="form-select" id="triggerRisk">
+                    <option value="high">High Risk</option>
+                    <option value="medium">Medium Risk</option>
+                    <option value="low">Low Risk</option>
+                </select>
+            </div>
+            <button class="add-item-btn" onclick="addTrigger()">
+                <i class="fas fa-plus"></i>
+                Add Trigger
+            </button>
             
-            <!-- Warning Signs -->
-            <div class="section">
-                <h2 class="section-title">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    Warning Signs
-                </h2>
-                <div class="warning-signs">
-                    <div class="warning-title">
-                        <i class="fas fa-bell"></i>
-                        Watch for These Red Flags:
+            <div class="item-list" id="triggersList">
+                <div class="item-card">
+                    <div class="item-content">
+                        <div class="item-title">Stressful Work Situations</div>
+                        <div class="item-desc">High-pressure deadlines and conflicts with coworkers</div>
                     </div>
-                    <ul class="warning-list">
-                        <li><i class="fas fa-check-circle"></i> Isolating from support network</li>
-                        <li><i class="fas fa-check-circle"></i> Skipping meetings or therapy sessions</li>
-                        <li><i class="fas fa-check-circle"></i> Romanticizing past substance use</li>
-                        <li><i class="fas fa-check-circle"></i> Increased irritability or mood swings</li>
-                        <li><i class="fas fa-check-circle"></i> Poor self-care (sleep, eating, hygiene)</li>
-                        <li><i class="fas fa-check-circle"></i> Lying or being dishonest</li>
-                        <li><i class="fas fa-check-circle"></i> Visiting old using locations</li>
-                        <li><i class="fas fa-check-circle"></i> Feeling overconfident about recovery</li>
-                    </ul>
+                    <span class="risk-badge risk-high">High Risk</span>
+                </div>
+                <div class="item-card">
+                    <div class="item-content">
+                        <div class="item-title">Being Alone Too Long</div>
+                        <div class="item-desc">Isolation can lead to negative thoughts</div>
+                    </div>
+                    <span class="risk-badge risk-medium">Medium Risk</span>
                 </div>
             </div>
+        </div>
+        
+        <!-- Coping Strategies -->
+        <div class="form-section">
+            <h2 class="section-title">
+                <i class="fas fa-toolbox"></i>
+                My Coping Strategies
+            </h2>
+            <div class="form-group">
+                <label class="form-label">Strategy Name</label>
+                <input type="text" class="form-input" id="strategyName" placeholder="e.g., Call my sponsor, Go for a walk">
+            </div>
+            <div class="form-group">
+                <label class="form-label">When to use this strategy</label>
+                <textarea class="form-textarea" id="strategyWhen" placeholder="Describe situations where this helps..."></textarea>
+            </div>
+            <button class="add-item-btn" onclick="addStrategy()">
+                <i class="fas fa-plus"></i>
+                Add Strategy
+            </button>
             
-            <!-- Coping Strategies -->
-            <div class="section">
-                <h2 class="section-title">
-                    <i class="fas fa-lightbulb"></i>
-                    Healthy Coping Strategies
-                </h2>
-                <div class="strategies-grid">
-                    <div class="strategy-card">
-                        <div class="strategy-icon">🧘</div>
-                        <div class="strategy-title">Mindfulness & Breathing</div>
-                        <div class="strategy-description">Practice deep breathing, meditation, or use the mindfulness exercises in the app</div>
-                    </div>
-                    <div class="strategy-card">
-                        <div class="strategy-icon">🏃</div>
-                        <div class="strategy-title">Physical Activity</div>
-                        <div class="strategy-description">Go for a walk, run, or workout. Exercise releases natural endorphins</div>
-                    </div>
-                    <div class="strategy-card">
-                        <div class="strategy-icon">✍️</div>
-                        <div class="strategy-title">Journaling</div>
-                        <div class="strategy-description">Write about your feelings, triggers, and what you're grateful for</div>
-                    </div>
-                    <div class="strategy-card">
-                        <div class="strategy-icon">👥</div>
-                        <div class="strategy-title">Call Support</div>
-                        <div class="strategy-description">Reach out to sponsor, counselor, or trusted friend immediately</div>
-                    </div>
-                    <div class="strategy-card">
-                        <div class="strategy-icon">🎯</div>
-                        <div class="strategy-title">Distract & Redirect</div>
-                        <div class="strategy-description">Engage in a hobby, watch a movie, or do something creative</div>
-                    </div>
-                    <div class="strategy-card">
-                        <div class="strategy-icon">📚</div>
-                        <div class="strategy-title">Read Recovery Literature</div>
-                        <div class="strategy-description">Review your favorite recovery books or daily readings</div>
+            <div class="item-list" id="strategiesList">
+                <div class="item-card">
+                    <div class="item-content">
+                        <div class="item-title">Call my sponsor immediately</div>
+                        <div class="item-desc">When I feel cravings or urges to use</div>
                     </div>
                 </div>
-            </div>
-            
-            <!-- Emergency Action Plan -->
-            <div class="section">
-                <h2 class="section-title">
-                    <i class="fas fa-clipboard-list"></i>
-                    Emergency Action Plan
-                </h2>
-                <ol class="action-steps">
-                    <li>STOP - Pause and acknowledge the craving or trigger</li>
-                    <li>BREATHE - Take 10 deep breaths to calm your nervous system</li>
-                    <li>CALL - Contact your sponsor, counselor, or crisis line (988)</li>
-                    <li>LEAVE - Remove yourself from the triggering situation immediately</li>
-                    <li>ATTEND - Go to a meeting (in-person or online) right now</li>
-                    <li>JOURNAL - Write down what you're feeling and why</li>
-                    <li>REFLECT - Remember your reasons for recovery and consequences of use</li>
-                    <li>REWARD - Once safe, celebrate staying sober with a healthy reward</li>
-                </ol>
-            </div>
-            
-            <!-- Support Network -->
-            <div class="section">
-                <h2 class="section-title">
-                    <i class="fas fa-users"></i>
-                    My Support Network
-                </h2>
-                <div class="contacts-grid">
-                    <div class="contact-card">
-                        <div class="contact-info">
-                            <div class="contact-name">988 Suicide & Crisis Lifeline</div>
-                            <div class="contact-role">24/7 Crisis Support</div>
-                            <a href="tel:988" class="contact-phone">Call: 988</a>
-                        </div>
-                        <a href="tel:988" class="call-btn">
-                            <i class="fas fa-phone"></i>
-                            Call Now
-                        </a>
+                <div class="item-card">
+                    <div class="item-content">
+                        <div class="item-title">Practice deep breathing</div>
+                        <div class="item-desc">When feeling anxious or overwhelmed</div>
                     </div>
-                    <div class="contact-card">
-                        <div class="contact-info">
-                            <div class="contact-name">SAMHSA National Helpline</div>
-                            <div class="contact-role">Treatment Referral Service</div>
-                            <a href="tel:18006624357" class="contact-phone">Call: 1-800-662-4357</a>
-                        </div>
-                        <a href="tel:18006624357" class="call-btn">
-                            <i class="fas fa-phone"></i>
-                            Call Now
-                        </a>
-                    </div>
-                    <div class="contact-card">
-                        <div class="contact-info">
-                            <div class="contact-name">Desert Mountain Healing IOP</div>
-                            <div class="contact-role">Your Treatment Center</div>
-                            <a href="tel:15555551234" class="contact-phone">Call: (555) 555-1234</a>
-                        </div>
-                        <a href="tel:15555551234" class="call-btn">
-                            <i class="fas fa-phone"></i>
-                            Call Now
-                        </a>
-                    </div>
-                    <div class="contact-card">
-                        <div class="contact-info">
-                            <div class="contact-name">My Sponsor</div>
-                            <div class="contact-role">Support & Guidance</div>
-                            <a href="#" class="contact-phone" onclick="alert('Add your sponsor\'s number'); return false;">Add Number</a>
-                        </div>
-                        <a href="#" class="call-btn" onclick="alert('Add your sponsor\'s number first'); return false;">
-                            <i class="fas fa-phone"></i>
-                            Call Now
-                        </a>
+                </div>
+                <div class="item-card">
+                    <div class="item-content">
+                        <div class="item-title">Attend a meeting</div>
+                        <div class="item-desc">When feeling isolated or disconnected</div>
                     </div>
                 </div>
             </div>
         </div>
+        
+        <!-- Warning Signs -->
+        <div class="form-section">
+            <h2 class="section-title">
+                <i class="fas fa-bell"></i>
+                My Warning Signs
+            </h2>
+            <div class="form-group">
+                <label class="form-label">What warning signs indicate you might be at risk?</label>
+                <textarea class="form-textarea" placeholder="List behaviors, thoughts, or feelings that signal danger..." style="min-height: 150px;">- Skipping meetings
+- Isolating from support network
+- Romanticizing past substance use
+- Increased irritability and mood swings
+- Poor sleep patterns</textarea>
+            </div>
+        </div>
+        
+        <!-- Support Network -->
+        <div class="form-section">
+            <h2 class="section-title">
+                <i class="fas fa-users"></i>
+                My Support Network
+            </h2>
+            <div class="form-group">
+                <label class="form-label">Support Person Name</label>
+                <input type="text" class="form-input" placeholder="Name">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Phone Number</label>
+                <input type="tel" class="form-input" placeholder="(555) 123-4567">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Relationship</label>
+                <input type="text" class="form-input" placeholder="Sponsor, Friend, Family, Therapist">
+            </div>
+            <button class="add-item-btn">
+                <i class="fas fa-plus"></i>
+                Add Contact
+            </button>
+        </div>
+        
+        <!-- Provider Review Section -->
+        <div class="provider-review">
+            <h3 style="margin-bottom: 1rem; font-size: 1.3rem; color: var(--dark);">
+                <i class="fas fa-clipboard-check"></i> Provider Review & Approval
+            </h3>
+            <div class="provider-info">
+                <div class="provider-avatar">SJ</div>
+                <div class="provider-details">
+                    <div class="provider-name">Dr. Sarah Johnson</div>
+                    <div class="provider-role">Licensed Therapist • Own Today</div>
+                </div>
+            </div>
+            <p style="color: #6B7280; margin-bottom: 1rem;">
+                Your provider will review this plan with you during your next session and provide feedback to ensure it's comprehensive and effective for your recovery.
+            </p>
+            <div style="padding: 1rem; background: white; border-radius: 0.5rem;">
+                <strong style="color: var(--dark);">Provider Notes:</strong>
+                <p style="color: #6B7280; margin-top: 0.5rem; font-style: italic;">
+                    "This will be reviewed and co-created during our session on June 20, 2026."
+                </p>
+            </div>
+        </div>
+        
+        <!-- Save Button -->
+        <button class="save-plan-btn" onclick="savePlan()">
+            <i class="fas fa-save"></i>
+            Save My Relapse Prevention Plan
+        </button>
     </div>
     
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        const SUPABASE_URL = 'https://qmrdlgopygylaakskpls.supabase.co';
-        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFtcmRsZ29weWd5bGFha3NrcGxzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUyMTk3MDMsImV4cCI6MjA4MDc5NTcwM30.aYORMs31sN847fKtH103VKFd13xtRft9FFXJNlvOsZw';
-        
-        const { createClient } = supabase;
-        const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
-        
-        let currentUser = null;
-        
-        async function init() {
-            // Check authentication
-            const { data: { user } } = await supabaseClient.auth.getUser();
-            
-            // Demo mode - no auth required
-            
-            currentUser = user;
-            
-            // Load user's personal triggers
-            await loadTriggers();
-        }
-        
-        async function loadTriggers() {
-            try {
-                const { data } = await supabaseClient
-                    .from('relapse_triggers')
-                    .select('*')
-                    .eq('user_id', currentUser.id);
-                
-                if (data && data.length > 0) {
-                    // Render custom triggers
-                    // For demo, we're showing static ones
-                }
-            } catch (error) {
-                console.error('Error loading triggers:', error);
-            }
-        }
-        
         function addTrigger() {
-            const triggerName = prompt('What triggers you? (e.g., "Certain locations", "Specific people", "Stressful situations")');
-            if (!triggerName) return;
+            const name = document.getElementById('triggerName').value;
+            const desc = document.getElementById('triggerDesc').value;
+            const risk = document.getElementById('triggerRisk').value;
             
-            const description = prompt('Describe this trigger in detail:');
-            if (!description) return;
-            
-            const risk = prompt('Risk level? Enter: high, medium, or low').toLowerCase();
-            if (!['high', 'medium', 'low'].includes(risk)) {
-                alert('Please enter high, medium, or low');
+            if (!name || !desc) {
+                alert('Please fill in both trigger description and details');
                 return;
             }
             
-            // Add to database
-            supabaseClient
-                .from('relapse_triggers')
-                .insert({
-                    user_id: currentUser.id,
-                    name: triggerName,
-                    description: description,
-                    risk_level: risk
-                })
-                .then(() => {
-                    alert('Trigger added successfully!');
-                    location.reload();
-                })
-                .catch(error => {
-                    console.error('Error adding trigger:', error);
-                    alert('Error adding trigger. Please try again.');
-                });
+            const riskClass = risk === 'high' ? 'risk-high' : risk === 'medium' ? 'risk-medium' : 'risk-low';
+            const riskLabel = risk.charAt(0).toUpperCase() + risk.slice(1) + ' Risk';
+            
+            const list = document.getElementById('triggersList');
+            const newItem = document.createElement('div');
+            newItem.className = 'item-card';
+            newItem.innerHTML = `
+                <div class="item-content">
+                    <div class="item-title">${name}</div>
+                    <div class="item-desc">${desc}</div>
+                </div>
+                <span class="risk-badge ${riskClass}">${riskLabel}</span>
+            `;
+            list.appendChild(newItem);
+            
+            document.getElementById('triggerName').value = '';
+            document.getElementById('triggerDesc').value = '';
         }
         
-        init();
+        function addStrategy() {
+            const name = document.getElementById('strategyName').value;
+            const when = document.getElementById('strategyWhen').value;
+            
+            if (!name || !when) {
+                alert('Please fill in both strategy name and when to use it');
+                return;
+            }
+            
+            const list = document.getElementById('strategiesList');
+            const newItem = document.createElement('div');
+            newItem.className = 'item-card';
+            newItem.innerHTML = `
+                <div class="item-content">
+                    <div class="item-title">${name}</div>
+                    <div class="item-desc">${when}</div>
+                </div>
+            `;
+            list.appendChild(newItem);
+            
+            document.getElementById('strategyName').value = '';
+            document.getElementById('strategyWhen').value = '';
+        }
+        
+        function savePlan() {
+            alert('✅ Demo Mode: Your Relapse Prevention Plan has been saved!\n\nIn production, this will:\n- Save to your secure database\n- Notify your provider (Dr. Sarah Johnson)\n- Be available during your next session\n- Sync across all your devices');
+        }
     </script>
 </body>
 </html>
