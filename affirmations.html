@@ -609,6 +609,9 @@
                 return d.toISOString().split('T')[0];
             });
             
+            // Update streak display
+            document.getElementById('streakCount').textContent = streak;
+            
             // Display affirmation
             getNewAffirmation();
             
@@ -766,7 +769,6 @@
         async function loadFavorites() {
             // Demo mode - no favorites loaded
             favorites = [];
-            }
         }
         
         function renderFavorites() {
