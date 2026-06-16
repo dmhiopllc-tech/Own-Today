@@ -1,13 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8V3QF8VVMZ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-8V3QF8VVMZ');
+    </script>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Progress Test</title>
+    <title>Progress Tracker - Own Today</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/white-label.css">
 </head>
-<body>
-    <h1>TEST - If you see this, the file works!</h1>
-    <p>This is a simple test file for progress.html</p>
-    <a href="index.html">Back to Home</a>
+<body style="font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #F5F7FA, #FFF); padding: 2rem;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+        <a href="client-portal.html" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; background: white; color: #4A9FBF; text-decoration: none; border-radius: 0.5rem; font-weight: 600; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+            <i class="fas fa-arrow-left"></i>
+            Back to Dashboard
+        </a>
+        
+        <div style="background: linear-gradient(135deg, #4A9FBF 0%, #1F2937 100%); color: white; padding: 3rem 2rem; border-radius: 1rem; margin-bottom: 2rem; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.1);">
+            <h1 style="margin: 0 0 0.5rem 0; font-size: 2.5rem;"><i class="fas fa-chart-line"></i> Progress Tracker</h1>
+            <p style="margin: 0; opacity: 0.9;">Visualize your recovery journey and celebrate milestones</p>
+        </div>
+        
+        <div style="background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); text-align: center;">
+            <p style="font-size: 1.1rem; color: #6B7280;">This is a demo page. Full functionality will be available when connected to your database.</p>
+        </div>
+    </div>
 </body>
 </html>
