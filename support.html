@@ -278,8 +278,8 @@
                     <i class="fas fa-comments"></i>
                 </div>
                 <h3>Live Chat</h3>
-                <p>Chat with our support team Monday-Friday, 9am-6pm EST</p>
-                <a href="#" onclick="alert('Chat will open during business hours!'); return false;">Start Chat</a>
+                <p>Chat with our support team Monday-Friday, 8am-8pm MST</p>
+                <a href="#" onclick="openTawkChat(); return false;">Start Chat</a>
             </div>
         </div>
         
@@ -389,11 +389,25 @@
                 <div class="contact-method">
                     <i class="fas fa-clock"></i>
                     <strong>Hours</strong>
-                    <span>Mon-Fri 9am-6pm EST</span>
+                    <span>Mon-Fri 8am-8pm MST</span>
                 </div>
             </div>
         </div>
     </div>
+    
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/6a32d491d0dd3e1d406c5d6f/1jrb8slrh';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+    </script>
+    <!--End of Tawk.to Script-->
     
     <script>
         function toggleFaq(element) {
@@ -406,6 +420,13 @@
             
             // Toggle clicked item
             element.classList.toggle('active');
+        }
+        
+        function openTawkChat() {
+            // Open Tawk.to chat widget
+            if (typeof Tawk_API !== 'undefined') {
+                Tawk_API.maximize();
+            }
         }
     </script>
 </body>
